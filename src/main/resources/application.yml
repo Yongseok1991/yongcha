@@ -5,10 +5,13 @@ spring:
   profiles:
     active: local
   devtools:
-  livereload:
-    enabled: true
-  restart:
-    enabled: true
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  messages:
+    basename: messages
+    encoding: UTF-8
 
   data:
     web:
