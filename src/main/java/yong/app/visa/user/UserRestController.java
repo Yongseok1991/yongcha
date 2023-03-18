@@ -34,7 +34,7 @@ public class UserRestController {
         String rawPassword = user.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         user.setPassword(encPassword);
-        user.setRole("ROLE_USER");
+        user.setRole(RoleType.ROLE_USER);
         return ResponseEntity.ok(yongUserRepository.save(user));
     }
 }
