@@ -55,5 +55,3 @@ springdoc:
     doc-expansion: none # tag, operation ??? ??
   paths-to-match:
     - /**
-
-

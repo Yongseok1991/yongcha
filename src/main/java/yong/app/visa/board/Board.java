@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
+import yong.app.com.base.BaseEntity;
 import yong.app.visa.user.YongUser;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Board {
+public class Board extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,12 +38,4 @@ public class Board {
     @JoinColumn(name ="userUid")
     private YongUser user;
 
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @CreationTimestamp
-    private LocalDateTime createDate;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @UpdateTimestamp
-    private LocalDateTime updateDate;
 }

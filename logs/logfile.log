@@ -1,0 +1,101 @@
+[INFO ] 2023-04-11 16:11:42 [background-preinit] Version - HV000001: Hibernate Validator 6.2.5.Final
+[INFO ] 2023-04-11 16:11:42 [restartedMain] AppApplication - Starting AppApplication using Java 1.8.0_221 on DESKTOP-QH7DASI with PID 27056 (D:\opt\JetBrains\workspace-kware_bps\yong\build\classes\java\main started by kware in D:\opt\JetBrains\workspace-kware_bps\yong)
+[INFO ] 2023-04-11 16:11:42 [restartedMain] AppApplication - The following 1 profile is active: "local"
+[INFO ] 2023-04-11 16:11:43 [restartedMain] DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[INFO ] 2023-04-11 16:11:43 [restartedMain] DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[INFO ] 2023-04-11 16:11:46 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 2023-04-11 16:11:46 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 115 ms. Found 2 JPA repository interfaces.
+[INFO ] 2023-04-11 16:11:49 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 9000 (http)
+[INFO ] 2023-04-11 16:11:49 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-9000"]
+[INFO ] 2023-04-11 16:11:49 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 2023-04-11 16:11:49 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.71]
+[INFO ] 2023-04-11 16:11:50 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 2023-04-11 16:11:50 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 6479 ms
+[INFO ] 2023-04-11 16:11:50 [restartedMain] HikariDataSource - HikariPool-1 - Starting...
+[INFO ] 2023-04-11 16:11:51 [restartedMain] HikariDataSource - HikariPool-1 - Start completed.
+[INFO ] 2023-04-11 16:11:51 [restartedMain] H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:~/yong/app'
+[INFO ] 2023-04-11 16:11:51 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 2023-04-11 16:11:51 [restartedMain] Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+[INFO ] 2023-04-11 16:11:52 [restartedMain] Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[INFO ] 2023-04-11 16:11:52 [restartedMain] Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO ] 2023-04-11 16:11:55 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 2023-04-11 16:11:55 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 2023-04-11 16:11:56 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2417127c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@779c8810, org.springframework.security.web.context.SecurityContextPersistenceFilter@6dcb2544, org.springframework.security.web.header.HeaderWriterFilter@4e1243df, org.springframework.security.web.authentication.logout.LogoutFilter@28766227, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@62f5b8cd, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@ca4159, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@59490fad, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@ce0a389, org.springframework.security.web.session.SessionManagementFilter@6d90d42, org.springframework.security.web.access.ExceptionTranslationFilter@3de56f93, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5896e66d]
+[WARN ] 2023-04-11 16:11:56 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[WARN ] 2023-04-11 16:11:58 [restartedMain] OptionalLiveReloadServer - Unable to start LiveReload server
+[INFO ] 2023-04-11 16:11:58 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-9000"]
+[INFO ] 2023-04-11 16:11:58 [restartedMain] TomcatWebServer - Tomcat started on port(s): 9000 (http) with context path ''
+[INFO ] 2023-04-11 16:11:58 [restartedMain] AppApplication - Started AppApplication in 17.545 seconds (JVM running for 25.379)
+[INFO ] 2023-04-11 16:11:59 [http-nio-9000-exec-2] [/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[INFO ] 2023-04-11 16:11:59 [http-nio-9000-exec-2] DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+[INFO ] 2023-04-11 16:11:59 [http-nio-9000-exec-2] DispatcherServlet - Completed initialization in 3 ms
+[INFO ] 2023-04-11 16:11:59 [http-nio-9000-exec-2] ErrorPageController - errorPage 404
+[INFO ] 2023-04-11 16:11:59 [http-nio-9000-exec-2] ErrorPageController - dispatchTypes= ERROR
+[INFO ] 2023-04-11 16:12:00 [http-nio-9000-exec-3] ErrorPageController - errorPage 404
+[INFO ] 2023-04-11 16:12:00 [http-nio-9000-exec-3] ErrorPageController - dispatchTypes= ERROR
+[INFO ] 2023-04-11 17:42:03 [background-preinit] Version - HV000001: Hibernate Validator 6.2.5.Final
+[INFO ] 2023-04-11 17:42:03 [restartedMain] AppApplication - Starting AppApplication using Java 11.0.17 on DESKTOP-QH7DASI with PID 37364 (D:\opt\JetBrains\workspace-kware_bps\yong\build\classes\java\main started by kware in D:\opt\JetBrains\workspace-kware_bps\yong)
+[INFO ] 2023-04-11 17:42:03 [restartedMain] AppApplication - The following 1 profile is active: "local"
+[INFO ] 2023-04-11 17:42:03 [restartedMain] DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[INFO ] 2023-04-11 17:42:03 [restartedMain] DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[INFO ] 2023-04-11 17:42:04 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 2023-04-11 17:42:04 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 52 ms. Found 2 JPA repository interfaces.
+[INFO ] 2023-04-11 17:42:05 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 9000 (http)
+[INFO ] 2023-04-11 17:42:05 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-9000"]
+[INFO ] 2023-04-11 17:42:05 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 2023-04-11 17:42:05 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.71]
+[INFO ] 2023-04-11 17:42:05 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 2023-04-11 17:42:05 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1679 ms
+[INFO ] 2023-04-11 17:42:05 [restartedMain] HikariDataSource - HikariPool-1 - Starting...
+[INFO ] 2023-04-11 17:42:05 [restartedMain] HikariDataSource - HikariPool-1 - Start completed.
+[INFO ] 2023-04-11 17:42:05 [restartedMain] H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:~/yong/app'
+[INFO ] 2023-04-11 17:42:05 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 2023-04-11 17:42:05 [restartedMain] Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+[INFO ] 2023-04-11 17:42:05 [restartedMain] Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[INFO ] 2023-04-11 17:42:06 [restartedMain] Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO ] 2023-04-11 17:42:06 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 2023-04-11 17:42:06 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 2023-04-11 17:42:07 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@332cf4c6, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6d110851, org.springframework.security.web.context.SecurityContextPersistenceFilter@ba04146, org.springframework.security.web.header.HeaderWriterFilter@10b5e1ff, org.springframework.security.web.authentication.logout.LogoutFilter@14e002be, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@602ed19f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@778c8b9e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1324a7d7, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@47afac1f, org.springframework.security.web.session.SessionManagementFilter@1573ef94, org.springframework.security.web.access.ExceptionTranslationFilter@761b3afd, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@30314c4a]
+[WARN ] 2023-04-11 17:42:07 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[WARN ] 2023-04-11 17:42:08 [restartedMain] OptionalLiveReloadServer - Unable to start LiveReload server
+[INFO ] 2023-04-11 17:42:08 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-9000"]
+[INFO ] 2023-04-11 17:42:08 [restartedMain] TomcatWebServer - Tomcat started on port(s): 9000 (http) with context path ''
+[INFO ] 2023-04-11 17:42:08 [restartedMain] AppApplication - Started AppApplication in 5.473 seconds (JVM running for 6.743)
+[INFO ] 2023-04-12 09:42:00 [http-nio-9000-exec-1] [/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[INFO ] 2023-04-12 09:42:00 [http-nio-9000-exec-1] DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+[INFO ] 2023-04-12 09:42:00 [http-nio-9000-exec-1] DispatcherServlet - Completed initialization in 12 ms
+[INFO ] 2023-04-12 09:42:00 [http-nio-9000-exec-1] ErrorPageController - errorPage 404
+[INFO ] 2023-04-12 09:42:00 [http-nio-9000-exec-1] ErrorPageController - dispatchTypes= ERROR
+[INFO ] 2023-04-12 13:42:56 [background-preinit] Version - HV000001: Hibernate Validator 6.2.5.Final
+[INFO ] 2023-04-12 13:42:56 [restartedMain] AppApplication - Starting AppApplication using Java 11.0.17 on DESKTOP-QH7DASI with PID 21408 (D:\opt\JetBrains\workspace-kware_bps\yong\build\classes\java\main started by kware in D:\opt\JetBrains\workspace-kware_bps\yong)
+[INFO ] 2023-04-12 13:42:56 [restartedMain] AppApplication - The following 1 profile is active: "local"
+[INFO ] 2023-04-12 13:42:56 [restartedMain] DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[INFO ] 2023-04-12 13:42:56 [restartedMain] DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[INFO ] 2023-04-12 13:42:57 [restartedMain] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 2023-04-12 13:42:57 [restartedMain] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 45 ms. Found 2 JPA repository interfaces.
+[INFO ] 2023-04-12 13:42:58 [restartedMain] TomcatWebServer - Tomcat initialized with port(s): 9000 (http)
+[INFO ] 2023-04-12 13:42:58 [restartedMain] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-9000"]
+[INFO ] 2023-04-12 13:42:58 [restartedMain] StandardService - Starting service [Tomcat]
+[INFO ] 2023-04-12 13:42:58 [restartedMain] StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.71]
+[INFO ] 2023-04-12 13:42:58 [restartedMain] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 2023-04-12 13:42:58 [restartedMain] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1610 ms
+[INFO ] 2023-04-12 13:42:58 [restartedMain] HikariDataSource - HikariPool-1 - Starting...
+[INFO ] 2023-04-12 13:42:58 [restartedMain] HikariDataSource - HikariPool-1 - Start completed.
+[INFO ] 2023-04-12 13:42:58 [restartedMain] H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:~/yong/app'
+[INFO ] 2023-04-12 13:42:58 [restartedMain] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 2023-04-12 13:42:58 [restartedMain] Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+[INFO ] 2023-04-12 13:42:59 [restartedMain] Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[INFO ] 2023-04-12 13:42:59 [restartedMain] Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO ] 2023-04-12 13:42:59 [restartedMain] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 2023-04-12 13:42:59 [restartedMain] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 2023-04-12 13:43:00 [restartedMain] DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@74e7854, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@34795253, org.springframework.security.web.context.SecurityContextPersistenceFilter@542e5e5a, org.springframework.security.web.header.HeaderWriterFilter@50a1dfc2, org.springframework.security.web.authentication.logout.LogoutFilter@58e4f9ad, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@383960cf, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5ce3a653, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6f71cfed, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@451889fa, org.springframework.security.web.session.SessionManagementFilter@197e049c, org.springframework.security.web.access.ExceptionTranslationFilter@142518bc, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@21c77ab7]
+[WARN ] 2023-04-12 13:43:00 [restartedMain] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 2023-04-12 13:43:01 [restartedMain] OptionalLiveReloadServer - LiveReload server is running on port 35729
+[INFO ] 2023-04-12 13:43:01 [restartedMain] Http11NioProtocol - Starting ProtocolHandler ["http-nio-9000"]
+[INFO ] 2023-04-12 13:43:01 [restartedMain] TomcatWebServer - Tomcat started on port(s): 9000 (http) with context path ''
+[INFO ] 2023-04-12 13:43:01 [restartedMain] AppApplication - Started AppApplication in 5.568 seconds (JVM running for 7.019)
+[INFO ] 2023-04-12 13:43:33 [http-nio-9000-exec-10] [/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[INFO ] 2023-04-12 13:43:33 [http-nio-9000-exec-10] DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+[INFO ] 2023-04-12 13:43:33 [http-nio-9000-exec-10] DispatcherServlet - Completed initialization in 2 ms
+[INFO ] 2023-04-12 13:43:33 [http-nio-9000-exec-10] ErrorPageController - errorPage 404
+[INFO ] 2023-04-12 13:43:33 [http-nio-9000-exec-10] ErrorPageController - dispatchTypes= ERROR
