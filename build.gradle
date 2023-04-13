@@ -40,6 +40,8 @@ dependencies {
 	// springdoc-openapi-ui
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0'
+
 }
 
 tasks.named('test') {

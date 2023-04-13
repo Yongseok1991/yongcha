@@ -8,3 +8,8 @@ spring:
     url: jdbc:h2:file:~/yong/app
     username: sa
     password:
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true

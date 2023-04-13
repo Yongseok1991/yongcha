@@ -19,25 +19,23 @@ spring:
         default-page-size: 10
         max-page-size: 2000
   jpa:
-    show-sql: true
     hibernate:
       ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
+      default_batch_fetch_size: 1000
 
   thymeleaf:
     prefix: classpath:templates/
     suffix: .html
     cache: false
 
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
 logging:
   level:
-    org:
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
+    org.hibernate.SQL: info
   config: classpath:log4j2.yml
 
 springdoc:
