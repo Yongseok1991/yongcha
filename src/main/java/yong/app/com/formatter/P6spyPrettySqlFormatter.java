@@ -2,9 +2,12 @@ package yong.app.com.formatter;
 
 import com.p6spy.engine.logging.Category;
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.engine.jdbc.internal.FormatStyle;
 
+import javax.persistence.EntityManager;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Stack;
@@ -25,7 +28,9 @@ public class P6spyPrettySqlFormatter implements MessageFormattingStrategy {
         return sqlFormatToUpper(sql, category, getMessage(connectionId, elapsed, getStackBuilder()));
     }
 
+
     private String sqlFormatToUpper(String sql, String category, String message) {
+
         if (Objects.isNull(sql.trim()) || sql.trim().isEmpty()) {
             return "";
         }
@@ -70,11 +75,9 @@ public class P6spyPrettySqlFormatter implements MessageFormattingStrategy {
                 .append(NEW_LINE)
                 .append("\t").append(String.format("Execution Time: %s ms", elapsed))
                 .append(NEW_LINE)
-                .append(NEW_LINE)
                 .append("\t").append(String.format("Call Stack (number 1 is entry point): %s", callStackBuilder))
                 .append(NEW_LINE)
-                .append(NEW_LINE)
-                .append("----------------------------------------------------------------------------------------------------")
+                .append("==============================================================")
                 .toString();
     }
 
