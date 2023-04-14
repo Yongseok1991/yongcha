@@ -47,7 +47,6 @@ public class P6spyPrettySqlFormatter implements MessageFormattingStrategy {
         return FormatStyle.BASIC
                 .getFormatter()
                 .format(sql)
-                .toUpperCase(Locale.ROOT)
                 .replace("+0900", "");
     }
 
