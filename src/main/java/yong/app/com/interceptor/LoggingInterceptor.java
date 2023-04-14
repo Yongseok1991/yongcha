@@ -18,7 +18,7 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
         List<String> params  = new ArrayList<>();
         request.getParameterNames().asIterator().forEachRemaining(paramName -> params.add(paramName + " : " + request.getParameter(paramName)));
         log.info(params.toString());
-        log.info("url : {}", request.getRequestURI());
+        log.info("received [{} '{}' {}]", request.getMethod(), request.getRequestURI(), request.getProtocol());
         return super.preHandle(request, response, handler);
     }
 

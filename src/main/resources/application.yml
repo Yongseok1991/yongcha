@@ -28,11 +28,6 @@ spring:
     suffix: .html
     cache: false
 
-decorator:
-  datasource:
-    p6spy:
-      enable-logging: true
-
 logging:
   level:
     org.hibernate.SQL: info
