@@ -17,7 +17,7 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         List<String> params  = new ArrayList<>();
         request.getParameterNames().asIterator().forEachRemaining(paramName -> params.add(paramName + " : " + request.getParameter(paramName)));
-        log.info("=============================================");
+        log.info("===============================================================");
         log.info("parameter: {}", params.toString());
         log.info("received [{} '{}' {}]", request.getMethod(), request.getRequestURI(), request.getProtocol());
         return super.preHandle(request, response, handler);
@@ -28,7 +28,7 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         log.info("response status: {}", response.getStatus());
-        log.info("=============================================\n");
+        log.info("===============================================================\n");
         super.postHandle(request, response, handler, modelAndView);
     }
 

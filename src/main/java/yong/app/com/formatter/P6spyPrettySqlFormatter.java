@@ -77,7 +77,7 @@ public class P6spyPrettySqlFormatter implements MessageFormattingStrategy {
                 .append(NEW_LINE)
                 .append("\t").append(String.format("Call Stack (number 1 is entry point): %s", callStackBuilder))
                 .append(NEW_LINE)
-                .append("==============================================================")
+                .append("-------------------------------------------------------------------------")
                 .toString();
     }
 
