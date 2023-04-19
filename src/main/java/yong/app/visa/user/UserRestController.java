@@ -7,8 +7,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import yong.app.visa.role.Role;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +29,8 @@ public class UserRestController {
     //@PreAuthorize("hasRole('ROLE_MANAGER')")
     @Secured("ROLE_MANAGER")
     @GetMapping("/manager")
-    public  String manager() {
+    public String manager() {
+
         return "매니저 페이지입니다.";
     }
 
@@ -34,7 +39,14 @@ public class UserRestController {
         String rawPassword = user.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         user.setPassword(encPassword);
-        user.setRole(RoleType.ROLE_USER);
+        Role role = new Role();
+        role.setRoleName("ROLE_MANAGER");
+        user.setRoles(new ArrayList<>(Arrays.asList(role)));
         return ResponseEntity.ok(yongUserRepository.save(user));
+    }
+
+    @GetMapping("/userList")
+    public ResponseEntity users() {
+        return ResponseEntity.ok(yongUserRepository.findAll());
     }
 }

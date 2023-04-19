@@ -1,6 +1,7 @@
 package yong.app.com.auth;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import yong.app.visa.user.YongUser;
 
@@ -24,7 +25,7 @@ public class PrincipalDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collect = new ArrayList<>();
-        collect.add(()-> String.valueOf(user.getRole()));
+        user.getRoles().forEach(role -> collect.add(new SimpleGrantedAuthority(role.getRoleName())));
         return collect;
     }
 
