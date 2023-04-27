@@ -1,7 +1,9 @@
 package yong.app.domain.role;
 
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import yong.app.domain.user.YongUser;
 
@@ -12,6 +14,7 @@ import java.util.List;
 @Table(name="app_role")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +24,8 @@ public class Role {
 
     @Column(name="description")
     private String description;
-    @ManyToMany(mappedBy = "roles")
-    private List<YongUser> users;
-
+    @Builder
+    public Role(String roleName) {
+        this.roleName = roleName;
+    }
 }
