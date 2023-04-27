@@ -29,7 +29,7 @@ public class Board extends BaseEntity {
 
     // DB는 오브젝트를 저장할 수 없다. FK // 자바는 오브젝트를 저장할 수 있다.
     // Many  = Board , one = User
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="userUid")
     private YongUser user;
 
