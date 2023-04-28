@@ -4,30 +4,28 @@ package yong.app.domain.user;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
-import yong.app.global.base.BaseEntity;
+import yong.app.global.base.BaseTimeEntity;
 import yong.app.domain.role.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
-* @fileName YongUser
-* @author dahyeon
-* @version 1.0.0
-* @date 2023-04-26
-* @summary swagger에 대한 예시 작성
+ * @fileName YongUser
+ * @author dahyeon
+ * @version 1.0.0
+ * @date 2023-04-26
+ * @summary swagger에 대한 예시 작성
  *         @Schema 추가 속성들 : nullable / defaultValue / example / maxLength / allowValues ...
-**/
+ **/
 
 @Entity
 @Getter
 @Setter
 @Schema(description = "YongUser 엔티티")                             // ** entity에 대한 설명
-public class YongUser extends BaseEntity {
+public class YongUser extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

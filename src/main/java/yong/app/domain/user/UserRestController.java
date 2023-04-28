@@ -1,4 +1,4 @@
-package yong.app.visa.user;
+package yong.app.domain.user;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,13 +26,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
-* @fileName UserRestController
-* @author dahyeon
-* @version 1.0.0
-* @date 2023-04-26
-* @summary swagger에 대한 예시 작성
+ * @fileName UserRestController
+ * @author dahyeon
+ * @version 1.0.0
+ * @date 2023-04-26
+ * @summary swagger에 대한 예시 작성
  *         ApiResponse : Error에 대해 ResponseBody 반환 설정 필요 있을 듯.
-**/
+ **/
 
 @Tag(name="유저 컨트롤러", description="유저 컨트롤러 관련 api입니다.")              // ** 같은 Tag name에 대해서는 같은 api 그룹으로 인식
 @RequestMapping("/api")
@@ -57,8 +57,10 @@ public class UserRestController {
             @Parameter(name = "password", description = "유저의 password", required = false)
     })
     @GetMapping("/admin")
-    public String admin() {
-        return "어드민 페이지입니다.";
+    public ResponseEntity admin() {
+
+//        YongUser yongUser = yongUserRepository.findAll();
+        return ResponseEntity.ok(yongUserRepository.findAll());
     }
 
     //@PostAuthorize("hasRole('ROLE_MANAGER')")
