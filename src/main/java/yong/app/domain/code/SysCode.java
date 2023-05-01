@@ -6,6 +6,8 @@ import yong.app.global.base.BaseEntity;
 import yong.app.global.base.BaseTimeEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
 * @fileName SysCode
@@ -17,7 +19,7 @@ import javax.persistence.*;
  *          SysCodeBuilderInsert : sysCode insert
  *          update : sysCode update
 **/
-@ToString
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -74,6 +76,5 @@ public class SysCode extends BaseTimeEntity {
         this.rmDc = rmDc;
         this.sortNo = sortNo;
     }
-
 
 }

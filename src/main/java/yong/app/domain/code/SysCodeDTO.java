@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
 * @fileName SysCodeDTO
@@ -41,9 +43,11 @@ public class SysCodeDTO  {
     private String codeDc;      //코드 설명
 
     @Schema(name = "useAt", description = "sysCode의 사용여부", defaultValue = "Y")
+    @NotBlank
     private String useAt;      //사용 여부
 
     @Schema(name = "lv", description = "sysCode의 래벨", defaultValue = "1")
+    @NotNull
     private Long lv;         //코드 레벨
 
     @Schema(name = "rmDc", description = "sysCode의 비고설명", defaultValue = "", example = "비고")

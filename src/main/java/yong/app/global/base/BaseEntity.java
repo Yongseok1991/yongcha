@@ -26,16 +26,4 @@ public class BaseEntity extends BaseTimeEntity {
     @LastModifiedBy
     private Long updtId;
 
-
-    @Override
-    public void onPrePersist(){
-        this.regId = 1L;
-        this.updtId = this.regId;
-    }
-
-    @Override
-    public void onPreUpdate(){
-        this.regId = 1L;
-    }
-
 }

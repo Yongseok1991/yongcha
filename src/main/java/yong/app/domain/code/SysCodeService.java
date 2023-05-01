@@ -1,9 +1,10 @@
 package yong.app.domain.code;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yong.app.global.response.StatusCode;
+import yong.app.global.response.RestApiException;
 
 /**
 * @fileName SysCodeService
@@ -12,10 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 * @date 2023-04-28
 * @summary  sysCodeService : update, save 구현 
 **/
+
 @Service
 @RequiredArgsConstructor
 public class SysCodeService {
-
 
     private final SysCodeRepository sysCodeRepository;
 
@@ -26,12 +27,9 @@ public class SysCodeService {
     }
 
     @Transactional
-    public Long updateById(Long id, SysCodeDTO sysCodeDTO){
-
-        SysCode sysCode = sysCodeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id="+id));
-
-        sysCode.update(sysCode.getCode(), sysCodeDTO.getUpperCode(), sysCodeDTO.getCodeNm(), sysCodeDTO.getCodeDc(), sysCodeDTO.getUseAt(), sysCodeDTO.getLv(), sysCodeDTO.getRmDc(), sysCodeDTO.getSortNo());
-
-        return id;
+    public SysCode updateById(Long id, SysCodeDTO sysCodeDTO){
+        SysCode sysCode = sysCodeRepository.findById(id).orElseThrow(() -> new RestApiException(StatusCode.BAD_REQUEST, "해당 code id가 없습니다."));
+        sysCode.update(sysCodeDTO.getCode(), sysCodeDTO.getUpperCode(), sysCodeDTO.getCodeNm(), sysCodeDTO.getCodeDc(), sysCodeDTO.getUseAt(), sysCodeDTO.getLv(), sysCodeDTO.getRmDc(), sysCodeDTO.getSortNo());
+        return sysCode;
     }
 }
