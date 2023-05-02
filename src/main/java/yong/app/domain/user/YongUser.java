@@ -2,6 +2,7 @@ package yong.app.domain.user;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import yong.app.global.base.BaseTimeEntity;
@@ -49,5 +50,13 @@ public class YongUser extends BaseTimeEntity {
 
     public void addRole(Role role) {
         this.roles.add(role);
+    }
+
+    @Builder
+    public YongUser(Long uid, String username, String password, Set<Role> roles) {
+        this.uid = uid;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
     }
 }
