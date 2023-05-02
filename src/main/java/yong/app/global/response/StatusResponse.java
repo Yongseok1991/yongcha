@@ -2,6 +2,7 @@ package yong.app.global.response;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import yong.app.global.response.StatusCode;
 
@@ -46,12 +47,12 @@ public class StatusResponse {
         this.moreMessage = statusCode.getMoreMessage();
     }
 
-    // FOR 200 STATUS
-    public StatusResponse(Integer statusCode, String statusName, String message, Object moreMessae){
-        this.statusCode = statusCode;
-        this.statusName = statusName;
-        this.message = message;
-        this.moreMessage = moreMessae;
+    // for 200 response
+    public StatusResponse(StatusCode statusCode, Object moreMessage){
+        this.statusCode = statusCode.getHttpStatus().value();
+        this.statusName = statusCode.getHttpStatus().name();
+        this.message = statusCode.getMessage();
+        this.moreMessage = moreMessage;
     }
 
     public void addError(String objectName, String field, String message) {

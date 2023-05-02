@@ -37,18 +37,18 @@ public class SysCodeRestController {
 
     @Operation(summary = "show SysCode list", description = "SysCode list를 보여줍니다.")   // ** api 동작에 대한 명세를 적는 어노테이션
     @ApiDocumentResponse
-    @GetMapping("/sysCodes")
+    @GetMapping("/sysCodes")// sys-codes
     @Transactional(readOnly = true)
     public ResponseEntity index() {
         List<SysCode> list = sysCodeRepository.findAll();
 
         if(list.size() == 0){
-            throw new RestApiException(StatusCode.BAD_REQUEST, "there is no list");
+            throw new RestApiException(StatusCode.NO_CONTENT, "there is no list");
         }
 
         return ResponseEntity
                 .status(StatusCode.SUCCESS.getHttpStatus().value())
-                .body(new StatusResponse(StatusCode.SUCCESS.getHttpStatus().value(), StatusCode.SUCCESS.name(), StatusCode.SUCCESS.getMessage(), list));
+                .body(new StatusResponse(StatusCode.SUCCESS, list));
     }
 
     @Operation(summary = "show SysCode view", description = "SysCode의 특정 id에 대한 view를 보여줍니다.")
@@ -65,7 +65,7 @@ public class SysCodeRestController {
         Optional<SysCode> sysCode = sysCodeRepository.findById(id);
         return ResponseEntity
                 .status(StatusCode.SUCCESS.getHttpStatus().value())
-                .body(new StatusResponse(StatusCode.SUCCESS.getHttpStatus().value(), StatusCode.SUCCESS.name(), StatusCode.SUCCESS.getMessage(), sysCode.get()));
+                .body(new StatusResponse(StatusCode.SUCCESS, sysCode.get()));
     }
 
     @Operation(summary = "update SysCode", description = "SysCode의 id를 통해 특정 code를 update합니다.")   // ** api 동작에 대한 명세를 적는 어노테이션
@@ -75,7 +75,7 @@ public class SysCodeRestController {
         SysCode sysCode = sysCodeService.updateById(id, sysCodeDTO);
         return ResponseEntity
                 .status(StatusCode.SUCCESS.getHttpStatus().value())
-                .body(new StatusResponse(StatusCode.SUCCESS.getHttpStatus().value(), StatusCode.SUCCESS.name(), StatusCode.SUCCESS.getMessage(), sysCode));
+                .body(new StatusResponse(StatusCode.SUCCESS, sysCode));
     }
 
 
@@ -92,17 +92,16 @@ public class SysCodeRestController {
         sysCodeRepository.deleteById(id);
         return ResponseEntity
                 .status(StatusCode.SUCCESS.getHttpStatus().value())
-                .body(new StatusResponse(StatusCode.SUCCESS.getHttpStatus().value(), StatusCode.SUCCESS.name(), StatusCode.SUCCESS.getMessage(), "delete success"));
+                .body(new StatusResponse(StatusCode.SUCCESS, "delete success"));
     }
 
     @Operation(summary = "insert SysCode", description = "SysCode에 데이터를 insert합니다.")
     @ApiDocumentResponse
     @PostMapping("/sysCodes")
     public ResponseEntity insert(@RequestBody @Valid SysCodeDTO sysCodeDTO){
-        log.info("sysDto : {} " , sysCodeDTO);
         SysCode sysCode = sysCodeService.save(sysCodeDTO);
         return ResponseEntity
                 .status(StatusCode.SUCCESS.getHttpStatus().value())
-                .body(new StatusResponse(StatusCode.SUCCESS.getHttpStatus().value(), StatusCode.SUCCESS.name(), StatusCode.SUCCESS.getMessage(), sysCode));
+                .body(new StatusResponse(StatusCode.SUCCESS, sysCode));
     }
 }

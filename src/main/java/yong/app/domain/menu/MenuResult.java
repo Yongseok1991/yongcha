@@ -31,7 +31,11 @@ public class MenuResult {
                 menu.getId(),
                 menu.getName(),
                 menu.getDepth(),
-                menu.getChildren().stream().map(MenuResult::of).collect(Collectors.toList())
+                menu.getChildren().stream().map(MenuResult::of).collect(Collectors.toList())      // TODO : 분석
         );
+    }
+
+    public Boolean hasChildren(){
+         return !this.children.isEmpty();
     }
 }

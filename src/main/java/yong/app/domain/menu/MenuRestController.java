@@ -38,12 +38,12 @@ public class MenuRestController {
         List<MenuResult> menus = menuService.getMenuList();
 
         if(menus == null){
-            throw new RestApiException(StatusCode.BAD_REQUEST, "there is no list");
+            throw new RestApiException(StatusCode.NO_CONTENT, "there is no list");
         }
 
         return ResponseEntity
                 .status(StatusCode.SUCCESS.getHttpStatus().value())
-                .body(new StatusResponse(StatusCode.SUCCESS.getHttpStatus().value(), StatusCode.SUCCESS.name(), StatusCode.SUCCESS.getMessage(), menus));
+                .body(new StatusResponse(StatusCode.SUCCESS, menus));
     }
 
     @Operation(summary = "insert menu list", description = "insert menu list")
@@ -52,8 +52,8 @@ public class MenuRestController {
     public ResponseEntity insert(@RequestBody @Valid MenuDTO menuDTO){
         menuService.save(menuDTO);
         return ResponseEntity
-                .status(StatusCode.SUCCESS.getHttpStatus().value())
-                .body(new StatusResponse(StatusCode.SUCCESS.getHttpStatus().value(), StatusCode.SUCCESS.name(), StatusCode.SUCCESS.getMessage(), menuDTO));
+                .status(StatusCode.CREATED.getHttpStatus().value())
+                .body(new StatusResponse(StatusCode.CREATED, menuDTO));
     }
 
     @Operation(summary = "view menu by id", description = "view menu by id")
@@ -64,13 +64,13 @@ public class MenuRestController {
         Optional<Menu> optional = menuRepository.findById(id);
 
         if(!optional.isPresent()) {
-            optional.orElseThrow(() -> new RestApiException(StatusCode.BAD_REQUEST, "GetMapping Error"));
+            optional.orElseThrow(() -> new RestApiException(StatusCode.NO_CONTENT, "GetMapping Error"));
         }
 
         List<MenuResult> menus = menuService.getMenuListById(id);
         return ResponseEntity
                 .status(StatusCode.SUCCESS.getHttpStatus().value())
-                .body(new StatusResponse(StatusCode.SUCCESS.getHttpStatus().value(), StatusCode.SUCCESS.name(), StatusCode.SUCCESS.getMessage(), menus));
+                .body(new StatusResponse(StatusCode.SUCCESS, menus));
     }
 
 
@@ -82,10 +82,8 @@ public class MenuRestController {
 
         return ResponseEntity
                 .status(StatusCode.SUCCESS.getHttpStatus().value())
-                .body(new StatusResponse(StatusCode.SUCCESS.getHttpStatus().value(), StatusCode.SUCCESS.name(), StatusCode.SUCCESS.getMessage(), menus));
+                .body(new StatusResponse(StatusCode.SUCCESS, menus));
 
     }
-
-
 }
 

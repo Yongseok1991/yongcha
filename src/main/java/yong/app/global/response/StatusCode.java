@@ -20,6 +20,16 @@ public enum StatusCode {
     SUCCESS(HttpStatus.OK, "Success.", ""),
 
     /*
+    * 201 : CREATED
+    * */
+    CREATED(HttpStatus.CREATED, "Created", ""),
+
+    /*
+     * No content : 204
+     */
+    NO_CONTENT(HttpStatus.NO_CONTENT, "No Content", ""),
+
+    /*
      * 400 BAD_REQUEST: 잘못된 요청
      */
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "Invalid request.", ""),
