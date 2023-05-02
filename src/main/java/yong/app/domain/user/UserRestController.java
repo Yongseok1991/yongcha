@@ -1,4 +1,4 @@
-package yong.app.visa.user;
+package yong.app.domain.user;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import yong.app.domain.role.Role;
 import yong.app.domain.role.RoleRepository;
+import yong.app.domain.user.EnumAuthorUserInfo;
 import yong.app.domain.user.YongUser;
 import yong.app.domain.user.YongUserRepository;;
 
@@ -39,9 +40,10 @@ import java.util.Arrays;
 @RestController
 @RequiredArgsConstructor
 public class UserRestController {
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private final YongUserRepository yongUserRepository;
     private final RoleRepository roleRepository;
+    private final YongUserService yongUserService;
 
     @Operation(summary = "show admin page", description = "admin page를 보여줍니다.")   // ** api 동작에 대한 명세를 적는 어노테이션
     // ** HTTP 상태 코드에 대해 반환 정보 설정
@@ -70,13 +72,7 @@ public class UserRestController {
     }
 
     @PostMapping("/joinProc")
-    public ResponseEntity joinProc(@Valid YongUser user) {
-        String rawPassword = user.getPassword();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        user.setPassword(encPassword);
-        Role roleUser = roleRepository.findByRoleName("ROLE_ADMIN");
-        user.addRole(roleUser);
-//        user.setRoles(new ArrayList<>(Arrays.asList(role)));
-        return ResponseEntity.ok(yongUserRepository.save(user));
+    public ResponseEntity joinProc(@Valid YongUserDTO user) {
+        return ResponseEntity.ok(yongUserService.joinProc(EnumAuthorUserInfo.ROLE_USER, user));
     }
 }

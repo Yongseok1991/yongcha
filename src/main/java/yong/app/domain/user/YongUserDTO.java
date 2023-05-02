@@ -23,31 +23,14 @@ import java.util.Set;
  *         @Schema 추가 속성들 : nullable / defaultValue / example / maxLength / allowValues ...
 **/
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Schema(description = "YongUser 엔티티")                             // ** entity에 대한 설명
-public class YongUser extends BaseTimeEntity {
+public class YongUserDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(name = "유저 uid", description = "유저의 uid를 보여주는 필드")      // ** 필드에 대한 설명
     private Long uid;
-
-    @NotBlank
-    @Schema(name = "유저 name", description = "유저의 name을 보여주는 필드")
     private String username;
-
-    @NotBlank
-    @Schema(name = "유저 password", description = "유저의 password를 보여주는 필드")
     private String password;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @Schema(name = "유저 role", description = "유저의 role (YongUser와 M:M 관계)")
     private Set<Role> roles = new HashSet<>();
 
     public void addRole(Role role) {
@@ -55,10 +38,20 @@ public class YongUser extends BaseTimeEntity {
     }
 
     @Builder
-    public YongUser(Long uid, String username, String password, Set<Role> roles) {
-        this.uid = uid;
+    public YongUserDTO(String username, String password, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.roles = roles;
     }
+
+    public YongUser toEntity(YongUserDTO dto) {
+        YongUser yongUser = YongUser
+                .builder()
+                .username(dto.getUsername())
+                .password(dto.getPassword())
+                .roles(dto.getRoles())
+                .build();
+        return yongUser;
+    }
+
 }
