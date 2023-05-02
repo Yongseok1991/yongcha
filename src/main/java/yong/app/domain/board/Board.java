@@ -4,7 +4,7 @@ package yong.app.domain.board;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import yong.app.global.base.BaseEntity;
+import yong.app.global.base.BaseTimeEntity;
 import yong.app.domain.user.YongUser;
 
 import javax.persistence.*;
@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Board extends BaseEntity {
+public class Board extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

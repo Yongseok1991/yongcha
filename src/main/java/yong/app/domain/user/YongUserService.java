@@ -5,6 +5,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import yong.app.domain.role.RoleRepository;
 
+
+
+/**
+* @fileName YongUserService
+* @author yongseok
+* @version 1.0.0
+* @date 2023-05-02
+* @summary service레이어
+**/
+
 @Service
 @RequiredArgsConstructor
 public class YongUserService {

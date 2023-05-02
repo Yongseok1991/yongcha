@@ -7,6 +7,15 @@ import yong.app.domain.role.Role;
 import yong.app.domain.role.RoleRepository;
 
 
+/**
+* @fileName EnumAuthorUserInfo
+* @author yongseok
+* @version 1.0.0
+* @date 2023-05-02
+* @summary 유저 권한 별 처리를 위한 enum 클래스 AuthorInjection 보조클래스 참고
+**/
+
+
 public enum EnumAuthorUserInfo {
 
     ROLE_USER("ROLE_USER"),

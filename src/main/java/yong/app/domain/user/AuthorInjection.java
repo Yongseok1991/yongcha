@@ -1,13 +1,19 @@
 package yong.app.domain.user;
 
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import yong.app.domain.role.RoleRepository;
 
 import javax.annotation.PostConstruct;
+
+/**
+* @fileName AuthorInjection
+* @author yongseok
+* @version 1.0.0
+* @date 2023-05-02
+* @summary EnumAuthorUserInfo 서브 클래스 enum에 의존성 주입을 위한 클래스(RoleRepository)
+**/
 
 @Component
 public class AuthorInjection {
