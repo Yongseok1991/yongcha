@@ -1,6 +1,7 @@
 package yong.app.global.base;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,11 +17,16 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @Setter
 public abstract class BaseTimeEntity {
+
     @CreatedDate // 엔티티가 생성되어 저장될 떄 시간을 자동으로 저장
     @Column(updatable = false) // 업데이트 불가
+    @Schema(name = "생성 날짜+시간", description = "생성 날짜+시간" , hidden = true)
     private String createdTime;
+
     @LastModifiedDate
+    @Schema(name = "수정 날짜+시간", description = "수정 날짜+시간" , hidden = true)
     private String modifiedTime;
+
     @PrePersist
     public void onPrePersist(){
         this.createdTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
