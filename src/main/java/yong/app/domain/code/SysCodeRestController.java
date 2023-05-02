@@ -99,6 +99,7 @@ public class SysCodeRestController {
     @ApiDocumentResponse
     @PostMapping("/sysCodes")
     public ResponseEntity insert(@RequestBody @Valid SysCodeDTO sysCodeDTO){
+        log.info("sysDto : {} " , sysCodeDTO);
         SysCode sysCode = sysCodeService.save(sysCodeDTO);
         return ResponseEntity
                 .status(StatusCode.SUCCESS.getHttpStatus().value())

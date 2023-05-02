@@ -26,7 +26,7 @@ public class Menu extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(name = "메뉴 id", description = "메뉴 id", hidden = true)
+    @Schema(name = "메뉴 id", description = "메뉴 id")
     private Long id;
 
     @Schema(name = "메뉴 이름", description = "메뉴 이름")
@@ -40,7 +40,7 @@ public class Menu extends BaseTimeEntity {
     @Schema(name = "깊이", description = "메뉴 깊이")
     private Long depth;
 
-    @Schema(name = "부모메뉴", description = "부모 메뉴", hidden = true)
+    @Schema(name = "하위 메뉴", description = "하위 메뉴")
     @OneToMany(mappedBy = "parent")
     private List<Menu> children = new ArrayList<>();
 

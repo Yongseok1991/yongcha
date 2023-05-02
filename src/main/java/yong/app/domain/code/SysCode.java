@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @NoArgsConstructor
-public class SysCode extends BaseTimeEntity {
+public class SysCode extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

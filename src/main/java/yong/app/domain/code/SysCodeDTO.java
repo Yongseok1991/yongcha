@@ -1,10 +1,8 @@
 package yong.app.domain.code;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -19,6 +17,7 @@ import javax.validation.constraints.NotNull;
  *          toEntityForInsert : sysCode insert
 **/
 
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor
@@ -56,6 +55,8 @@ public class SysCodeDTO  {
     @Schema(name = "sortNo", description = "sysCode의 정렬 번호", defaultValue = "1")
     private Long sortNo;      //정렬순서번호
 
+    private Long regId;
+    private Long updtId;
 
     public SysCode toEntityForInsert(String code, String upperCode, String codeNm, String codeDc, String useAt, Long lv, String rmDc, Long sortNo) {
         return SysCode.SysCodeBuilderInsert()

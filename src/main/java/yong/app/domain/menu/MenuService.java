@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  **/
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor    // final, @NonNull인 필드 값만 파라미터로 받는 생성자 생성
 public class MenuService {
 
     private final MenuRepository menuRepository;

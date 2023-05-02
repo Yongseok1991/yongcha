@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
  **/
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor // 모든 필드 값을 받는 생성자 생성
+@NoArgsConstructor  // 파라미터가 없는 기본 생성자 생성
 public class MenuResult {
 
     private Long id;

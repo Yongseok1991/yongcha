@@ -21,9 +21,12 @@ public class BaseEntity extends BaseTimeEntity {
 
     @CreatedBy
     @Column(updatable = false)
+    @Schema(name = "작성자", description = "작성자" , hidden = true)
     private Long regId;
 
     @LastModifiedBy
+    @Schema(name = "수정자", description = "수정자" , hidden = true)
     private Long updtId;
+
 
 }

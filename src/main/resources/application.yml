@@ -13,6 +13,25 @@ spring:
     basename: messages
     encoding: UTF-8
 
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: b7278908523316715ac66b7434151c8e
+            redirect-uri: http://localhost:9000/login/oauth2/code/{registrationId}
+            client-authentication-method: POST
+            authorization-grant-type: authorization_code
+            scope: profile_nickname, account_email #동의 항목
+            client-name: Kakao
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
   data:
     web:
       pageable:

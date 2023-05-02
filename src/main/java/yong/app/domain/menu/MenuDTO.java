@@ -19,12 +19,10 @@ import java.util.List;
  *            - parentId : child일 경우, 해당 parent Id값
  **/
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 public class MenuDTO {
-
 
     @Schema(name = "id", description = "메뉴 id", hidden = true)
     private Long id;

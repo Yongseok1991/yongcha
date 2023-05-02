@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import yong.app.global.interceptor.LoggingInterceptor;
 
 
-
 /**
 * @fileName WebConfig
 * @author yongseok
@@ -25,6 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
     public LoggingInterceptor loggingInterceptor() {
         return new LoggingInterceptor();
     }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggingInterceptor())

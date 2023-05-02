@@ -30,6 +30,7 @@ public class SysCodeService {
     public SysCode updateById(Long id, SysCodeDTO sysCodeDTO){
         SysCode sysCode = sysCodeRepository.findById(id).orElseThrow(() -> new RestApiException(StatusCode.BAD_REQUEST, "해당 code id가 없습니다."));
         sysCode.update(sysCodeDTO.getCode(), sysCodeDTO.getUpperCode(), sysCodeDTO.getCodeNm(), sysCodeDTO.getCodeDc(), sysCodeDTO.getUseAt(), sysCodeDTO.getLv(), sysCodeDTO.getRmDc(), sysCodeDTO.getSortNo());
+        // dirty checking
         return sysCode;
     }
 }
