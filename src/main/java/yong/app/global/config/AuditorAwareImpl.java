@@ -19,7 +19,6 @@ import java.util.Optional;
 **/
 @Slf4j
 public class AuditorAwareImpl implements AuditorAware<Long> {
-
     @Override
     public Optional<Long> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -35,7 +34,7 @@ public class AuditorAwareImpl implements AuditorAware<Long> {
             return Optional.ofNullable(updtId);             // ofNullable : return null
 
         } else {
-            throw new NullPointerException("regId is not binding");
+            return null;
             // TODO : redirect to login page.... (move Back/to login page)
         }
     }

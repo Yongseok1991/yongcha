@@ -3,7 +3,8 @@ package yong.app.domain.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import yong.app.domain.role.RoleRepository;
+import yong.app.domain.role.YongRoleRepository;
+import yong.app.domain.role.YongRoleService;
 
 import javax.annotation.PostConstruct;
 
@@ -19,13 +20,13 @@ import javax.annotation.PostConstruct;
 public class AuthorInjection {
 
     @Autowired
-    private RoleRepository roleRepository;
+    private YongRoleService yongRoleService;
 
     private YongAuthor authorUserInfo;
     @PostConstruct
     public void init() {
         authorUserInfo = YongAuthor.INSTANCE;
-        authorUserInfo.setMyService(roleRepository);
+        authorUserInfo.setMyService(yongRoleService);
     }
 
     public YongAuthor getInstance() {

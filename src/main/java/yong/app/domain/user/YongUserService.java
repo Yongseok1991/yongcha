@@ -1,34 +1,11 @@
 package yong.app.domain.user;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import yong.app.domain.role.RoleRepository;
+import java.util.List;
+import java.util.UUID;
 
-
-
-/**
-* @fileName YongUserService
-* @author yongseok
-* @version 1.0.0
-* @date 2023-05-02
-* @summary service레이어
-**/
-
-@Service
-@RequiredArgsConstructor
-public class YongUserService {
-
-    private final RoleRepository roleRepository;
-    private final YongUserRepository yongUserRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public YongUser joinProc(YongAuthor authorEnum, YongUserDTO bean) {
-
-        String rawPassword = bean.getPassword();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        bean.setPassword(encPassword);
-        return yongUserRepository.save(authorEnum.getUser(bean).toEntity(bean));
-    }
-
+public interface YongUserService {
+    YongUser joinProc(YongAuthor authorEnum, YongUserDTO bean);
+    YongUser oAuthJoinProc(YongAuthor authorEnum, YongUserDTO bean);
+    YongUser findByUsername(String username);
+    List<YongUser> findAll();
 }

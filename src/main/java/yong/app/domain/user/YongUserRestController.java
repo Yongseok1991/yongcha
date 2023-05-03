@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import yong.app.domain.role.RoleRepository;
 import yong.app.global.auth.PrincipalDetails;
-;
 
 import javax.validation.Valid;
+
+;
 
 /**
  * @fileName UserRestController
@@ -38,9 +38,6 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 public class YongUserRestController {
-
-    private final YongUserRepository yongUserRepository;
-    private final RoleRepository roleRepository;
     private final YongUserService yongUserService;
 
     @Operation(summary = "show admin page", description = "admin page를 보여줍니다.")   // ** api 동작에 대한 명세를 적는 어노테이션
@@ -58,9 +55,7 @@ public class YongUserRestController {
     })
     @GetMapping("/admin")
     public ResponseEntity admin() {
-
-//        YongUser yongUser = yongUserRepository.findAll();
-        return ResponseEntity.ok(yongUserRepository.findAll());
+        return ResponseEntity.ok(yongUserService.findAll());
     }
 
     //@PostAuthorize("hasRole('ROLE_MANAGER')")

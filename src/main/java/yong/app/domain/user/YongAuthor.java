@@ -1,6 +1,6 @@
 package yong.app.domain.user;
 
-import yong.app.domain.role.RoleRepository;
+import yong.app.domain.role.YongRoleService;
 
 
 /**
@@ -18,20 +18,20 @@ public enum YongAuthor {
     ROLE_ADMIN("ROLE_ADMIN"),
     ROLE_MANAGER("ROLE_MANAGER"),
     INSTANCE("INSTANCE");
-    private RoleRepository roleRepository;
+    private YongRoleService yongRoleService;
     public final String config;
 
-    public void setMyService(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
+    public void setMyService(YongRoleService yongRoleService) {
+        this.yongRoleService = yongRoleService;
     }
     private YongAuthor(String config) {
         this.config = config;
     }
     public YongUserDTO getUser(YongUserDTO yongUser) {
         switch (config) {
-            case "ROLE_ADMIN": yongUser.addRole(INSTANCE.roleRepository.findByRoleName("ROLE_ADMIN")); break;
-            case "ROLE_USER": yongUser.addRole(INSTANCE.roleRepository.findByRoleName("ROLE_USER")); break;
-            case "ROLE_MANAGER": yongUser.addRole(INSTANCE.roleRepository.findByRoleName("ROLE_MANAGER"));
+            case "ROLE_ADMIN": yongUser.addRole(INSTANCE.yongRoleService.findByRoleName("ROLE_ADMIN")); break;
+            case "ROLE_USER": yongUser.addRole(INSTANCE.yongRoleService.findByRoleName("ROLE_USER")); break;
+            case "ROLE_MANAGER": yongUser.addRole(INSTANCE.yongRoleService.findByRoleName("ROLE_MANAGER"));
         }
         return yongUser;
     }

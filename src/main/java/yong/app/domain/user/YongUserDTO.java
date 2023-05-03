@@ -32,15 +32,17 @@ public class YongUserDTO {
     private String username;
     private String password;
     private Set<Role> roles = new HashSet<>();
+    private String email;
 
     public void addRole(Role role) {
         this.roles.add(role);
     }
 
     @Builder
-    public YongUserDTO(String username, String password, Set<Role> roles) {
+    public YongUserDTO(String username, String password, String email,Set<Role> roles) {
         this.username = username;
         this.password = password;
+        this.email = email;
         this.roles = roles;
     }
 
@@ -49,6 +51,7 @@ public class YongUserDTO {
                 .builder()
                 .username(dto.getUsername())
                 .password(dto.getPassword())
+                .email(dto.getEmail())
                 .roles(dto.getRoles())
                 .build();
         return yongUser;
