@@ -19,7 +19,7 @@ import javax.annotation.PostConstruct;
 public class AuthorInjection {
 
     @Autowired
-    private  RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     private EnumAuthorUserInfo authorUserInfo;
     @PostConstruct
