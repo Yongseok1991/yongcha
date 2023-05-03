@@ -57,7 +57,7 @@ public class MenuService {
 
         // 해당 ID가 있는지 여부 check
         if(!menu.isPresent()){
-            menu.orElseThrow(() -> new RestApiException(StatusCode.BAD_REQUEST, "PutMapping Error"));
+            menu.orElseThrow(() -> new RestApiException(StatusCode.NO_CONTENT, "PutMapping Error"));
         }else{
             
             Optional<Menu> parent = menuRepository.findById(menuDTO.getParentId());

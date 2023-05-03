@@ -4,6 +4,7 @@ package yong.app.domain.user;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import yong.app.global.base.BaseTimeEntity;
 import yong.app.domain.role.Role;
@@ -26,6 +27,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Schema(description = "YongUser 엔티티")                             // ** entity에 대한 설명
+@NoArgsConstructor
 public class YongUser extends BaseTimeEntity {
 
     @Id

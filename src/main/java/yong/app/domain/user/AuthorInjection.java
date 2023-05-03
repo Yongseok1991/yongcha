@@ -21,14 +21,14 @@ public class AuthorInjection {
     @Autowired
     private RoleRepository roleRepository;
 
-    private EnumAuthorUserInfo authorUserInfo;
+    private YongAuthor authorUserInfo;
     @PostConstruct
     public void init() {
-        authorUserInfo = EnumAuthorUserInfo.INSTANCE;
+        authorUserInfo = YongAuthor.INSTANCE;
         authorUserInfo.setMyService(roleRepository);
     }
 
-    public EnumAuthorUserInfo getInstance() {
+    public YongAuthor getInstance() {
         return authorUserInfo;
     }
 }

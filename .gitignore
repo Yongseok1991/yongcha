@@ -13,7 +13,12 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
+.idea/**
+.gradle/**
+build/**
+out/**
+logs/**
+gradle/**
 *.iws
 *.iml
 *.ipr

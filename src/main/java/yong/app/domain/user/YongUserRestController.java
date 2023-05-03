@@ -9,22 +9,19 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import yong.app.domain.role.Role;
 import yong.app.domain.role.RoleRepository;
-import yong.app.domain.user.EnumAuthorUserInfo;
-import yong.app.domain.user.YongUser;
-import yong.app.domain.user.YongUserRepository;;
+import yong.app.global.auth.PrincipalDetails;
+;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * @fileName UserRestController
@@ -35,11 +32,12 @@ import java.util.Arrays;
  *         ApiResponse : Error에 대해 ResponseBody 반환 설정 필요 있을 듯.
  **/
 
+@Slf4j
 @Tag(name="유저 컨트롤러", description="유저 컨트롤러 관련 api입니다.")              // ** 같은 Tag name에 대해서는 같은 api 그룹으로 인식
 @RequestMapping("/api")
 @RestController
 @RequiredArgsConstructor
-public class UserRestController {
+public class YongUserRestController {
 
     private final YongUserRepository yongUserRepository;
     private final RoleRepository roleRepository;
@@ -75,6 +73,15 @@ public class UserRestController {
 
     @PostMapping("/joinProc")
     public ResponseEntity joinProc(@Valid YongUserDTO user) {
-        return ResponseEntity.ok(yongUserService.joinProc(EnumAuthorUserInfo.ROLE_USER, user));
+        return ResponseEntity.ok(yongUserService.joinProc(YongAuthor.ROLE_USER, user));
+    }
+
+    @GetMapping("/tests")
+    public ResponseEntity tests(@AuthenticationPrincipal PrincipalDetails principalDetails){
+
+        log.info("{} -> ", principalDetails.getUser());
+        log.info("{} -> ", principalDetails.getAttributes());
+
+        return null;
     }
 }

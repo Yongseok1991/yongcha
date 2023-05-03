@@ -28,7 +28,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggingInterceptor())
-                .addPathPatterns("/**");
+                .addPathPatterns("/**")
+                .excludePathPatterns("/app-assets/**", "/assets/**");
     }
 
     @Override
@@ -40,6 +41,7 @@ public class WebConfig implements WebMvcConfigurer {
     private void userController(ViewControllerRegistry registry) {
         registry.addViewController("/users").setViewName("user/index");
         registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/home").setViewName("app/home/home");
     }
 
     /* redirect 필요 시

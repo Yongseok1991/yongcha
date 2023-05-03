@@ -23,7 +23,7 @@ public class YongUserService {
     private final YongUserRepository yongUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public YongUser joinProc(EnumAuthorUserInfo authorEnum, YongUserDTO bean) {
+    public YongUser joinProc(YongAuthor authorEnum, YongUserDTO bean) {
 
         String rawPassword = bean.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
