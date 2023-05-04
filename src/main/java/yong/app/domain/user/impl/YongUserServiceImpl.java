@@ -27,7 +27,6 @@ public class YongUserServiceImpl implements YongUserService {
 
     private final YongUserRepository yongUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final YongRoleService yongRoleService;
 
     public YongUser joinProc(YongAuthor authorEnum, YongUserDTO bean) {
 
@@ -51,5 +50,11 @@ public class YongUserServiceImpl implements YongUserService {
     public List<YongUser> findAll() {
         return yongUserRepository.findAll();
     }
+
+    @Override
+    public Boolean checkUsernameDuplicate(String username) {
+        return yongUserRepository.existsByUsername(username);
+    }
+
 
 }
