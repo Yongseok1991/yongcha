@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 // 주석 하나
+// 주석 둘
 @Entity
 @Table(name="app_role")
 @Getter
