@@ -19,20 +19,23 @@ import java.util.Optional;
 **/
 @Slf4j
 public class AuditorAwareImpl implements AuditorAware<Long> {
-
     @Override
     public Optional<Long> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long regId = null;
-        Long updtId = null;
+        /*
+        *       TODO
+        *         regId, updtID가 ... 사용하는 곳만 바인딩하기 (보류)
+         */
         if(authentication != null && !"anonymousUser".equals(authentication.getPrincipal())) {
+
             PrincipalDetails details = (PrincipalDetails) authentication.getPrincipal();
-            regId = details.getUser().getUid();
-            updtId = details.getUser().getUid();
+            Long regId = details.getUser().getUid();
+            Long updtId = details.getUser().getUid();
+            return Optional.ofNullable(updtId);             // ofNullable : return null
+
         } else {
-            throw new NullPointerException("regId is not binding");
+            return null;
+            // TODO : redirect to login page.... (move Back/to login page)
         }
-        log.info("username : {} " , regId);
-        return Optional.of(updtId);
     }
 }

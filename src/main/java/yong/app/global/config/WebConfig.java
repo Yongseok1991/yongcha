@@ -2,6 +2,7 @@ package yong.app.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -18,8 +19,10 @@ import yong.app.global.interceptor.LoggingInterceptor;
 **/
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
-
+    @Bean // IoC가 된다.
+    public BCryptPasswordEncoder encodePWD() {
+        return new BCryptPasswordEncoder();
+    }
     @Bean
     public LoggingInterceptor loggingInterceptor() {
         return new LoggingInterceptor();
@@ -28,7 +31,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggingInterceptor())
-                .addPathPatterns("/**");
+                .addPathPatterns("/**")
+                .excludePathPatterns("/app-assets/**", "/assets/**");
     }
 
     @Override
@@ -40,6 +44,7 @@ public class WebConfig implements WebMvcConfigurer {
     private void userController(ViewControllerRegistry registry) {
         registry.addViewController("/users").setViewName("user/index");
         registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/home").setViewName("app/home/home");
     }
 
     /* redirect 필요 시

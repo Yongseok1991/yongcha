@@ -14,7 +14,7 @@ public class SwaggerConfig {
                 .contact(new Contact()
                         .name("yongcha")
                         .email("yongcha@gmail.com")
-                        .url("https://localhost:90000"))
+                        .url("https://localhost:9000"))
                 .version("v1.0")
                 .title("영차 서비스 API")
                 .description("영차 서비스 API");

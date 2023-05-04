@@ -2,7 +2,9 @@ package yong.app.domain.user;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import yong.app.global.base.BaseTimeEntity;
 import yong.app.domain.role.Role;
@@ -25,6 +27,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Schema(description = "YongUser 엔티티")                             // ** entity에 대한 설명
+@NoArgsConstructor
 public class YongUser extends BaseTimeEntity {
 
     @Id
@@ -37,6 +40,9 @@ public class YongUser extends BaseTimeEntity {
     private String username;
 
     @NotBlank
+    @Schema(name = "유저 email", description = "유저의 email을 보여주는 필드")
+    private String email;
+    @NotBlank
     @Schema(name = "유저 password", description = "유저의 password를 보여주는 필드")
     private String password;
 
@@ -47,7 +53,12 @@ public class YongUser extends BaseTimeEntity {
     @Schema(name = "유저 role", description = "유저의 role (YongUser와 M:M 관계)")
     private Set<Role> roles = new HashSet<>();
 
-    public void addRole(Role role) {
-        this.roles.add(role);
+    @Builder
+    public YongUser(Long uid, String username, String password, String email, Set<Role> roles) {
+        this.uid = uid;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+        this.email = email;
     }
 }

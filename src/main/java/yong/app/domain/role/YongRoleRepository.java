@@ -2,6 +2,6 @@ package yong.app.domain.role;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface YongRoleRepository extends JpaRepository<Role, Long> {
      Role findByRoleName(String roleName);
 }

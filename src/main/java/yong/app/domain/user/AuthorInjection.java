@@ -3,6 +3,7 @@ package yong.app.domain.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import yong.app.domain.role.YongRoleRepository;
 import yong.app.domain.role.YongRoleService;
 
 import javax.annotation.PostConstruct;

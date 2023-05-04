@@ -10,7 +10,7 @@ import java.util.List;
 public interface MenuRepository extends JpaRepository<Menu, Long> {
 
     List<Menu> findAllByParentIsNotNull();
-    List<Menu> findAllByParentIsNullOrderById();
+    List<Menu> findAllByParentIsNullOrderById();        // TODO : 권한별로 .....
 }
 
 
