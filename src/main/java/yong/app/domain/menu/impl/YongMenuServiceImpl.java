@@ -1,7 +1,8 @@
-package yong.app.domain.menu;
+package yong.app.domain.menu.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import yong.app.domain.menu.*;
 import yong.app.global.response.RestApiException;
 import yong.app.global.response.StatusCode;
 
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor    // final, @NonNull인 필드 값만 파라미터로 받는 생성자 생성
-public class MenuService {
+public class YongMenuServiceImpl implements YongMenuService {
 
     private final MenuRepository menuRepository;
 

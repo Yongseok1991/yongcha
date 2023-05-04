@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import yong.app.domain.code.impl.SysCodeServiceImpl;
+import yong.app.domain.menu.YongMenuService;
 import yong.app.global.response.ApiDocumentResponse;
 import yong.app.global.response.StatusCode;
 import yong.app.global.response.RestApiException;
@@ -34,6 +36,7 @@ import java.util.Optional;
 public class SysCodeRestController {
     private final SysCodeRepository sysCodeRepository;
     private final SysCodeService sysCodeService;
+
 
     @Operation(summary = "show SysCode list", description = "SysCode list를 보여줍니다.")   // ** api 동작에 대한 명세를 적는 어노테이션
     @ApiDocumentResponse

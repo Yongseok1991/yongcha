@@ -15,6 +15,9 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import yong.app.global.auth.PrincipalDetails;
+import yong.app.global.response.ApiDocumentResponse;
+import yong.app.global.response.StatusCode;
+import yong.app.global.response.StatusResponse;
 
 import javax.validation.Valid;
 
@@ -39,11 +42,7 @@ public class YongUserRestController {
 
     @Operation(summary = "show admin page", description = "admin page를 보여줍니다.")   // ** api 동작에 대한 명세를 적는 어노테이션
     // ** HTTP 상태 코드에 대해 반환 정보 설정
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = YongUser.class))),       // YongUser class가 ResponseBody에 반환
-            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(schema = @Schema(implementation = Error.class))),       // Error class가 ResponseBody에 반환 (후에 커스터마이징을 통해 error 반환 바꾸기)
-            @ApiResponse(responseCode = "404", description = "NOT FOUND", content = @Content)
-    })
+    @ApiDocumentResponse
     // ** parameters
     @Parameters({
             @Parameter(name = "uid", description = "유저의 uid", required = true),
@@ -64,11 +63,14 @@ public class YongUserRestController {
     }
 
     @PostMapping("/joinProc")
-    public ResponseEntity joinProc(@Valid YongUserDTO user) {
+    @ApiDocumentResponse
+    public ResponseEntity joinProc(@Valid @RequestBody YongUserDTO user) {
+        log.info("user : {}", user);
         return ResponseEntity.ok(yongUserService.joinProc(YongAuthor.ROLE_USER, user));
     }
 
     @GetMapping("/tests")
+    @ApiDocumentResponse
     public ResponseEntity tests(@AuthenticationPrincipal PrincipalDetails principalDetails){
 
         log.info("{} -> ", principalDetails.getUser());
@@ -78,8 +80,12 @@ public class YongUserRestController {
     }
 
     @GetMapping("/users/{username}/exists")
+    @ApiDocumentResponse
     public ResponseEntity checkUsernameDuplicate(@PathVariable String username) {
-        return ResponseEntity.ok(yongUserService.checkUsernameDuplicate(username));
+        Boolean bool = yongUserService.checkUsernameDuplicate(username);
+        return ResponseEntity
+                .status(StatusCode.SUCCESS.getHttpStatus().value())
+                .body(new StatusResponse(StatusCode.SUCCESS, bool));
     }
 
 }

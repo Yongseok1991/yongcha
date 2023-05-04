@@ -22,14 +22,14 @@ public class AuthorInjection {
     @Autowired
     private YongRoleService yongRoleService;
 
-    private YongAuthor authorUserInfo;
+    private YongAuthor yongAuthor;
     @PostConstruct
     public void init() {
-        authorUserInfo = YongAuthor.INSTANCE;
-        authorUserInfo.setMyService(yongRoleService);
+        yongAuthor = YongAuthor.INSTANCE;
+        yongAuthor.setMyService(yongRoleService);
     }
 
     public YongAuthor getInstance() {
-        return authorUserInfo;
+        return yongAuthor;
     }
 }

@@ -2,6 +2,7 @@ package yong.app.domain.user.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import yong.app.domain.role.Role;
@@ -21,6 +22,7 @@ import java.util.UUID;
 **/
 
 @Service
+@Primary
 @Slf4j
 @RequiredArgsConstructor
 public class YongUserServiceImpl implements YongUserService {
