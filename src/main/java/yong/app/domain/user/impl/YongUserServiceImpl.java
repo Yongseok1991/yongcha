@@ -2,6 +2,7 @@ package yong.app.domain.user.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import yong.app.domain.role.Role;
@@ -21,13 +22,13 @@ import java.util.UUID;
 **/
 
 @Service
+@Primary
 @Slf4j
 @RequiredArgsConstructor
 public class YongUserServiceImpl implements YongUserService {
 
     private final YongUserRepository yongUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final YongRoleService yongRoleService;
 
     public YongUser joinProc(YongAuthor authorEnum, YongUserDTO bean) {
 
@@ -51,5 +52,11 @@ public class YongUserServiceImpl implements YongUserService {
     public List<YongUser> findAll() {
         return yongUserRepository.findAll();
     }
+
+    @Override
+    public Boolean checkUsernameDuplicate(String username) {
+        return yongUserRepository.existsByUsername(username);
+    }
+
 
 }

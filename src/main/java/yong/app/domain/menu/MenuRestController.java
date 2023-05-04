@@ -4,19 +4,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import yong.app.domain.code.SysCode;
-import yong.app.global.auth.PrincipalDetails;
-import yong.app.global.config.AuditConfig;
-import yong.app.global.config.AuditorAwareImpl;
+import yong.app.domain.menu.impl.YongMenuServiceImpl;
 import yong.app.global.response.ApiDocumentResponse;
 import yong.app.global.response.RestApiException;
 import yong.app.global.response.StatusCode;
 import yong.app.global.response.StatusResponse;
 
-import javax.persistence.Table;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MenuRestController {
 
-    private final MenuService menuService;
+    private final YongMenuService menuService;
     private final MenuRepository menuRepository;
 
     @Operation(summary = "show menu list", description = "show menu list")

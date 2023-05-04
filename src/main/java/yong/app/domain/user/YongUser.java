@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import yong.app.global.base.BaseTimeEntity;
 import yong.app.domain.role.Role;
+import yong.app.global.response.StatusCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -45,7 +46,7 @@ public class YongUser extends BaseTimeEntity {
     @NotBlank
     @Schema(name = "유저 password", description = "유저의 password를 보여주는 필드")
     private String password;
-
+    
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
