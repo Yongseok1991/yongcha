@@ -15,6 +15,7 @@ public class YongUserController {
     @GetMapping("/join")
     public String join(Model model) {
         model.addAttribute("author", yongRoleRepository.findAll());
+        model.addAttribute("user", new YongUser());
         return "app/join/index";
     }
 
