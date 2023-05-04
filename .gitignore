@@ -19,6 +19,7 @@ build/**
 out/**
 logs/**
 gradle/**
+*.log
 *.iws
 *.iml
 *.ipr

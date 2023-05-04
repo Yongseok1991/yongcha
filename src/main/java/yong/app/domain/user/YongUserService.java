@@ -8,4 +8,6 @@ public interface YongUserService {
     YongUser oAuthJoinProc(YongAuthor authorEnum, YongUserDTO bean);
     YongUser findByUsername(String username);
     List<YongUser> findAll();
+
+    Boolean checkUsernameDuplicate(String username);
 }

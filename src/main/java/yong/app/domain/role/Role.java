@@ -5,11 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import yong.app.domain.user.YongUser;
 
 import javax.persistence.*;
-import java.util.List;
 
+// 주석 하나
 @Entity
 @Table(name="app_role")
 @Getter
