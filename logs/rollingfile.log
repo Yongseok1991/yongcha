@@ -1,4 +1,4 @@
-[INFO ] 2023-05-04 11:12:23.410 [http-nio-9000-exec-6] p6spy - 
-[INFO ] 2023-05-04 11:12:23.412 [http-nio-9000-exec-6] LoggingInterceptor - response status: 200
-[INFO ] 2023-05-04 11:12:23.412 [http-nio-9000-exec-6] LoggingInterceptor - ===============================================================
-
+[INFO ] 2023-05-04 15:10:14.902 [http-nio-9000-exec-5] LoggingInterceptor - ===============================================================
+[INFO ] 2023-05-04 15:10:14.905 [http-nio-9000-exec-5] LoggingInterceptor - parameter: []
+[INFO ] 2023-05-04 15:10:14.905 [http-nio-9000-exec-5] LoggingInterceptor - received [POST '/api/joinProc' HTTP/1.1]
+[WARN ] 2023-05-04 15:10:15.023 [http-nio-9000-exec-5] ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity yong.app.domain.user.YongUserRestController.joinProc(yong.app.domain.user.YongUserDTO) with 2 errors: [Field error in object 'yongUserDTO' on field 'password': rejected value [   ]; codes [NotBlank.yongUserDTO.password,NotBlank.password,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [yongUserDTO.password,password]; arguments []; default message [password]]; default message [비밀번호는 공백일 수 없습니다.]] [Field error in object 'yongUserDTO' on field 'email': rejected value [test]; codes [Email.yongUserDTO.email,Email.email,Email.java.lang.String,Email]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [yongUserDTO.email,email]; arguments []; default message [email],[Ljavax.validation.constraints.Pattern$Flag;@4f45580b,.*]; default message [이메일 형식을 맞춰주세요.]] ]
