@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://db.advmzrtyhlmimuolvcrg.supabase.co:5432/postgres
-    username: postgres
-    password: yongcha123!
+    url:
+    username:
+    password:
 decorator:
   datasource:
     p6spy:
