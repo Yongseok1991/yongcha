@@ -5,10 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import yong.app.domain.user.YongUser;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name="app_role")
