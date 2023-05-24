@@ -21,7 +21,6 @@ public class PrincipalDetails implements UserDetails {
 
     private YongUser user;
 
-
     // 일반 시큐리티 로그인시 사용
     public PrincipalDetails(YongUser user) {
         this.user = user;
