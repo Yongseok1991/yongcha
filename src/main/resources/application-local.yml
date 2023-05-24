@@ -1,8 +1,15 @@
 spring:
   datasource:
+<<<<<<< HEAD
+    url: jdbc:h2:tcp://localhost/~/h2-db/yong-test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+=======
     url:
     username:
     password:
+>>>>>>> 0e1214fc03bcd69231a9b91c0e081f0ff33e16c5
 decorator:
   datasource:
     p6spy:

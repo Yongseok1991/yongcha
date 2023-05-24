@@ -1,64 +1,71 @@
 package yong.app.domain.user;
 
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
+import yong.app.domain.auth.RoleType;
+import yong.app.domain.auth.YongRole;
+import yong.app.domain.auth.YongUsersRole;
+import yong.app.domain.base.Address;
 import yong.app.global.base.BaseTimeEntity;
-import yong.app.domain.role.Role;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-/**
- * @fileName YongUser
- * @author dahyeon
- * @version 1.0.0
- * @date 2023-04-26
- * @summary swagger에 대한 예시 작성
- *         @Schema 추가 속성들 : nullable / defaultValue / example / maxLength / allowValues ...
- **/
-
 @Entity
+@Table(name = "yong_user")
 @Getter
-@Setter
-@Schema(description = "YongUser 엔티티")                             // ** entity에 대한 설명
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class YongUser extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(name = "유저 uid", description = "유저의 uid를 보여주는 필드")      // ** 필드에 대한 설명
-    private Long uid;
+    @GeneratedValue
+    @Column(name = "yong_user_id")
+    private Long id;
 
-    @NotBlank
-    @Schema(name = "유저 name", description = "유저의 name을 보여주는 필드")
-    private String username;
+    @Column(name = "nickname")
+    private String nickname;
 
-    @NotBlank
-    @Schema(name = "유저 email", description = "유저의 email을 보여주는 필드")
+    @Column(name = "email")
     private String email;
-    @NotBlank
-    @Schema(name = "유저 password", description = "유저의 password를 보여주는 필드")
+
+    @OneToMany(mappedBy = "yongUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<YongUsersRole> yongRoles = new HashSet<>();
+
+    @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @Schema(name = "유저 role", description = "유저의 role (YongUser와 M:M 관계)")
-    private Set<Role> roles = new HashSet<>();
+    @Column(name = "full_name")
+    private String fullName;
 
-    @Builder
-    public YongUser(Long uid, String username, String password, String email, Set<Role> roles) {
-        this.uid = uid;
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Embedded
+    private Address address;
+
+    @Column(name = "noti_yn")
+    private String notiYn;
+
+
+    @Builder(builderMethodName = "joinProcBuilder")
+    public YongUser(String email, List<YongRole> yongRole, String password) {
+       //
+        for(YongRole yr : yongRole) {
+            YongUsersRole yongUsersRole = YongUsersRole.joinAuthUserBuilder()
+                    .yongRole(yr)
+                    .yongUser(this)
+                    .build();
+            this.yongRoles.add(yongUsersRole);
+        }
         this.email = email;
+        this.password = password;
     }
+
+    public void addYongRole(YongUsersRole role) {
+        yongRoles.add(role);
+        role.setYongUser(this);
+    }
+
 }
