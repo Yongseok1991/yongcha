@@ -18,6 +18,7 @@ import static javax.persistence.FetchType.LAZY;
 public class YongUsersRole extends BaseTimeEntity {
 
     // 주석주석
+    // 주석주석2
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "yong_users_role_id")
