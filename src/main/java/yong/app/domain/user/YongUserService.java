@@ -9,7 +9,6 @@ import java.util.Optional;
 
 
 public interface YongUserService {
-<<<<<<< HEAD
 
     Optional<YongUser> findByEmail(String email);
 
@@ -19,12 +18,4 @@ public interface YongUserService {
 
     List<RoleType> findRoleTypeByEmail(String email);
 
-=======
-    YongUser joinProc(YongAuthor authorEnum, YongUserDTO bean);
-    YongUser oAuthJoinProc(YongAuthor authorEnum, YongUserDTO bean);
-    YongUser findByUsername(String username);
-    List<YongUser> findAll();
-
-    Boolean checkUsernameDuplicate(String username);
->>>>>>> 0e1214fc03bcd69231a9b91c0e081f0ff33e16c5
 }
