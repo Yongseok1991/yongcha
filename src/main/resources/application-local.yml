@@ -1,8 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://db.advmzrtyhlmimuolvcrg.supabase.co:5432/postgres
-    username: postgres
-    password: yongcha123!
+    url: jdbc:h2:tcp://localhost/~/h2-db/yong-test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
 decorator:
   datasource:
     p6spy:

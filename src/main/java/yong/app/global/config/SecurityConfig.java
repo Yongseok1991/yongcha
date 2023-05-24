@@ -7,14 +7,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import yong.app.global.auth.PrincipalOauth2UserService;
+//import yong.app.global.auth.PrincipalOauth2UserService;
 
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final PrincipalOauth2UserService principalOauth2UserService;
+//    private final PrincipalOauth2UserService principalOauth2UserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -29,14 +29,16 @@ public class SecurityConfig {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
+                .usernameParameter("email")
                 .loginPage("/login")
                 .loginProcessingUrl("/loginProc")
-                .defaultSuccessUrl("/")
-                .and()
-                .oauth2Login()
-                .loginPage("/login")
-                .userInfoEndpoint()
-                .userService(principalOauth2UserService);
+                .defaultSuccessUrl("/");
+//                .and()
+//                .oauth2Login()
+//                .loginPage("/login")
+//                .userInfoEndpoint()
+//                .userService(principalOauth2UserService);
+
         return http.build();
     }
 }
