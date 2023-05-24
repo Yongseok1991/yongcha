@@ -50,7 +50,7 @@ public class YongUserServiceImpl implements YongUserService {
     public Long join(UserForm userForm) {
 
         List<YongRole> byRoleType = yongRoleRepository.findAllByRoleTypeIn(userForm.getRoleType())
-                                                        .stream().collect(Collectors.toList());
+                .stream().collect(Collectors.toList());
 
         if(byRoleType.isEmpty()){
             throw new IllegalArgumentException();
@@ -69,7 +69,7 @@ public class YongUserServiceImpl implements YongUserService {
     @Override
     public void update(UserForm userForm) {
         YongUser byEmail = yongUserRepository.findByEmail(userForm.getEmail())
-                                             .orElseThrow(() -> new UsernameNotFoundException("there is no user"));
+                .orElseThrow(() -> new UsernameNotFoundException("there is no user"));
 
 
 //        yongUserRepository.update(uaerForm);

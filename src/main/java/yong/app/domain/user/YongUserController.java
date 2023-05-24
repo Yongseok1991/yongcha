@@ -2,6 +2,7 @@ package yong.app.domain.user;
 
 
 import lombok.RequiredArgsConstructor;
+<<<<<<< HEAD
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -75,4 +76,23 @@ public class YongUserController {
         };
         return replyMapping;
     }
+=======
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import yong.app.domain.role.YongRoleRepository;
+
+@Controller
+@RequiredArgsConstructor
+public class YongUserController {
+
+    private final YongRoleRepository yongRoleRepository;
+    @GetMapping("/join")
+    public String join(Model model) {
+        model.addAttribute("author", yongRoleRepository.findAll());
+        model.addAttribute("user", new YongUser());
+        return "app/join/index";
+    }
+
+>>>>>>> 0e1214fc03bcd69231a9b91c0e081f0ff33e16c5
 }
