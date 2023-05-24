@@ -50,25 +50,8 @@ public class YongUserController {
     @GetMapping("/users/find")
     private ResponseEntity findByEmail(String email) {
         Optional<YongUser> byEmail = repository.findByEmail(email);
-        modelMapper.addMappings(memberToMemberVO(email));
         UserForm map = modelMapper.map(byEmail.get(), UserForm.class);
 
         return ResponseEntity.ok().body(byEmail);
-    }
-
-
-    public PropertyMap<YongUser, UserForm> memberToMemberVO(String email) {
-        List<RoleType> roleTypes = new ArrayList<>();
-        List<RoleType> roleTypeByEmail = yongUserService.findRoleTypeByEmail(email);
-        PropertyMap<YongUser, UserForm> replyMapping = new PropertyMap<>() {
-            @Override
-            protected void configure() {    // 매핑 정보 입력
-                map().setEmail(source.getEmail());
-
-                // source -> get RoleTypes -> add to list
-                map().setRoleType(roleTypeByEmail);
-            }
-        };
-        return replyMapping;
     }
 }
