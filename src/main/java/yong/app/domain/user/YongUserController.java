@@ -7,17 +7,13 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import yong.app.domain.auth.RoleType;
-import yong.app.domain.auth.YongRoleRepository;
-import yong.app.domain.auth.YongUsersRole;
 import yong.app.global.auth.PrincipalDetails;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api")

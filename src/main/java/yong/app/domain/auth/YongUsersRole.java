@@ -17,7 +17,8 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class YongUsersRole extends BaseTimeEntity {
 
-
+    // 주석주석
+    // 주석주석2
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "yong_users_role_id")
@@ -27,12 +28,13 @@ public class YongUsersRole extends BaseTimeEntity {
     @JoinColumn(name = "yong_role_id")
     private YongRole yongRole;
 
+    private String description;
+
     @Setter
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "yong_user_id")
     private YongUser yongUser;
 
-    private String description;
 
 
     @Builder(builderMethodName = "joinAuthUserBuilder")
