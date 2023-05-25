@@ -67,12 +67,12 @@ public class YongUserServiceImpl implements YongUserService {
     }
 
     @Override
+    @Transactional
     public void update(UserForm userForm) {
         YongUser byEmail = yongUserRepository.findByEmail(userForm.getEmail())
                                              .orElseThrow(() -> new UsernameNotFoundException("there is no user"));
-
-
-//        yongUserRepository.update(uaerForm);
+        List<YongRole> allByRoleTypeIn = yongRoleRepository.findAllByRoleTypeIn(userForm.getRoleType());
+        byEmail.addAuthorCd(allByRoleTypeIn);
     }
 
     @Override
