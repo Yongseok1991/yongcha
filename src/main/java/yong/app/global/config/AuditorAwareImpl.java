@@ -27,12 +27,8 @@ public class AuditorAwareImpl implements AuditorAware<Long> {
         *         regId, updtID가 ... 사용하는 곳만 바인딩하기 (보류)
          */
         if(authentication != null && !"anonymousUser".equals(authentication.getPrincipal())) {
-
             PrincipalDetails details = (PrincipalDetails) authentication.getPrincipal();
-            Long regId = details.getUser().getUid();
-            Long updtId = details.getUser().getUid();
-            return Optional.ofNullable(updtId);             // ofNullable : return null
-
+            return Optional.of(details.getUser().getUid());             // ofNullable : return null
         } else {
             return null;
             // TODO : redirect to login page.... (move Back/to login page)
