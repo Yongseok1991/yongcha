@@ -36,12 +36,10 @@ public class YongUserServiceImpl implements YongUserService {
         Optional<YongUser> byEmail = yongUserRepository.findByEmail(email);
 
         Set<YongUsersRole> yongRoles = byEmail.get().getYongRoles();
-        for(YongUsersRole yr : yongRoles){
-            yr.getYongRole().getRoleType();         // 매핑 테이블 -> YongRole 테이블 접근 -> 필드 접근 -> 쿼리 수행됨
+        for (YongUsersRole yongRole : yongRoles) {
+            log.info("yongRole : {} ", yongRole); // 매핑 테이블 -> YongRole 테이블 접근 -> 필드 접근 -> 쿼리 수행됨
         }
 
-        int size = byEmail.get().getYongRoles().size();
-        System.out.println("size = " + size);
         return byEmail;
     }
 
@@ -53,7 +51,7 @@ public class YongUserServiceImpl implements YongUserService {
                 .stream().collect(Collectors.toList());
 
         if(byRoleType.isEmpty()){
-            throw new IllegalArgumentException();
+            throw new NullPointerException("there is no role type");
         }
 
         YongUser yongUser = YongUser.joinProcBuilder()
