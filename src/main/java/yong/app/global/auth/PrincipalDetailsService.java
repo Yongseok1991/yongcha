@@ -15,12 +15,9 @@ import java.util.Optional;
 public class PrincipalDetailsService implements UserDetailsService {
     private final YongUserService yongUserService;
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) {
          return yongUserService.findByEmail(email)
-                .map((user) -> {
-                    PrincipalDetails principalDetails = new PrincipalDetails(user);
-                    return principalDetails;
-                })
+                .map(PrincipalDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("email is not found"));
     }
 }
