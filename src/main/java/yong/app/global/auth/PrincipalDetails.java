@@ -11,10 +11,7 @@ import yong.app.domain.auth.YongUsersRole;
 import yong.app.domain.user.YongUser;
 import yong.app.domain.user.YongUserService;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class PrincipalDetails implements UserDetails {
     private static final long serialVersionUID = 1L;

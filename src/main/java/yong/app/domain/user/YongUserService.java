@@ -1,22 +1,25 @@
 package yong.app.domain.user;
 
+
+import org.apache.catalina.User;
+import org.springframework.stereotype.Service;
+import yong.app.domain.auth.RoleType;
+
+
 import java.util.List;
 import java.util.Optional;
 
 
 public interface YongUserService {
 
-    List<YongUserVO> list(); // show user list
+    List<YongUserVO> list();
 
-    YongUserVO show(Long id); // show single user info
+    Optional<YongUser> findByEmail(String email);
 
-    Optional<YongUser> findByEmail(String email); // use for login
+    Long join(UserForm userForm);
 
-    Long join(YongUserDTO yongUserDTO); // new login
+    void update(UserForm userForm);
 
-    void update(YongUserDTO yongUserDTO);
-
-    void updateById(Long id, YongUserDTO yongUserDTO); // update user by id
-    void updateByLoginEmail(String email, YongUserDTO yongUserDTO); // update user by login info
+    List<RoleType> findRoleTypeByEmail(String email);
 
 }

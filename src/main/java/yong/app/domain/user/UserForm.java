@@ -6,6 +6,7 @@ import lombok.Setter;
 import yong.app.domain.auth.RoleType;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,6 +16,6 @@ public class UserForm {
 //    @JsonIgnore
     private String password;
 
-    private List<RoleType> roleType;
+    private Set<RoleType> roleType;
 
 }

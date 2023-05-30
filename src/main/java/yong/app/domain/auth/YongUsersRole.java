@@ -26,8 +26,8 @@ public class YongUsersRole extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JsonIgnore
     @JoinColumn(name = "yong_role_id")
+    @JsonIgnore
     private YongRole yongRole;
 
     private String description;
