@@ -35,13 +35,13 @@ public class YongUserServiceImpl implements YongUserService {
     public Optional<YongUser> findByEmail(String email) {
         Optional<YongUser> byEmail = yongUserRepository.findByEmail(email);
 
-        Set<YongUsersRole> yongRoles = byEmail.get().getYongRoles();
-        for(YongUsersRole yr : yongRoles){
-            yr.getYongRole().getRoleType();         // 매핑 테이블 -> YongRole 테이블 접근 -> 필드 접근 -> 쿼리 수행됨
-        }
+//        Set<YongUsersRole> yongRoles = byEmail.get().getYongRoles();
+//        for(YongUsersRole yr : yongRoles){
+//            yr.getYongRole().getRoleType();         // 매핑 테이블 -> YongRole 테이블 접근 -> 필드 접근 -> 쿼리 수행됨
+//        }
 
-        int size = byEmail.get().getYongRoles().size();
-        System.out.println("size = " + size);
+//        int size = byEmail.get().getYongRoles().size();
+//        System.out.println("size = " + size);
         return byEmail;
     }
 
