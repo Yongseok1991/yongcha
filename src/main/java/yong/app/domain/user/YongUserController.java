@@ -47,20 +47,20 @@ public class YongUserController {
         return ResponseEntity.ok(true);
     }
 
-    @GetMapping("/users/find")
-    private ResponseEntity<YongUser> findByEmail(String email) {
-        YongUser byEmail = repository.findByEmail(email)
-                .orElseThrow(() -> new IllegalStateException("no user"));
-
-        log.info(byEmail.getEmail());
-
-        Set<YongUsersRole> yongRoles = byEmail.getYongRoles();
-        for (YongUsersRole yongRole : yongRoles) {
-            log.info("yongRole: {}", yongRole.getYongRole().getRoleType());
-        }
-        UserForm map = modelMapper.map(byEmail, UserForm.class);
-        return ResponseEntity.ok().body(byEmail);
-    }
+//    @GetMapping("/users/find")
+//    private ResponseEntity<YongUser> findByEmail(String email) {
+//        YongUser byEmail = repository.findByEmail(email)
+//                .orElseThrow(() -> new IllegalStateException("no user"));
+//
+//        log.info(byEmail.getEmail());
+//
+//        Set<YongUsersRole> yongRoles = byEmail.getYongRoles();
+//        for (YongUsersRole yongRole : yongRoles) {
+//            log.info("yongRole: {}", yongRole.getYongRole().getRoleType());
+//        }
+//        UserForm map = modelMapper.map(byEmail, UserForm.class);
+//        return ResponseEntity.ok().body(byEmail);
+//    }
 
     @GetMapping("/test/users")
     private ResponseEntity test(@AuthenticationPrincipal PrincipalDetails principalDetails){

@@ -35,7 +35,7 @@ public class YongUserServiceImpl implements YongUserService {
         return all.stream().map(yongUser -> modelMapper.map(yongUser, YongUserVO.class)).collect(Collectors.toList());
     }
 
-    @Transactional  // 트랜잭션 필요함.
+    @Transactional(readOnly = true)  // 트랜잭션 필요함.
     public Optional<YongUser> findByEmail(String email) {
         Optional<YongUser> byEmail = yongUserRepository.findByEmail(email);
 
@@ -44,8 +44,8 @@ public class YongUserServiceImpl implements YongUserService {
             yr.getYongRole().getRoleType();         // 매핑 테이블 -> YongRole 테이블 접근 -> 필드 접근 -> 쿼리 수행됨
         }
 
-        int size = byEmail.get().getYongRoles().size();
-        System.out.println("size = " + size);
+//        int size = byEmail.get().getYongRoles().size();
+//        System.out.println("size = " + size);
 
         return byEmail;
     }
@@ -88,7 +88,6 @@ public class YongUserServiceImpl implements YongUserService {
 
         Set<YongUsersRole> yongRoles = byEmail.get().getYongRoles();
         for(YongUsersRole yr : yongRoles){
-            System.out.println("yr : " + yr.getYongRole());
             roleTypes.add(yr.getYongRole().getRoleType());         // 매핑 테이블 -> YongRole 테이블 접근 -> 필드 접근 -> 쿼리 수행됨
         }
 

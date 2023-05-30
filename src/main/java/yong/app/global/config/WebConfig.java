@@ -77,24 +77,24 @@ public class WebConfig implements WebMvcConfigurer {
         return modelMapper;
     }
 
-    public PropertyMap<YongUser, UserForm> memberToMemberVO() {
-        List<RoleType> roleTypes = new ArrayList<>();
-        PropertyMap<YongUser, UserForm> replyMapping = new PropertyMap<>() {
-            @Override
-            protected void configure() {    // 매핑 정보 입력
-                map().setEmail(source.getEmail());
-
-                // source -> get RoleTypes -> add to list
-                Set<YongUsersRole> yongRoles = source.getYongRoles();
-                for(YongUsersRole yongUsersRole : yongRoles){
-                    roleTypes.add(yongUsersRole.getYongRole().getRoleType());
-                }
-
-                map().setRoleType(roleTypes);
-            }
-        };
-        return replyMapping;
-    }
+//    public PropertyMap<YongUser, UserForm> memberToMemberVO() {
+//        List<RoleType> roleTypes = new ArrayList<>();
+//        PropertyMap<YongUser, UserForm> replyMapping = new PropertyMap<>() {
+//            @Override
+//            protected void configure() {    // 매핑 정보 입력
+//                map().setEmail(source.getEmail());
+//
+//                // source -> get RoleTypes -> add to list
+//                Set<YongUsersRole> yongRoles = source.getYongRoles();
+//                for(YongUsersRole yongUsersRole : yongRoles){
+//                    roleTypes.add(yongUsersRole.getYongRole().getRoleType());
+//                }
+//
+//                map().setRoleType(roleTypes);
+//            }
+//        };
+//        return replyMapping;
+//    }
 
     /* redirect 필요 시
     @GetMapping("/")
