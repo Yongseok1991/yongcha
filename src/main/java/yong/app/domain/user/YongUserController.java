@@ -22,7 +22,6 @@ public class YongUserController {
     private final YongUserRepository repository;
     private final ModelMapper modelMapper;
 
-
     // GET LIST
     // - 리턴 : vo list
     // - 방법 : findAll -> 모델매퍼를 통해 vo list로 변경
@@ -32,9 +31,9 @@ public class YongUserController {
         return ResponseEntity.ok(list);
     }
 
-
     // GET ONE
     // - 리턴 : vo
+
     @GetMapping("/users/{id}") // get user info by id
     public ResponseEntity<YongUserVO> show(@PathVariable("id") Long id){
         YongUserVO show = yongUserService.show(id);
@@ -47,21 +46,29 @@ public class YongUserController {
         return ResponseEntity.ok(map);
     }
 
-    @PostMapping("/users/join")
-    public ResponseEntity<Long> join(UserForm userForm) {
-        Long joinId = yongUserService.join(userForm);
+    @PostMapping("/users/join") // insert info
+    public ResponseEntity<Long> join(@RequestBody YongUserDTO yongUserDTO) {
+        Long joinId = yongUserService.join(yongUserDTO);
         return ResponseEntity.ok(joinId);
     }
 
-    @PutMapping("/users/join/{id}")
-    public ResponseEntity<String> update(UserForm userForm) {
-        yongUserService.update(userForm);
-        return ResponseEntity.ok("updated!!");
+    @PutMapping("/users/join/{id}") // update user by id
+    public ResponseEntity<String> updateById(@PathVariable Long id, @RequestBody YongUserDTO yongUserDTO) {
+        yongUserService.updateById(id, yongUserDTO);
+        return ResponseEntity.ok("updated by id!!");
+    }
+
+    @PutMapping("/users/login/join") // update user by login info
+    public ResponseEntity<String> updateByLoginEmail(@RequestBody YongUserDTO yongUserDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        String email = principalDetails.getUser().getEmail();
+        System.out.println("email = " + email);
+        yongUserService.updateByLoginEmail(email, yongUserDTO);
+        return ResponseEntity.ok("updated by email!!");
     }
 
     @PutMapping("/users/join/add")
-    public ResponseEntity addAuthor(UserForm userForm) {
-        yongUserService.update(userForm);
+    public ResponseEntity addAuthor(@RequestBody YongUserDTO yongUserDTO) {
+        yongUserService.update(yongUserDTO);
         return ResponseEntity.ok(true);
     }
 
@@ -78,10 +85,5 @@ public class YongUserController {
 //        }
         UserForm map = modelMapper.map(byEmail, UserForm.class);
         return ResponseEntity.ok().body(byEmail);
-    }
-
-    @GetMapping("/test/users")
-    private ResponseEntity test(@AuthenticationPrincipal PrincipalDetails principalDetails){
-        return  ResponseEntity.ok(principalDetails);
     }
 }
