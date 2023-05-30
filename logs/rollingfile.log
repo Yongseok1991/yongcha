@@ -1,5 +1,0 @@
-[INFO ] 2023-05-04 17:23:58.810 [http-nio-9000-exec-9] LoggingInterceptor - parameter: []
-[INFO ] 2023-05-04 17:23:58.811 [http-nio-9000-exec-9] LoggingInterceptor - received [GET '/error' HTTP/1.1]
-[INFO ] 2023-05-04 17:23:58.812 [http-nio-9000-exec-9] LoggingInterceptor - response status: 404
-[INFO ] 2023-05-04 17:23:58.812 [http-nio-9000-exec-9] LoggingInterceptor - ===============================================================
-
