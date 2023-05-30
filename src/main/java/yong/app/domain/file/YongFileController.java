@@ -16,7 +16,7 @@ public class YongFileController {
 
     // GET LIST
     // - 리턴 : vo list
-    // - 방법 : findAllByParentIsNull -> 모델매퍼를 통해 vo로 변경
+    // - 방법 : findAllByParentIsNull -> 모델매퍼를 통해 vo list로 변경
     @GetMapping("/files")
     public ResponseEntity<List<YongFileVO>> list(){
         List<YongFileVO> findFiles = yongFileService.list();

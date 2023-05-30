@@ -77,6 +77,7 @@ public class WebConfig implements WebMvcConfigurer {
         return modelMapper;
     }
 
+
 //    public PropertyMap<YongUser, UserForm> memberToMemberVO() {
 //        List<RoleType> roleTypes = new ArrayList<>();
 //        PropertyMap<YongUser, UserForm> replyMapping = new PropertyMap<>() {
