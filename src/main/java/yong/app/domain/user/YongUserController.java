@@ -4,17 +4,13 @@ package yong.app.domain.user;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import yong.app.domain.auth.RoleType;
 import yong.app.domain.auth.YongUsersRole;
 import yong.app.global.auth.PrincipalDetails;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -26,16 +22,23 @@ public class YongUserController {
     private final YongUserRepository repository;
     private final ModelMapper modelMapper;
 
-    @PostMapping("/users/join")
-    public ResponseEntity join(UserForm userForm) {
+    @GetMapping("/users")
+    public ResponseEntity<List<YongUserVO>> list(){
+        List<YongUserVO> list = yongUserService.list();
+        return ResponseEntity.ok(list);
+    }
 
-        return ResponseEntity.ok(yongUserService.join(userForm));
+
+    @PostMapping("/users/join")
+    public ResponseEntity<Long> join(UserForm userForm) {
+        Long joinId = yongUserService.join(userForm);
+        return ResponseEntity.ok(joinId);
     }
 
     @PutMapping("/users/join/{id}")
-    public ResponseEntity update(UserForm userForm) {
+    public ResponseEntity<String> update(UserForm userForm) {
         yongUserService.update(userForm);
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok("updated!!");
     }
 
     @PutMapping("/users/join/add")
@@ -43,15 +46,6 @@ public class YongUserController {
         yongUserService.update(userForm);
         return ResponseEntity.ok(true);
     }
-
-    @GetMapping("/users/auth")
-    public ResponseEntity auth(@AuthenticationPrincipal PrincipalDetails details) {
-        log.info("details: {}", details);
-        log.info("details: {}", details.getUser());
-        log.info("details: {}", details.getAuthorities());
-        return ResponseEntity.ok(details);
-    }
-
 
     @GetMapping("/users/find")
     private ResponseEntity<YongUser> findByEmail(String email) {
@@ -68,13 +62,8 @@ public class YongUserController {
         return ResponseEntity.ok().body(byEmail);
     }
 
-    @GetMapping("/users/authti")
-    private ResponseEntity getAuth(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        log.info("principalDetails: {}", principalDetails.getUser());
-//        Set<YongUsersRole> yongRoles = principalDetails.getUser().getYongRoles();
-//        for (YongUsersRole yongRole : yongRoles) {
-//            log.info("yongRole: {}", yongRole);
-//        }
-        return ResponseEntity.ok().body(principalDetails);
+    @GetMapping("/test/users")
+    private ResponseEntity test(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        return  ResponseEntity.ok(principalDetails);
     }
 }
