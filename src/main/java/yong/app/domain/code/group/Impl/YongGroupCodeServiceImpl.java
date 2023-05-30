@@ -10,6 +10,7 @@ import yong.app.domain.code.common.YongCommonCodeRepository;
 import yong.app.domain.code.group.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,13 +42,13 @@ public class YongGroupCodeServiceImpl implements YongGroupCodeService {
 
     @Override
     public YongGroupCodeVO show(Long id) {
-        YongGroupCode yongGroupCode = yongGroupCodeRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("there is no group code"));
+        YongGroupCode yongGroupCode = yongGroupCodeRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no group code"));
         return modelMapper.map(yongGroupCode, YongGroupCodeVO.class);
     }
 
     @Override
     public void update(Long id, YongGroupCodeDTO yongGroupCodeDTO) {
-        YongGroupCode yongGroupCode = yongGroupCodeRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("there is no group code"));
+        YongGroupCode yongGroupCode = yongGroupCodeRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no group code"));
         yongGroupCode.updateGroupCode(yongGroupCodeDTO);
     }
 
