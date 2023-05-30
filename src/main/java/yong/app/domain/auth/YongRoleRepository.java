@@ -8,5 +8,5 @@ import java.util.Set;
 public interface YongRoleRepository extends JpaRepository<YongRole, Long> {
 
 
-    List<YongRole> findAllByRoleTypeIn(Set<RoleType> roleTypes);
+    List<YongRole> findAllByRoleTypeIn(List<RoleType> roleTypes);
 }
