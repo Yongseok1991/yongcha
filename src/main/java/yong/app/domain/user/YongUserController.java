@@ -22,12 +22,30 @@ public class YongUserController {
     private final YongUserRepository repository;
     private final ModelMapper modelMapper;
 
-    @GetMapping("/users")
+
+    // GET LIST
+    // - 리턴 : vo list
+    // - 방법 : findAll -> 모델매퍼를 통해 vo list로 변경
+    @GetMapping("/users") // get users info list
     public ResponseEntity<List<YongUserVO>> list(){
         List<YongUserVO> list = yongUserService.list();
         return ResponseEntity.ok(list);
     }
 
+
+    // GET ONE
+    // - 리턴 : vo
+    @GetMapping("/users/{id}") // get user info by id
+    public ResponseEntity<YongUserVO> show(@PathVariable("id") Long id){
+        YongUserVO show = yongUserService.show(id);
+        return ResponseEntity.ok(show);
+    }
+
+    @GetMapping("/login/users")  // get login user info
+    public ResponseEntity<YongUserVO> showLoginUser(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        YongUserVO map = modelMapper.map(principalDetails.getUser(), YongUserVO.class);
+        return ResponseEntity.ok(map);
+    }
 
     @PostMapping("/users/join")
     public ResponseEntity<Long> join(UserForm userForm) {
@@ -54,10 +72,10 @@ public class YongUserController {
 
         log.info(byEmail.getEmail());
 
-        Set<YongUsersRole> yongRoles = byEmail.getYongRoles();
-        for (YongUsersRole yongRole : yongRoles) {
-            log.info("yongRole: {}", yongRole.getYongRole().getRoleType());
-        }
+//        Set<YongUsersRole> yongRoles = byEmail.getYongRoles();
+//        for (YongUsersRole yongRole : yongRoles) {
+//            log.info("yongRole: {}", yongRole.getYongRole().getRoleType());
+//        }
         UserForm map = modelMapper.map(byEmail, UserForm.class);
         return ResponseEntity.ok().body(byEmail);
     }

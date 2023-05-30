@@ -29,6 +29,7 @@ public class YongUserServiceImpl implements YongUserService {
     private final YongRoleRepository yongRoleRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final ModelMapper modelMapper;
+
     @Override
     public List<YongUserVO> list() {
         List<YongUser> all = yongUserRepository.findAll();
