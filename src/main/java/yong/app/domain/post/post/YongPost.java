@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import yong.app.domain.file.YongFile;
 import yong.app.domain.post.category.YongPostCategory;
 import yong.app.global.base.BaseEntity;
 
@@ -23,6 +24,10 @@ public class YongPost extends BaseEntity {
     @JoinColumn(name = "yong_post_category_id")
     private YongPostCategory postCategory;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "yong_file_id")
+    private YongFile yongFile;
+
     @Column(name = "title")
     private String title;
 
@@ -38,8 +43,9 @@ public class YongPost extends BaseEntity {
 
     // insert 용
     @Builder(builderMethodName = "insertPostBuilder", toBuilder = true)
-    public YongPost(YongPostCategory postCategory, String title, String content, Integer viewCount) {
+    public YongPost(YongPostCategory postCategory, String title, String content, Integer viewCount, YongFile yongFile) {
         this.postCategory = postCategory;
+        this.yongFile = yongFile;
         this.title = title;
         this.content = content;
         this.viewCount = viewCount;
@@ -50,6 +56,7 @@ public class YongPost extends BaseEntity {
     // update 용
     public void updatePost(YongPostDTO yongPostDTO){
         if(yongPostDTO.getYongPostCategory() != null) this.postCategory = yongPostDTO.getYongPostCategory();
+        if(yongPostDTO.getYongFile() != null) this.yongFile = yongPostDTO.getYongFile();
         if(yongPostDTO.getTitle() != null) this.title = yongPostDTO.getTitle();
         if(yongPostDTO.getContent() != null) this.content = yongPostDTO.getContent();
         if(yongPostDTO.getViewCount() != null) this.viewCount = yongPostDTO.getViewCount();

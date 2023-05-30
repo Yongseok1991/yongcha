@@ -8,4 +8,7 @@ public class YongFileDTO {
     private String fileName;
     private String description;
     private Long parentFileId;
+    private String deleteYn;
+
+    private YongFile parent;
 }

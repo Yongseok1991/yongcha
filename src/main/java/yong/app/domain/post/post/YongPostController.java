@@ -16,7 +16,7 @@ public class YongPostController {
 
     // GET LIST
     // - 리턴 : vo list
-    // - 방법 : findAlll -> vo로 변경
+    // - 방법 : findAlll -> 모델매퍼를 통해 vo로 변경
     @GetMapping("/posts")
     public ResponseEntity<List<YongPostVO>> list(){
         List<YongPostVO> list = yongPostService.list();
@@ -26,7 +26,7 @@ public class YongPostController {
 
     // INSERT
     // - 리턴 : id (pk)
-    // - 방법 : builder 이용 -> 부모 있을 경우, 없을 경우 분기처리
+    // - 방법 : builder 이용 -> 무조건 부모가 있어야함 / file의 경우 있고 없고를 분기처리
     @PostMapping("/posts")
     public ResponseEntity<Long> insert(@RequestBody YongPostDTO yongPostDTO){
         Long joinId = yongPostService.join(yongPostDTO);
@@ -36,7 +36,7 @@ public class YongPostController {
 
     // UPDATE
     // - 리턴 : void
-    // - 방법 : findById -> 변경 메서드를 통해 '변경 지점이 엔티티로 모이도록' 하였다.
+    // - 방법 : findById -> 변경 메서드를 통해 '변경 지점이 엔티티로 모이도록' 하였다. (file의 경우 있고 없고를 분기처리)
     @PutMapping("/posts/{id}")
     public ResponseEntity<String> update(@PathVariable("id") Long id, @RequestBody YongPostDTO yongPostDTO){
         yongPostService.update(id, yongPostDTO);

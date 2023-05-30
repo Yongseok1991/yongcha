@@ -10,16 +10,13 @@ import java.util.Optional;
 
 public interface YongPostRepository extends JpaRepository<YongPost, Long> {
 
-    // post category와 fetch join을 통해 -> 전체 list 조회
-//    @Query("select yp from YongPost yp left join fetch yp.postCategory")
     @Override
-    @EntityGraph(attributePaths = {"postCategory"})
+    @EntityGraph(attributePaths = {"postCategory", "yongFile"})
     List<YongPost> findAll();
 
 
-    // post category와 fetch join을 통해 -> 1건 조회
-//    @Query("select yp from YongPost yp left join fetch yp.postCategory where yp.id = :id")
-
-    @EntityGraph(attributePaths = {"postCategory"})
+    @EntityGraph(attributePaths = {"postCategory", "yongFile"})
     Optional<YongPost> findPostById(@Param("id") Long id);
+
+    Optional<YongPost> findByIdAndDeleteYnIs(Long id, String deleteYn);
 }

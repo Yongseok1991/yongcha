@@ -2,6 +2,7 @@ package yong.app.domain.user.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,10 +12,7 @@ import yong.app.domain.auth.RoleType;
 import yong.app.domain.auth.YongRole;
 import yong.app.domain.auth.YongRoleRepository;
 import yong.app.domain.auth.YongUsersRole;
-import yong.app.domain.user.UserForm;
-import yong.app.domain.user.YongUser;
-import yong.app.domain.user.YongUserRepository;
-import yong.app.domain.user.YongUserService;
+import yong.app.domain.user.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +28,21 @@ public class YongUserServiceImpl implements YongUserService {
     private final YongUserRepository yongUserRepository;
     private final YongRoleRepository yongRoleRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
+    private final ModelMapper modelMapper;
+    @Override
+    public List<YongUserVO> list() {
+        List<YongUser> all = yongUserRepository.findAll();
+        return all.stream().map(yongUser -> modelMapper.map(yongUser, YongUserVO.class)).collect(Collectors.toList());
+    }
 
     @Transactional  // 트랜잭션 필요함.
     public Optional<YongUser> findByEmail(String email) {
         Optional<YongUser> byEmail = yongUserRepository.findByEmail(email);
 
-        Set<YongUsersRole> yongRoles = byEmail.get().getYongRoles();
-        for (YongUsersRole yongRole : yongRoles) {
-            log.info("yongRole : {} ", yongRole); // 매핑 테이블 -> YongRole 테이블 접근 -> 필드 접근 -> 쿼리 수행됨
-        }
+//        Set<YongUsersRole> yongRoles = byEmail.get().getYongRoles();
+//        for (YongUsersRole yongRole : yongRoles) {
+//            log.info("yongRole : {} ", yongRole.getYongRole()); // 매핑 테이블 -> YongRole 테이블 접근 -> 필드 접근 -> 쿼리 수행됨
+//        }
 
         return byEmail;
     }

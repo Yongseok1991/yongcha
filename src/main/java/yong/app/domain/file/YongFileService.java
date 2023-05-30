@@ -4,7 +4,13 @@ import java.util.List;
 
 public interface YongFileService {
 
-    List<YongFileVO> findAll();
+    List<YongFileVO> list();
 
-    Long insert(YongFileDTO yongFileDTO);
+    Long join(YongFileDTO yongFileDTO);
+
+    YongFileVO show(Long id);
+
+    void update(Long id, YongFileDTO yongFileDTO);
+
+    void delete(Long id);
 }

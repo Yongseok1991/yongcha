@@ -77,4 +77,8 @@ public class YongUser extends BaseTimeEntity {
         }
     }
 
+    public void addYongRoles(YongUsersRole yongRoles) {
+            this.yongRoles.add(yongRoles);
+    }
+
 }

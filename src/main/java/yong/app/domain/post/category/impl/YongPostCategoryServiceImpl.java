@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import yong.app.domain.post.category.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 
@@ -55,7 +56,7 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
     @Transactional(readOnly = false)  // 변경이 필요한 메서드에서만 트랜잭션 readOnly false로 풀기
     public void update(Long id, YongPostCategoryDTO yongPostCategoryDTO) {
         YongPostCategory yongPostCategory = yongPostCategoryRepository.findById(id)
-                    .orElseThrow(() -> new UsernameNotFoundException("there is no post category"));
+                    .orElseThrow(() -> new NoSuchElementException("there is no post category"));
 
         yongPostCategory.updateCategory(yongPostCategoryDTO);
     }
@@ -63,7 +64,7 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
     @Override
     public YongPostCategoryVO show(Long id) {
         YongPostCategory yongPostCategory = yongPostCategoryRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("there is no post user"));
+                .orElseThrow(() -> new NoSuchElementException("there is no post category"));
 
         return modelMapper.map(yongPostCategory, YongPostCategoryVO.class);
     }
@@ -72,7 +73,7 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
     @Transactional(readOnly = false) // 변경이 필요한 메서드에서만 트랜잭션 readOnly false로 풀기
     public void delete(Long id) {
         YongPostCategory yongPostCategory = yongPostCategoryRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("there is no category"));
+                .orElseThrow(() -> new NoSuchElementException("there is no category"));
 
         yongPostCategory.deleteCategory();
     }
