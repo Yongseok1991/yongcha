@@ -35,17 +35,14 @@ public class YongUserServiceImpl implements YongUserService {
         return all.stream().map(yongUser -> modelMapper.map(yongUser, YongUserVO.class)).collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)  // 트랜잭션 필요함.
+    @Transactional  // 트랜잭션 필요함.
     public Optional<YongUser> findByEmail(String email) {
         Optional<YongUser> byEmail = yongUserRepository.findByEmail(email);
 
-        Set<YongUsersRole> yongRoles = byEmail.get().getYongRoles();
-        for(YongUsersRole yr : yongRoles){
-            yr.getYongRole().getRoleType();         // 매핑 테이블 -> YongRole 테이블 접근 -> 필드 접근 -> 쿼리 수행됨
-        }
-
-//        int size = byEmail.get().getYongRoles().size();
-//        System.out.println("size = " + size);
+//        Set<YongUsersRole> yongRoles = byEmail.get().getYongRoles();
+//        for (YongUsersRole yongRole : yongRoles) {
+//            log.info("yongRole : {} ", yongRole.getYongRole()); // 매핑 테이블 -> YongRole 테이블 접근 -> 필드 접근 -> 쿼리 수행됨
+//        }
 
         return byEmail;
     }
@@ -55,7 +52,7 @@ public class YongUserServiceImpl implements YongUserService {
     public Long join(UserForm userForm) {
 
         List<YongRole> byRoleType = yongRoleRepository.findAllByRoleTypeIn(userForm.getRoleType())
-                                                        .stream().collect(Collectors.toList());
+                .stream().collect(Collectors.toList());
 
         if(byRoleType.isEmpty()){
             throw new NullPointerException("there is no role type");
@@ -75,7 +72,7 @@ public class YongUserServiceImpl implements YongUserService {
     @Transactional
     public void update(UserForm userForm) {
         YongUser byEmail = yongUserRepository.findByEmail(userForm.getEmail())
-                                             .orElseThrow(() -> new UsernameNotFoundException("there is no user"));
+                .orElseThrow(() -> new UsernameNotFoundException("there is no user"));
         List<YongRole> allByRoleTypeIn = yongRoleRepository.findAllByRoleTypeIn(userForm.getRoleType());
         byEmail.addAuthorCd(allByRoleTypeIn);
     }
@@ -88,6 +85,7 @@ public class YongUserServiceImpl implements YongUserService {
 
         Set<YongUsersRole> yongRoles = byEmail.get().getYongRoles();
         for(YongUsersRole yr : yongRoles){
+            System.out.println("yr : " + yr.getYongRole());
             roleTypes.add(yr.getYongRole().getRoleType());         // 매핑 테이블 -> YongRole 테이블 접근 -> 필드 접근 -> 쿼리 수행됨
         }
 

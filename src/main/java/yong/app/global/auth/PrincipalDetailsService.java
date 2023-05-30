@@ -23,13 +23,13 @@ public class PrincipalDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) {
         Optional<YongUser> byEmail = yongUserService.findByEmail(email);
 
-//        if(byEmail.isPresent()) {
-//            YongUser yongUser = byEmail.get();
-//            Set<YongUsersRole> yongRoles = yongUser.getYongRoles();
-//            for (YongUsersRole yongRole : yongRoles) {
-//                yongRole.getYongRole().getRoleType();
-//            }
-//        }
+        if(byEmail.isPresent()) {
+            YongUser yongUser = byEmail.get();
+            Set<YongUsersRole> yongRoles = yongUser.getYongRoles();
+            for (YongUsersRole yongRole : yongRoles) {
+                yongRole.getYongRole().getRoleType();
+            }
+        }
         return new PrincipalDetails(byEmail.get());
     }
 }
