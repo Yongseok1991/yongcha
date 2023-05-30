@@ -8,21 +8,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import yong.app.domain.auth.RoleType;
 import yong.app.domain.auth.YongRole;
 import yong.app.domain.auth.YongRoleRepository;
 import yong.app.domain.auth.YongUsersRole;
 import yong.app.domain.user.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class YongUserServiceImpl implements YongUserService {
 
     private final YongUserRepository yongUserRepository;
@@ -35,7 +34,12 @@ public class YongUserServiceImpl implements YongUserService {
         return all.stream().map(yongUser -> modelMapper.map(yongUser, YongUserVO.class)).collect(Collectors.toList());
     }
 
-    @Transactional  // 트랜잭션 필요함.
+    @Override
+    public YongUserVO show(Long id) {
+        YongUser findUser = yongUserRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no user"));
+        return modelMapper.map(findUser, YongUserVO.class);
+    }
+
     public Optional<YongUser> findByEmail(String email) {
         Optional<YongUser> byEmail = yongUserRepository.findByEmail(email);
 
@@ -48,10 +52,10 @@ public class YongUserServiceImpl implements YongUserService {
     }
 
     @Override
-    @Transactional
-    public Long join(UserForm userForm) {
+    @Transactional(readOnly = false)
+    public Long join(YongUserDTO yongUserDTO) {
 
-        List<YongRole> byRoleType = yongRoleRepository.findAllByRoleTypeIn(userForm.getRoleType())
+        List<YongRole> byRoleType = yongRoleRepository.findAllByRoleTypeIn(yongUserDTO.getRoleType())
                                                         .stream().collect(Collectors.toList());
 
         if(byRoleType.isEmpty()){
@@ -59,8 +63,8 @@ public class YongUserServiceImpl implements YongUserService {
         }
 
         YongUser yongUser = YongUser.joinProcBuilder()
-                .email(userForm.getEmail())
-                .password(bCryptPasswordEncoder.encode(userForm.getPassword()))
+                .email(yongUserDTO.getEmail())
+                .password(bCryptPasswordEncoder.encode(yongUserDTO.getPassword()))
                 .yongRole(byRoleType)
                 .build();
 
@@ -69,29 +73,43 @@ public class YongUserServiceImpl implements YongUserService {
     }
 
     @Override
-    @Transactional
-    public void update(UserForm userForm) {
-        YongUser byEmail = yongUserRepository.findByEmail(userForm.getEmail())
+    @Transactional(readOnly = false)
+    public void update(YongUserDTO yongUserDTO) {
+        YongUser byEmail = yongUserRepository.findByEmail(yongUserDTO.getEmail())
                                              .orElseThrow(() -> new UsernameNotFoundException("there is no user"));
-        List<YongRole> allByRoleTypeIn = yongRoleRepository.findAllByRoleTypeIn(userForm.getRoleType());
+
+        List<YongRole> allByRoleTypeIn = yongRoleRepository.findAllByRoleTypeIn(yongUserDTO.getRoleType());
         byEmail.addAuthorCd(allByRoleTypeIn);
     }
 
     @Override
-    public List<RoleType> findRoleTypeByEmail(String email) {
-        List<RoleType> roleTypes = new ArrayList<>();
+    @Transactional(readOnly = false)
+    public void updateById(Long id, YongUserDTO yongUserDTO) {
+        YongUser yongUser = yongUserRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no user"));
+        List<YongRole> allByRoleTypeIn = yongRoleRepository.findAllByRoleTypeIn(yongUserDTO.getRoleType());
 
-        Optional<YongUser> byEmail = yongUserRepository.findByEmail(email);
-
-        Set<YongUsersRole> yongRoles = byEmail.get().getYongRoles();
+        Set<YongUsersRole> yongRoles = yongUser.getYongRoles();
         for(YongUsersRole yr : yongRoles){
-            System.out.println("yr : " + yr.getYongRole());
-            roleTypes.add(yr.getYongRole().getRoleType());         // 매핑 테이블 -> YongRole 테이블 접근 -> 필드 접근 -> 쿼리 수행됨
+            RoleType roleType = yr.getYongRole().getRoleType();
+            if(yongUserDTO.getRoleType().contains(roleType))  throw new IllegalStateException("user already has " + roleType);
         }
 
-        int size = byEmail.get().getYongRoles().size();
-        return roleTypes;
+        yongUser.addAuthorCd(allByRoleTypeIn);
     }
 
+    @Override
+    @Transactional(readOnly = false)
+    public void updateByLoginEmail(String email, YongUserDTO yongUserDTO) {
+        YongUser byEmail = yongUserRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("there is no user"));
+        List<YongRole> allByRoleTypeIn = yongRoleRepository.findAllByRoleTypeIn(yongUserDTO.getRoleType());
 
+        Set<YongUsersRole> yongRoles = byEmail.getYongRoles();
+        for(YongUsersRole yr : yongRoles){
+            RoleType roleType = yr.getYongRole().getRoleType();
+            if(yongUserDTO.getRoleType().contains(roleType))  throw new IllegalStateException("user already has " + roleType);
+        }
+
+        byEmail.addAuthorCd(allByRoleTypeIn);
+    }
 }

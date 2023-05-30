@@ -33,7 +33,7 @@ public class YongFileServiceImpl implements YongFileService {
                 .description(yongFileDTO.getDescription())
                 .build();
 
-        // 2. if dto has parent id -> find it -> if aprent is not null, then set
+        // 2. if dto has parent id -> find it -> if parent is not null, then set
         if(yongFileDTO.getParentFileId() != null){
             YongFile parentFile = yongFileRepository.findByIdAndDeleteYnIs(yongFileDTO.getParentFileId(), "N")
                     .orElseThrow(() -> new NoSuchElementException("there is no parent"));

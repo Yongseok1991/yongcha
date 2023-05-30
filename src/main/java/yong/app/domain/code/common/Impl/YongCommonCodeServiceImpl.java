@@ -2,7 +2,6 @@ package yong.app.domain.code.common.Impl;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yong.app.domain.code.common.*;
@@ -10,6 +9,7 @@ import yong.app.domain.code.group.YongGroupCode;
 import yong.app.domain.code.group.YongGroupCodeRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +34,7 @@ public class YongCommonCodeServiceImpl implements YongCommonCodeService{
         if(yongCommonCodeDTO.getYongGroupCodeId() == null) throw new NullPointerException("group code is null");
 
         YongGroupCode parentGroupCode = yongGroupCodeRepository.findByIdAndDeleteYnIs(yongCommonCodeDTO.getYongGroupCodeId(), "N")
-                .orElseThrow(() -> new UsernameNotFoundException("there is no group code"));
+                .orElseThrow(() -> new NoSuchElementException("there is no group code"));
 
         YongCommonCode yongCommonCode = YongCommonCode.insertCommonCodeBuilder()
                 .yongGroupCode(parentGroupCode)
@@ -50,7 +50,7 @@ public class YongCommonCodeServiceImpl implements YongCommonCodeService{
     @Override
     public YongCommonCodeVO show(Long id) {
         YongCommonCode yongCommonCode = yongCommonCodeRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("there is no common code"));
+                .orElseThrow(() -> new NoSuchElementException("there is no common code"));
         return modelMapper.map(yongCommonCode, YongCommonCodeVO.class);
     }
 
@@ -61,17 +61,17 @@ public class YongCommonCodeServiceImpl implements YongCommonCodeService{
         if(yongCommonCodeDTO.getYongGroupCodeId() == null) throw new NullPointerException("group code is null");
 
         YongGroupCode parentGroupCode = yongGroupCodeRepository.findByIdAndDeleteYnIs(yongCommonCodeDTO.getYongGroupCodeId(), "N")
-                .orElseThrow(() -> new UsernameNotFoundException("there is no group code"));
+                .orElseThrow(() -> new NoSuchElementException("there is no group code"));
         yongCommonCodeDTO.setYongGroupCode(parentGroupCode);
 
-        YongCommonCode yongCommonCode = yongCommonCodeRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("there is no common code"));
+        YongCommonCode yongCommonCode = yongCommonCodeRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no common code"));
         yongCommonCode.updateCommonCode(yongCommonCodeDTO);
     }
 
     @Override
     @Transactional(readOnly = false)
     public void delete(Long id) {
-        YongCommonCode yongCommonCode = yongCommonCodeRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("there is no common code"));
+        YongCommonCode yongCommonCode = yongCommonCodeRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no common code"));
         yongCommonCode.deleteCommonCode();
     }
 }
