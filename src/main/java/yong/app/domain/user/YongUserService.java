@@ -10,6 +10,8 @@ import java.util.Optional;
 
 public interface YongUserService {
 
+    List<YongUserVO> list();
+
     Optional<YongUser> findByEmail(String email);
 
     Long join(UserForm userForm);
