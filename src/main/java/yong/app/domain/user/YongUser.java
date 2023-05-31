@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import yong.app.domain.auth.RoleType;
 import yong.app.domain.auth.YongRole;
 import yong.app.domain.auth.YongUsersRole;
+// import yong.app.domain.base.Address;
 import yong.app.domain.base.Address;
 import yong.app.global.base.BaseTimeEntity;
 
@@ -51,7 +53,9 @@ public class YongUser extends BaseTimeEntity {
     @Column(name = "noti_yn")
     private String notiYn;
 
-
+    @Column(name = "enabled_yn")
+    @ColumnDefault("false")
+    private Boolean isEnabled;
     @Builder(builderMethodName = "joinProcBuilder")
     public YongUser(String email, List<YongRole> yongRole, String password) {
        //

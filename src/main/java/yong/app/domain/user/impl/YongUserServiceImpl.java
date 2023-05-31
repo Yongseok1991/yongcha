@@ -13,8 +13,12 @@ import yong.app.domain.auth.RoleType;
 import yong.app.domain.auth.YongRole;
 import yong.app.domain.auth.YongRoleRepository;
 import yong.app.domain.auth.YongUsersRole;
+import yong.app.domain.token.YongConfirmRespository;
+import yong.app.domain.token.YongConfirmToken;
+import yong.app.domain.token.YongConfirmTokenService;
 import yong.app.domain.user.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,6 +30,7 @@ public class YongUserServiceImpl implements YongUserService {
 
     private final YongUserRepository yongUserRepository;
     private final YongRoleRepository yongRoleRepository;
+    private final YongConfirmTokenService yongConfirmTokenService;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final ModelMapper modelMapper;
 
@@ -53,7 +58,7 @@ public class YongUserServiceImpl implements YongUserService {
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public Long join(YongUserDTO yongUserDTO) {
 
         List<YongRole> byRoleType = yongRoleRepository.findAllByRoleTypeIn(yongUserDTO.getRoleType())
@@ -68,9 +73,16 @@ public class YongUserServiceImpl implements YongUserService {
                 .password(bCryptPasswordEncoder.encode(yongUserDTO.getPassword()))
                 .yongRole(byRoleType)
                 .build();
+        YongUser savedUser = yongUserRepository.save(yongUser);
+        Long tokenId = yongConfirmTokenService.save(savedUser.getId());
 
-        YongUser save = yongUserRepository.save(yongUser);
-        return save.getId();
+        // TODO [get] confirm url 생성 후 이메일 send
+        return tokenId;
+    }
+
+    @Override
+    public int enabledYongUser(String email) {
+        return yongUserRepository.enableAppUser(email);
     }
 
     @Override
@@ -113,4 +125,24 @@ public class YongUserServiceImpl implements YongUserService {
 
         byEmail.addAuthorCd(allByRoleTypeIn);
     }
+
+    @Override
+    @Transactional
+    public void confirmToken(String token) {
+
+        YongConfirmToken byToken = yongConfirmTokenService.getToken(token)
+                .orElseThrow(() -> new IllegalStateException("token is not found."));
+
+        LocalDateTime expiredAt = byToken.getExpiredTime();
+
+        if (expiredAt.isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("token expired");
+            // TODO token 교체 발급 후 이메일 다시 전송하는 로직
+        }
+        yongConfirmTokenService.changeConfirmedTime(token);
+        this.enabledYongUser(byToken.getYongUser().getEmail());
+    }
+
+
+
 }
