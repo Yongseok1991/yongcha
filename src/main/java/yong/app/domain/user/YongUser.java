@@ -4,9 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import yong.app.domain.auth.RoleType;
 import yong.app.domain.auth.YongRole;
 import yong.app.domain.auth.YongUsersRole;
+// import yong.app.domain.base.Address;
 import yong.app.domain.base.Address;
 import yong.app.global.base.BaseTimeEntity;
 
@@ -19,6 +22,7 @@ import java.util.Set;
 @Table(name = "yong_user")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicInsert
 public class YongUser extends BaseTimeEntity {
 
     @Id
@@ -51,9 +55,11 @@ public class YongUser extends BaseTimeEntity {
     @Column(name = "noti_yn")
     private String notiYn;
 
-
+    @Column(name = "enabled_yn")
+    @ColumnDefault("false")
+    private Boolean isEnabled;
     @Builder(builderMethodName = "joinProcBuilder")
-    public YongUser(String email, List<YongRole> yongRole, String password) {
+    public YongUser(String email, List<YongRole> yongRole, String password, String nickname, Boolean isEnabled) {
        //
         for(YongRole yr : yongRole) {
             YongUsersRole yongUsersRole = YongUsersRole.joinAuthUserBuilder()
@@ -64,6 +70,8 @@ public class YongUser extends BaseTimeEntity {
         }
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
+        this.isEnabled = isEnabled;
     }
 
     // 권한 추가 메소드
