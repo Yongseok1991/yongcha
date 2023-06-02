@@ -43,13 +43,13 @@ public class YongUserController {
     }
 
     @GetMapping("/login/users")  // get login user info
-    public ResponseEntity<YongUserVO> showLoginUser(@AuthenticationPrincipal PrincipalDetails principalDetails){
-        YongUserVO map = modelMapper.map(principalDetails.getUser(), YongUserVO.class);
+    public ResponseEntity<YongUserRecord> showLoginUser(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        YongUserRecord map = modelMapper.map(principalDetails.getUser(), YongUserRecord.class);
         return ResponseEntity.ok(map);
     }
 
     @PostMapping("/users/join") // insert info
-    public ResponseEntity<Long> join(@RequestBody YongUserDTO yongUserDTO) {
+    public ResponseEntity<Long> join(@RequestBody YongUserRecord yongUserDTO) {
         Long joinId = yongUserService.join(yongUserDTO);
         return ResponseEntity.ok(joinId);
     }

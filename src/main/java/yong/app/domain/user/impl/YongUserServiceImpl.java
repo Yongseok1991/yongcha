@@ -44,29 +44,22 @@ public class YongUserServiceImpl implements YongUserService {
     }
 
     public Optional<YongUser> getEmail(String email) {
-        Optional<YongUser> byEmail = yongUserRepository.findByEmail(email);
-
-//        Set<YongUsersRole> yongRoles = byEmail.get().getYongRoles();
-//        for (YongUsersRole yongRole : yongRoles) {
-//            log.info("yongRole : {} ", yongRole.getYongRole()); // 매핑 테이블 -> YongRole 테이블 접근 -> 필드 접근 -> 쿼리 수행됨
-//        }
-
-        return byEmail;
+        return yongUserRepository.findByEmail(email);
     }
 
     @Override
     @Transactional
-    public Long join(YongUserDTO yongUserDTO) {
+    public Long join(YongUserRecord yongUserDTO) {
 
-        List<YongRole> byRoleType = new ArrayList<>(yongRoleRepository.findAllByRoleTypeIn(yongUserDTO.getRoleType()));
+        List<YongRole> byRoleType = new ArrayList<>(yongRoleRepository.findAllByRoleTypeIn(yongUserDTO.roleTypes()));
 
         if(byRoleType.isEmpty()){
             throw new NullPointerException("there is no role type");
         }
         // 권한 포함 insert
         YongUser yongUser = YongUser.joinProcBuilder()
-                .email(yongUserDTO.getEmail())
-                .password(bCryptPasswordEncoder.encode(yongUserDTO.getPassword()))
+                .email(yongUserDTO.email())
+                .password(bCryptPasswordEncoder.encode(yongUserDTO.password()))
                 .yongRole(byRoleType)
                 .build();
         YongUser savedUser = yongUserRepository.save(yongUser);
@@ -165,7 +158,4 @@ public class YongUserServiceImpl implements YongUserService {
         yongConfirmTokenService.changeConfirmedTime(token);
         this.enabledYongUser(byToken.getYongUser().getEmail());
     }
-
-
-
 }

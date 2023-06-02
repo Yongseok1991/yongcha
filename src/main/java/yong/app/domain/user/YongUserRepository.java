@@ -17,8 +17,11 @@ public interface YongUserRepository extends JpaRepository<YongUser, Long> {
 
     // 비활성화 상태인 유저를 인증된 유저로 변경
     @Modifying
-    @Query("UPDATE YongUser y " +
-            "SET y.isEnabled = TRUE" +
-            " WHERE y.email = :email")
+    @Query("""
+            UPDATE YongUser y
+              SET y.isEnabled = TRUE
+            WHERE y.email = :email
+            """
+    )
     int enableYongUser(@Param("email")String email);
 }
