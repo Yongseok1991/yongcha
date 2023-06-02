@@ -19,7 +19,6 @@ build/**
 out/**
 logs/**
 gradle/**
-*.log
 *.iws
 *.iml
 *.ipr
@@ -33,6 +32,9 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
+application-local.yml
+gradlew
+gradlew.bat
 
 ### VS Code ###
 .vscode/
