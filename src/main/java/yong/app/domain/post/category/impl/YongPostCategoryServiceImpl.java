@@ -38,9 +38,9 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
     public Long join(YongPostCategoryDTO yongPostCategoryDTO) {
 
         YongPostCategory yongPostCategory = YongPostCategory.insertPostCategory()
-                                .description(yongPostCategoryDTO.getDescription())
-                                .name(yongPostCategoryDTO.getName())
-                                .build();
+                .description(yongPostCategoryDTO.getDescription())
+                .name(yongPostCategoryDTO.getName())
+                .build();
 
         YongPostCategory savePostCategory = yongPostCategoryRepository.save(yongPostCategory);
 
@@ -51,7 +51,7 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
     @Transactional(readOnly = false)  // 변경이 필요한 메서드에서만 트랜잭션 readOnly false로 풀기
     public void update(Long id, YongPostCategoryDTO yongPostCategoryDTO) {
         YongPostCategory yongPostCategory = yongPostCategoryRepository.findById(id)
-                    .orElseThrow(() -> new NoSuchElementException("there is no post category"));
+                .orElseThrow(() -> new NoSuchElementException("there is no post category"));
 
         yongPostCategory.updateCategory(yongPostCategoryDTO);
     }

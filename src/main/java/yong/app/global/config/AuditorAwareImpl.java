@@ -11,12 +11,12 @@ import java.util.Optional;
 
 
 /**
-* @fileName AuditorAwareImpl
-* @author dahyeon
-* @version 1.0.0
-* @date 2023-05-02
-* @summary 등록자, 수정자 자동 바인딩 타입을 바꿔서 사용할 수 있음 ex) String, Long, Integer
-**/
+ * @fileName AuditorAwareImpl
+ * @author dahyeon
+ * @version 1.0.0
+ * @date 2023-05-02
+ * @summary 등록자, 수정자 자동 바인딩 타입을 바꿔서 사용할 수 있음 ex) String, Long, Integer
+ **/
 @Slf4j
 public class AuditorAwareImpl implements AuditorAware<Long> {
     @Override
@@ -24,8 +24,8 @@ public class AuditorAwareImpl implements AuditorAware<Long> {
     public Optional<Long> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         /*
-        *       TODO
-        *         regId, updtID가 ... 사용하는 곳만 바인딩하기 (보류)
+         *       TODO
+         *         regId, updtID가 ... 사용하는 곳만 바인딩하기 (보류)
          */
         if(authentication != null && !"anonymousUser".equals(authentication.getPrincipal())) {
             PrincipalDetails details = (PrincipalDetails) authentication.getPrincipal();

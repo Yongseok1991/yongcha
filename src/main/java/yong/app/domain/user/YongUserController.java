@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import yong.app.domain.auth.YongUsersRole;
+import yong.app.domain.token.YongConfirmTokenService;
 import yong.app.global.auth.PrincipalDetails;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Set;
 public class YongUserController {
     private final YongUserService yongUserService;
     private final YongUserRepository repository;
+    private final YongConfirmTokenService yongConfirmTokenService;
     private final ModelMapper modelMapper;
 
     // GET LIST
@@ -107,4 +109,12 @@ public class YongUserController {
         UserForm map = modelMapper.map(byEmail, UserForm.class);
         return ResponseEntity.ok().body(byEmail);
     }
+
+    @GetMapping(path = "/users/confirm-token")
+    public ResponseEntity<String> confirm(String token) {
+        yongUserService.confirmToken(token);
+        return ResponseEntity.ok("confirmed");
+    }
+
+
 }
