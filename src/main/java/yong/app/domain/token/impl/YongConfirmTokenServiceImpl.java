@@ -25,18 +25,17 @@ public class YongConfirmTokenServiceImpl implements YongConfirmTokenService {
     private final YongUserRepository yongUserRepository;
     @Override
     @Transactional
-    public Long save(Long yongUserId) {
+    public Long confirmTokenSave(Long yongUserId) {
 
         YongUser joinedUser = yongUserRepository.findById(yongUserId)
                 .orElseThrow(IllegalStateException::new);
 
         String token = UUID.randomUUID().toString();
-
+        // TODO localDateTime 형태에 대한 유틸 클래스 필요 ex) yyyy-MM-dd HH:mm:ss
         YongConfirmToken yongConfirmToken =
                 YongConfirmToken
                         .createTokenBuilder()
                         .token(token)
-                        .confirmTime(LocalDateTime.now())
                         .expiredTime(LocalDateTime.now().plusMinutes(60))
                         .yongUser(joinedUser)
                         .build();
@@ -53,6 +52,4 @@ public class YongConfirmTokenServiceImpl implements YongConfirmTokenService {
     public int changeConfirmedTime(String token) {
         return yongConfirmRespository.updateConfirmedAt(token, LocalDateTime.now());
     }
-
-
 }

@@ -37,10 +37,9 @@ public class YongConfirmToken extends BaseTimeEntity {
     private YongUser yongUser;
 
     @Builder(builderMethodName = "createTokenBuilder")
-    public YongConfirmToken(String token, LocalDateTime expiredTime, LocalDateTime confirmTime, YongUser yongUser) {
+    public YongConfirmToken(String token, LocalDateTime expiredTime, YongUser yongUser) {
         this.token = token;
         this.expiredTime = expiredTime;
-        this.confirmTime = confirmTime;
         this.yongUser = yongUser;
     }
 }

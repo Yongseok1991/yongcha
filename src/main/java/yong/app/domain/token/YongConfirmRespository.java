@@ -15,9 +15,10 @@ public interface YongConfirmRespository extends JpaRepository<YongConfirmToken, 
     @Query("UPDATE YongConfirmToken c " +
             "SET c.confirmTime = :confirmTime " +
             "WHERE c.token = :token")
-    int updateConfirmedAt(@Param("token")String token,
-                          @Param("confirmTime")LocalDateTime confirmTime);
-
+    int updateConfirmedAt(
+            @Param("token") String token,
+            @Param("confirmTime") LocalDateTime confirmTime
+    );
     Optional<YongConfirmToken> findByToken(String token);
 
 }

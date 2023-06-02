@@ -3,7 +3,6 @@ package yong.app.global.auth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yong.app.domain.auth.YongUsersRole;
@@ -21,7 +20,7 @@ public class PrincipalDetailsService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) {
-        Optional<YongUser> byEmail = yongUserService.findByEmail(email);
+        Optional<YongUser> byEmail = yongUserService.getEmail(email);
 
         if(byEmail.isPresent()) {
             YongUser yongUser = byEmail.get();
