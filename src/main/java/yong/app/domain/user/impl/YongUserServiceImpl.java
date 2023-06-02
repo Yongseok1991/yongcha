@@ -58,8 +58,7 @@ public class YongUserServiceImpl implements YongUserService {
     @Transactional
     public Long join(YongUserDTO yongUserDTO) {
 
-        List<YongRole> byRoleType = yongRoleRepository.findAllByRoleTypeIn(yongUserDTO.getRoleType())
-                .stream().collect(Collectors.toList());
+        List<YongRole> byRoleType = new ArrayList<>(yongRoleRepository.findAllByRoleTypeIn(yongUserDTO.getRoleType()));
 
         if(byRoleType.isEmpty()){
             throw new NullPointerException("there is no role type");
@@ -73,10 +72,7 @@ public class YongUserServiceImpl implements YongUserService {
         YongUser savedUser = yongUserRepository.save(yongUser);
 
         // 가입 후 토큰 발급
-        Long tokenId = yongConfirmTokenService.confirmTokenSave(savedUser.getId());
-
-        // TODO [get] confirm url 생성 후 이메일 send
-        return tokenId;
+        return yongConfirmTokenService.confirmTokenSave(savedUser.getId());
     }
 
     @Override

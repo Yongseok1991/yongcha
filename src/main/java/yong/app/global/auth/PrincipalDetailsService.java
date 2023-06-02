@@ -26,6 +26,5 @@ public class PrincipalDetailsService implements UserDetailsService {
                     return new PrincipalDetails(yongUser);
                 })
                 .orElseThrow(() -> new IllegalStateException("email is not found"));
-
     }
 }
