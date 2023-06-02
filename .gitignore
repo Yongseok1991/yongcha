@@ -33,8 +33,8 @@ out/
 /nbdist/
 /.nb-gradle/
 application-local.yml
-
-application-local.yml
+gradlew
+gradlew.bat
 ### VS Code ###
 .vscode/
 =======
