@@ -1,4 +1,4 @@
-package yong.app.domain.file;
+package yong.app.domain.file.file;
 
 import java.util.List;
 

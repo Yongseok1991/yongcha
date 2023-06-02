@@ -1,10 +1,12 @@
 package yong.app.domain.post.category;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -12,6 +14,7 @@ import java.util.List;
 public class YongPostCategoryController {
 
     private final YongPostCategoryService yongPostCategoryService;
+
     // GET LIST
     // - 리턴 : vo list
     // - 방법 : findAll -> vo로 변경

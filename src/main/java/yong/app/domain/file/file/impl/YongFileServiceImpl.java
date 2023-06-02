@@ -1,10 +1,13 @@
-package yong.app.domain.file.impl;
+package yong.app.domain.file.file.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yong.app.domain.file.*;
+import yong.app.domain.file.file.*;
+import yong.app.domain.file.group.YongFileGroup;
+import yong.app.domain.file.group.YongFileGroupRepository;
+import yong.app.domain.notification.type.YongNotificationType;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -16,34 +19,36 @@ import java.util.stream.Collectors;
 public class YongFileServiceImpl implements YongFileService {
 
     private final YongFileRepository yongFileRepository;
+    private final YongFileGroupRepository fileGroupRepository;
     private final ModelMapper modelMapper;
 
     @Override
     public List<YongFileVO> list() {
-        List<YongFile> findAll = yongFileRepository.findAllByParentIsNull();
+        List<YongFile> findAll = yongFileRepository.findAll();
         return findAll.stream().map(yongFile -> modelMapper.map(yongFile, YongFileVO.class)).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = false)
     public Long join(YongFileDTO yongFileDTO) {
+
+        if(yongFileDTO.getYongFileGroupId() == null) throw new NullPointerException("file group id is null");
+
+        YongFileGroup fileGroup = fileGroupRepository.findById(yongFileDTO.getYongFileGroupId()).orElseThrow(() -> new NoSuchElementException("there is no file group"));
+
         // 1. file builder
         YongFile yongFile = YongFile.insertFileBuilder()
+                .yongFileGroup(fileGroup)
                 .fileName(yongFileDTO.getFileName())
-                .description(yongFileDTO.getDescription())
+                .filePath(yongFileDTO.getFilePath())
+                .fileSize(yongFileDTO.getFileSize())
+                .fileType(yongFileDTO.getFileType())
                 .build();
 
-        // 2. if dto has parent id -> find it -> if parent is not null, then set
-        if(yongFileDTO.getParentFileId() != null){
-            YongFile parentFile = yongFileRepository.findByIdAndDeleteYnIs(yongFileDTO.getParentFileId(), "N")
-                    .orElseThrow(() -> new NoSuchElementException("there is no parent"));
-            yongFile = yongFile.toBuilder().parent(parentFile).build();
-        }
-
-        // 3. save it
+        // 2. save it
         YongFile saveFile = yongFileRepository.save(yongFile);
 
-        // 4. return id
+        // 3. return id
         return saveFile.getId();
     }
 
@@ -57,27 +62,22 @@ public class YongFileServiceImpl implements YongFileService {
     @Override
     @Transactional(readOnly = false)
     public void update(Long id, YongFileDTO yongFileDTO) {
-        // 1. if has parent -> find parent and set parent
-        if(yongFileDTO.getParentFileId() != null){
-            YongFile parentFile = yongFileRepository.findByIdAndDeleteYnIs(yongFileDTO.getParentFileId(), "N")
-                    .orElseThrow(() -> new NoSuchElementException("there is no parent"));
-            yongFileDTO.setParent(parentFile);
-        }
+
+        if(yongFileDTO.getYongFileGroupId() == null) throw new NullPointerException("file group id is null");
+
+        // 1. find file group
+        YongFileGroup fileGroup = fileGroupRepository.findById(yongFileDTO.getYongFileGroupId()).orElseThrow(() -> new NoSuchElementException("there is no file group"));
 
         // 2. then use update method
         YongFile findFile = yongFileRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no file"));
-        findFile.updateFile(yongFileDTO);
+
+        findFile.updateFile(yongFileDTO, fileGroup);
     }
 
     @Override
     @Transactional(readOnly = false)
     public void delete(Long id) {
         YongFile yongFile = yongFileRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no file"));
-
-        // if has child -> can't delete parent
-        if(!yongFile.getChild().isEmpty()){
-            throw new IllegalArgumentException("there is child yon can't delete it");
-        }
-        yongFile.deleteFile();
+        yongFileRepository.delete(yongFile);
     }
 }

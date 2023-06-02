@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yong.app.domain.post.category.*;
+import yong.app.domain.post.post.YongPost;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,13 +26,7 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
 
         List<YongPostCategory> postCategories = yongPostCategoryRepository.findAll();
 
-        // 결과값이 없을때, 반환 타입이 컬렉션이면 '빈 컬렉션'이 리턴됨이 보장된다.
-        // -> 그렇기 때문에 size가 0인 컬렉션이 반환된다.
-        // => 따라서 '!= null'와 같은 작업을 하지 말것!
-        // (추가) 단건 반환의 경우 결과 값이 없으면 null이 반환된다.
-        if(postCategories.isEmpty()){
-            throw new UsernameNotFoundException("there is no post category");
-        }
+        if(postCategories.isEmpty()) throw new UsernameNotFoundException("there is no post category");
 
         return postCategories.stream()
                 .map(category -> modelMapper.map(category, YongPostCategoryVO.class))
@@ -65,7 +60,6 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
     public YongPostCategoryVO show(Long id) {
         YongPostCategory yongPostCategory = yongPostCategoryRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("there is no post category"));
-
         return modelMapper.map(yongPostCategory, YongPostCategoryVO.class);
     }
 
@@ -74,7 +68,6 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
     public void delete(Long id) {
         YongPostCategory yongPostCategory = yongPostCategoryRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("there is no category"));
-
         yongPostCategory.deleteCategory();
     }
 }

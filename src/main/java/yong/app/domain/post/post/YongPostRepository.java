@@ -11,8 +11,10 @@ import java.util.Optional;
 public interface YongPostRepository extends JpaRepository<YongPost, Long> {
 
     @Override
-    @EntityGraph(attributePaths = {"postCategory", "yongFile"})
     List<YongPost> findAll();
+
+
+
 
 
     @EntityGraph(attributePaths = {"postCategory", "yongFile"})

@@ -22,6 +22,7 @@ public class YongCommentServiceImpl implements YongCommentService {
     private final YongCommentRepository yongCommentRepository;
     private final YongPostRepository yongPostRepository;
     private final ModelMapper modelMapper;
+
     @Override
     public List<YongCommentVO> list() {
         List<YongComment> yongComments = yongCommentRepository.findAll();

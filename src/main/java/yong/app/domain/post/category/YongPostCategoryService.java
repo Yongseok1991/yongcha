@@ -1,5 +1,7 @@
 package yong.app.domain.post.category;
 
+import yong.app.domain.post.post.YongPost;
+
 import java.util.List;
 
 public interface YongPostCategoryService {

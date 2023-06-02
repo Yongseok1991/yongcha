@@ -13,4 +13,6 @@ public interface YongPostService {
     YongPostVO show(Long id);
 
     void delete(Long id);
+
+//    YongPost findPost(Long id);
 }
