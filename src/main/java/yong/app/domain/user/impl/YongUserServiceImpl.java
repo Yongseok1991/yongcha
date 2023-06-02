@@ -82,7 +82,8 @@ public class YongUserServiceImpl implements YongUserService {
     @Override
     @Transactional
     public String kakaoJoin(KakaoUserDTO kakaoUserDTO) {
-        List<YongRole> byRoleType = yongRoleRepository.findAllByRoleTypeIn(List.of(RoleType.ROLE_USER));
+
+        List<YongRole> byRoleType = yongRoleRepository.findAllByRoleTypeIn(Arrays.asList(RoleType.ROLE_USER));
 
         if(byRoleType.isEmpty()){
             throw new NullPointerException("there is no role type");
