@@ -20,26 +20,26 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().headers().frameOptions().disable();
-        http.authorizeRequests()
-                .antMatchers("/user/**").authenticated()
-                // .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') or
-                // hasRole('ROLE_USER')")
-                // .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') and
-                // hasRole('ROLE_USER')")
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-                .anyRequest().permitAll()
-                .and()
-                .formLogin()
-                .usernameParameter("email")
-                .loginPage("/login")
-                .loginProcessingUrl("/loginProc")
-                .defaultSuccessUrl("/")
-                .and()
-                .oauth2Login()
-                .loginPage("/login")
-                .userInfoEndpoint()
-                .userService(principalOauth2UserService);
-
+        http
+            .authorizeRequests(authorize -> {
+                authorize
+                    .mvcMatchers("/user/**").authenticated()
+                    .mvcMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                    .anyRequest().permitAll();
+            })
+            .formLogin(formLoginConfigurer -> {
+                formLoginConfigurer
+                    .usernameParameter("email")
+                    .loginPage("/login")
+                    .loginProcessingUrl("/loginProc")
+                    .defaultSuccessUrl("/");
+            })
+            .oauth2Login(oAuth2LoginConfigurer -> {
+                oAuth2LoginConfigurer
+                    .loginPage("/login")
+                    .userInfoEndpoint()
+                    .userService(principalOauth2UserService);
+            });
         return http.build();
     }
 }
