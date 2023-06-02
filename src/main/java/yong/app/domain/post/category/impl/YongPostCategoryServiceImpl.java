@@ -32,7 +32,6 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
         if(postCategories.isEmpty()){
             throw new UsernameNotFoundException("there is no post category");
         }
-
         return postCategories.stream()
                 .map(category -> modelMapper.map(category, YongPostCategoryVO.class))
                 .collect(Collectors.toList());
@@ -78,4 +77,3 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
         yongPostCategory.deleteCategory();
     }
 }
-

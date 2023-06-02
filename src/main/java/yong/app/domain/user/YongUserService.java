@@ -10,7 +10,7 @@ public interface YongUserService {
 
     YongUserVO show(Long id); // show single user info
 
-    Optional<YongUser> findByEmail(String email); // use for login
+    Optional<YongUser> getEmail(String email); // use for login
 
     Long join(YongUserDTO yongUserDTO); // new login
 
@@ -19,4 +19,10 @@ public interface YongUserService {
     void updateById(Long id, YongUserDTO yongUserDTO); // update user by id
     void updateByLoginEmail(String email, YongUserDTO yongUserDTO); // update user by login info
 
+    int enabledYongUser(String email);
+
+    void confirmToken(String token);
+    String kakaoJoin(KakaoUserDTO kakaoUserDTO);
+
+    Optional<YongUser> getYongUserWithId(Long id);
 }
