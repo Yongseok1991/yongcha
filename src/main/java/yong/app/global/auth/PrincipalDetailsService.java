@@ -20,15 +20,12 @@ public class PrincipalDetailsService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) {
-        Optional<YongUser> byEmail = yongUserService.getEmail(email);
+        return yongUserService.getEmail(email)
+                .map(yongUser -> {
+                    yongUser.getYongRoles().forEach(role -> role.getYongRole().getRoleType());
+                    return new PrincipalDetails(yongUser);
+                })
+                .orElseThrow(() -> new IllegalStateException("email is not found"));
 
-        if(byEmail.isPresent()) {
-            YongUser yongUser = byEmail.get();
-            Set<YongUsersRole> yongRoles = yongUser.getYongRoles();
-            for (YongUsersRole yongRole : yongRoles) {
-                yongRole.getYongRole().getRoleType();
-            }
-        }
-        return new PrincipalDetails(byEmail.get());
     }
 }
