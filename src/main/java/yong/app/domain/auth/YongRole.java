@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name ="yong_role")
@@ -19,6 +21,9 @@ public class YongRole {
 
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
+
+    @OneToMany(mappedBy = "yongRole")
+    private List<YongUsersRole> yongUsersRoles = new ArrayList<>();
 
     private String description;
 
