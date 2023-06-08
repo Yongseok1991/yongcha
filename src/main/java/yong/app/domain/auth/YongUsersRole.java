@@ -1,6 +1,4 @@
 package yong.app.domain.auth;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
@@ -36,8 +34,6 @@ public class YongUsersRole extends BaseTimeEntity {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "yong_user_id")
     private YongUser yongUser;
-
-
 
     @Builder(builderMethodName = "joinAuthUserBuilder")
     public YongUsersRole(YongRole yongRole, YongUser yongUser) {
