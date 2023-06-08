@@ -46,8 +46,8 @@ public class YongUserController {
     // - 리턴 : vo
     // - 방법 : principalDetails에서 user가져와 모델매퍼를 통해 vo로 변경
     @GetMapping("/login/users")  // get login user info
-    public ResponseEntity<YongUserVO> showLoginUser(@AuthenticationPrincipal PrincipalDetails principalDetails){
-        YongUserVO map = modelMapper.map(principalDetails.getUser(), YongUserVO.class);
+    public ResponseEntity<YongUserRecord> showLoginUser(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        YongUserRecord map = modelMapper.map(principalDetails.getUser(), YongUserRecord.class);
         return ResponseEntity.ok(map);
     }
 
@@ -58,7 +58,7 @@ public class YongUserController {
     //         (3) 1 user의 builder에서 각각의 user-role에 대해 builder 생성
     //         (4) save (cascade : all)
     @PostMapping("/users/join") // insert info
-    public ResponseEntity<Long> join(@RequestBody YongUserDTO yongUserDTO) {
+    public ResponseEntity<Long> join(@RequestBody YongUserRecord yongUserDTO) {
         Long joinId = yongUserService.join(yongUserDTO);
         return ResponseEntity.ok(joinId);
     }

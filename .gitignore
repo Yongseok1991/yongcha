@@ -35,6 +35,7 @@ out/
 application-local.yml
 gradlew
 gradlew.bat
+
 ### VS Code ###
 .vscode/
 =======

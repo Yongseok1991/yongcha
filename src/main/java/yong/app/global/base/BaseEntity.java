@@ -3,16 +3,14 @@ package yong.app.global.base;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import yong.app.domain.user.YongUser;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
 
 @Getter
 @EntityListeners(value = {AuditingEntityListener.class}) // Auditing 적용 에너테이션
@@ -27,6 +25,5 @@ public class BaseEntity extends BaseTimeEntity {
     @LastModifiedBy
     @Schema(name = "수정자", description = "수정자" , hidden = true)
     private Long updtId;
-
 
 }
