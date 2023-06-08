@@ -12,7 +12,7 @@ public interface YongUserService {
 
     Optional<YongUser> getEmail(String email); // use for login
 
-    Long join(YongUserDTO yongUserDTO); // new login
+    Long join(YongUserRecord yongUserDTO); // new login
 
     void update(YongUserDTO yongUserDTO);
 

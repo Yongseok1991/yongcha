@@ -21,6 +21,7 @@ public class KakaoUserDTO {
         if (oAuth2User != null) {
             this.attributes = oAuth2User.getAttributes();
             Map<String, Object> kakaoAccount = oAuth2User.getAttribute("kakao_account");
+            assert kakaoAccount != null;
             LinkedHashMap profile = (LinkedHashMap) kakaoAccount.get("profile");
             this.email = (String) kakaoAccount.get("email");
             this.nickname = (String) profile.get("nickname");

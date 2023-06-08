@@ -10,5 +10,6 @@ import java.util.Set;
 public class YongUserVO {
     private Long id;
     private String email;
+    private String nickname;
     private Set<YongRoleVO> roles;
 }
