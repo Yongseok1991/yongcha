@@ -1,7 +1,6 @@
 package yong.app.domain.moving.company.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yong.app.domain.base.YongFileCommon;
@@ -10,7 +9,6 @@ import yong.app.domain.moving.company.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,13 +16,12 @@ import java.util.stream.Collectors;
 public class YongMovingCompanyServiceImpl implements YongMovingCompanyService {
 
     private final YongMovingCompanyRepository movingCompanyRepository;
-    private final ModelMapper modelMapper;
     private final YongFileCommon yongFileCommon;
 
     @Override
     public List<YongMovingCompanyVO> list() {
         List<YongMovingCompany> all = movingCompanyRepository.findAll();
-        return all.stream().map(moving -> modelMapper.map(moving, YongMovingCompanyVO.class)).collect(Collectors.toList());
+        return all.stream().map(YongMovingCompanyVO::new).toList();
     }
 
     @Override
@@ -48,7 +45,7 @@ public class YongMovingCompanyServiceImpl implements YongMovingCompanyService {
     @Override
     public YongMovingCompanyVO show(Long id) {
         YongMovingCompany company = movingCompanyRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no company"));
-        return modelMapper.map(company, YongMovingCompanyVO.class);
+        return new YongMovingCompanyVO(company);
     }
 
     @Override

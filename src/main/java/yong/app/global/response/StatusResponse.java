@@ -74,6 +74,7 @@ public class StatusResponse {
         validErrors.add(new FieldsError(objectName, field, message));
     }
 
+
     @Getter
     @AllArgsConstructor
     public static class FieldsError {

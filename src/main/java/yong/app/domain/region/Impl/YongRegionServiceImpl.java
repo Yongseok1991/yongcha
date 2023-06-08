@@ -1,7 +1,6 @@
 package yong.app.domain.region.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yong.app.domain.region.*;
@@ -10,22 +9,19 @@ import yong.app.domain.user.YongUserRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = false)
 public class YongRegionServiceImpl implements YongRegionService {
 
-    private final ModelMapper modelMapper;
     private final YongRegionRepository yongRegionRepository;
     private final YongUserRepository yongUserRepository;
 
     @Override
     public List<YongRegionVO> list() {
         List<YongRegion> all = yongRegionRepository.findAll();
-        return all.stream().map(yongRegion -> modelMapper.map(yongRegion, YongRegionVO.class)).collect(Collectors.toList());
+        return all.stream().map(YongRegionVO::new).toList();
     }
 
     @Override
@@ -52,7 +48,7 @@ public class YongRegionServiceImpl implements YongRegionService {
     @Override
     public List<YongRegionVO> showByLoginEmail(String email) {
         List<YongRegion> byYongUserEmail = yongRegionRepository.findByYongUserEmail(email);
-        return byYongUserEmail.stream().map(yongRegion -> modelMapper.map(yongRegion, YongRegionVO.class)).collect(Collectors.toList());
+        return byYongUserEmail.stream().map(YongRegionVO::new).toList();
     }
 
     @Override

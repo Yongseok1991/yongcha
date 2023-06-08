@@ -1,8 +1,9 @@
 package yong.app.domain.post.post;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import yong.app.global.response.StatusCode;
+import yong.app.global.response.StatusResponse;
 
 import java.util.List;
 
@@ -13,15 +14,17 @@ public class YongPostController {
 
     private final YongPostService yongPostService;
     @GetMapping("/test/querydsl")
-    public ResponseEntity<List<YongPostVO>> querydsl(){
+    public StatusResponse querydsl(){
         List<YongPostVO> list = yongPostService.testQueryDSL();
-        return ResponseEntity.ok(list);
+        if(list.isEmpty()) return new StatusResponse(StatusCode.NO_CONTENT);
+        return new StatusResponse(StatusCode.SUCCESS, list, "전체 게시글 조회 by querydsl");
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<List<YongPostVO>> list(){
+    public StatusResponse list(){
         List<YongPostVO> list = yongPostService.list();
-        return ResponseEntity.ok(list);
+        if(list.isEmpty()) return new StatusResponse(StatusCode.NO_CONTENT);
+        return new StatusResponse(StatusCode.SUCCESS, list, "전체 게시글 조회");
     }
 
 
@@ -29,9 +32,10 @@ public class YongPostController {
     // - 리턴 : vo list
     // - 방법 : findAlll -> 모델매퍼를 통해 vo로 변경
     @GetMapping("/posts/with/files/comments")
-    public ResponseEntity<List<YongPostVO>> listWithFilesAndComments(){
+    public StatusResponse listWithFilesAndComments(){
         List<YongPostVO> list = yongPostService.listWithFilesAndComments();
-        return ResponseEntity.ok(list);
+        if(list.isEmpty()) return new StatusResponse(StatusCode.NO_CONTENT);
+        return new StatusResponse(StatusCode.SUCCESS, list, "전체 게시글 조회 with 댓글, 파일들");
     }
 
 
@@ -40,9 +44,9 @@ public class YongPostController {
     // - 방법 : builder 이용 -> 무조건 부모가 있어야함 / file의 경우 있고 없고를 분기처리
     //         (if) file 있다면 -> fileAdd with parent
     @PostMapping("/posts")
-    public ResponseEntity<Long> insert(@RequestBody YongPostDTO yongPostDTO){
+    public StatusResponse insert(@RequestBody YongPostDTO yongPostDTO){
         Long joinId = yongPostService.join(yongPostDTO);
-        return ResponseEntity.ok(joinId);
+        return new StatusResponse(StatusCode.SUCCESS, joinId, "게시글 생성 성공");
     }
 
 
@@ -52,9 +56,9 @@ public class YongPostController {
     //          (1) file 있다면 -> parentFileId 있는지 유무로 분기
     //          (2) parentFileId 있다면 -> 해당 parentId를
     @PutMapping("/posts/{id}")
-    public ResponseEntity<String> update(@PathVariable("id") Long id, @RequestBody YongPostDTO yongPostDTO){
+    public StatusResponse update(@PathVariable("id") Long id, @RequestBody YongPostDTO yongPostDTO){
         yongPostService.update(id, yongPostDTO);
-        return ResponseEntity.ok("updated!!");
+        return new StatusResponse(StatusCode.SUCCESS);
     }
 
 
@@ -62,24 +66,24 @@ public class YongPostController {
     // - 리턴 : vo
     // - 방법 : findById -> 모델매퍼를 통해 VO로 변경
     @GetMapping("/posts/{id}")
-    public ResponseEntity<YongPostVO> show(@PathVariable("id") Long id){
+    public StatusResponse show(@PathVariable("id") Long id){
         YongPostVO findPost = yongPostService.show(id);
-        return ResponseEntity.ok(findPost);
+        return new StatusResponse(StatusCode.SUCCESS, findPost, "게시글 단건 조회");
     }
 
     @GetMapping("/posts/with/files/comments/{id}")
-    public ResponseEntity<YongPostVO> showWithFilesAndComments(@PathVariable("id") Long id){
+    public StatusResponse showWithFilesAndComments(@PathVariable("id") Long id){
         YongPostVO findPost = yongPostService.showWithFilesAndComments(id);
-        return ResponseEntity.ok(findPost);
+        return new StatusResponse(StatusCode.SUCCESS, findPost, "게시글 단건 조회 with 댓글,파일들");
     }
 
     // DELETE
     // - 리턴 : void
     // - 방법 : findById -> delete (delete_yn 컬럼 to 'Y')
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id){
+    public StatusResponse delete(@PathVariable("id") Long id){
         yongPostService.delete(id);
-        return ResponseEntity.ok("deleted!!");
+        return new StatusResponse(StatusCode.SUCCESS);
     }
 
 }

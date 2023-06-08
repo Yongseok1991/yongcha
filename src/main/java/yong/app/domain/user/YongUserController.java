@@ -3,16 +3,14 @@ package yong.app.domain.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import yong.app.domain.auth.YongUsersRole;
 import yong.app.domain.token.YongConfirmTokenService;
 import yong.app.global.auth.PrincipalDetails;
+import yong.app.global.response.StatusCode;
+import yong.app.global.response.StatusResponse;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -22,33 +20,34 @@ public class YongUserController {
     private final YongUserService yongUserService;
     private final YongUserRepository repository;
     private final YongConfirmTokenService yongConfirmTokenService;
-    private final ModelMapper modelMapper;
 
     // GET LIST
     // - 리턴 : vo list
     // - 방법 : findAll -> 모델매퍼를 통해 vo list로 변경
     @GetMapping("/users") // get users info list
-    public ResponseEntity<List<YongUserVO>> list(){
+    public StatusResponse list(){
         List<YongUserVO> list = yongUserService.list();
-        return ResponseEntity.ok(list);
+        if(list.isEmpty()) return new StatusResponse(StatusCode.NO_CONTENT);
+        return new StatusResponse(StatusCode.SUCCESS, list, "전체 유저 리스트 조회");
     }
 
     // GET ONE by ID
     // - 리턴 : vo
     // - 방법 : findById -> 모델매펄르 통해 vo로 변경
     @GetMapping("/users/{id}") // get user info by id
-    public ResponseEntity<YongUserVO> show(@PathVariable("id") Long id){
+    public StatusResponse show(@PathVariable("id") Long id){
         YongUserVO show = yongUserService.show(id);
-        return ResponseEntity.ok(show);
+        return new StatusResponse(StatusCode.SUCCESS, show, "유저 단건 조회");
     }
 
     // GET ONE by LOGIN EMAIL
     // - 리턴 : vo
     // - 방법 : principalDetails에서 user가져와 모델매퍼를 통해 vo로 변경
     @GetMapping("/login/users")  // get login user info
-    public ResponseEntity<YongUserRecord> showLoginUser(@AuthenticationPrincipal PrincipalDetails principalDetails){
-        YongUserRecord map = modelMapper.map(principalDetails.getUser(), YongUserRecord.class);
-        return ResponseEntity.ok(map);
+    public StatusResponse showLoginUser(@AuthenticationPrincipal PrincipalDetails principalDetails){
+//        YongUserRecord map = modelMapper.map(principalDetails.getUser(), YongUserRecord.class);
+        YongUserVO yongUserVO = new YongUserVO(principalDetails.getUser());
+        return new StatusResponse(StatusCode.SUCCESS, yongUserVO, "로그인한 유저 단건 조회");
     }
 
     // INSERT
@@ -58,9 +57,9 @@ public class YongUserController {
     //         (3) 1 user의 builder에서 각각의 user-role에 대해 builder 생성
     //         (4) save (cascade : all)
     @PostMapping("/users/join") // insert info
-    public ResponseEntity<Long> join(@RequestBody YongUserRecord yongUserDTO) {
+    public StatusResponse join(@RequestBody YongUserRecord yongUserDTO) {
         Long joinId = yongUserService.join(yongUserDTO);
-        return ResponseEntity.ok(joinId);
+        return new StatusResponse(StatusCode.SUCCESS, joinId, "유저 생성");
     }
 
     // UPDATE by ID
@@ -70,9 +69,9 @@ public class YongUserController {
     //         (3) if : 가지고 있다면 exception
     //         (4) else : 변경 메서드를 통해 update (추가되는 권한에 대해서는 builder을 통해 매핑 테이릅에도 추가)
     @PutMapping("/users/join/{id}") // update user by id
-    public ResponseEntity<String> updateById(@PathVariable Long id, @RequestBody YongUserDTO yongUserDTO) {
+    public StatusResponse updateById(@PathVariable Long id, @RequestBody YongUserDTO yongUserDTO) {
         yongUserService.updateById(id, yongUserDTO);
-        return ResponseEntity.ok("updated by id!!");
+        return new StatusResponse(StatusCode.SUCCESS);
     }
 
     // UPDATE by Login Email
@@ -82,39 +81,31 @@ public class YongUserController {
     //         (3) if : 가지고 있다면 exception
     //         (4) else : 변경 메서드를 통해 update (추가되는 권한에 대해서는 builder을 통해 매핑 테이릅에도 추가)
     @PutMapping("/users/login/join") // update user by login info
-    public ResponseEntity<String> updateByLoginEmail(@RequestBody YongUserDTO yongUserDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public StatusResponse updateByLoginEmail(@RequestBody YongUserDTO yongUserDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         String email = principalDetails.getUser().getEmail();
         System.out.println("email = " + email);
         yongUserService.updateByLoginEmail(email, yongUserDTO);
-        return ResponseEntity.ok("updated by email!!");
+        return new StatusResponse(StatusCode.SUCCESS);
     }
 
     @PutMapping("/users/join/add")
-    public ResponseEntity addAuthor(@RequestBody YongUserDTO yongUserDTO) {
+    public StatusResponse addAuthor(@RequestBody YongUserDTO yongUserDTO) {
         yongUserService.update(yongUserDTO);
-        return ResponseEntity.ok(true);
+        return new StatusResponse(StatusCode.SUCCESS);
     }
 
     @GetMapping("/users/find")
-    private ResponseEntity<YongUser> findByEmail(String email) {
+    private StatusResponse findByEmail(String email) {
         YongUser byEmail = repository.findByEmail(email)
                 .orElseThrow(() -> new IllegalStateException("no user"));
-
         log.info(byEmail.getEmail());
 
-//        Set<YongUsersRole> yongRoles = byEmail.getYongRoles();
-//        for (YongUsersRole yongRole : yongRoles) {
-//            log.info("yongRole: {}", yongRole.getYongRole().getRoleType());
-//        }
-        UserForm map = modelMapper.map(byEmail, UserForm.class);
-        return ResponseEntity.ok().body(byEmail);
+        return new StatusResponse(StatusCode.SUCCESS, byEmail, "로그인한 유저 정보 조회");
     }
 
     @GetMapping(path = "/users/confirm-token")
-    public ResponseEntity<String> confirm(String token) {
+    public StatusResponse confirm(String token) {
         yongUserService.confirmToken(token);
-        return ResponseEntity.ok("confirmed");
+        return new StatusResponse(StatusCode.SUCCESS, "confirmed");
     }
-
-
 }

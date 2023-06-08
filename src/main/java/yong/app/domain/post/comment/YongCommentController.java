@@ -1,11 +1,9 @@
 package yong.app.domain.post.comment;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import yong.app.domain.post.comment.Impl.YongCommentServiceImpl;
-import yong.app.domain.post.post.YongPost;
-import yong.app.domain.post.post.YongPostVO;
+import yong.app.global.response.StatusCode;
+import yong.app.global.response.StatusResponse;
 
 import java.util.List;
 
@@ -17,32 +15,33 @@ public class YongCommentController {
     private final YongCommentService yongCommentService;
 
     @GetMapping("/comments")
-    public ResponseEntity<List<YongCommentVO>> list(){
+    public StatusResponse list(){
         List<YongCommentVO> list = yongCommentService.list();
-        return ResponseEntity.ok(list);
+        if(list.isEmpty()) return new StatusResponse(StatusCode.NO_CONTENT);
+        return new StatusResponse(StatusCode.SUCCESS, list, "전체 댓글 조회");
     }
 
     @PostMapping("/comments")
-    public ResponseEntity<Long> save(@RequestBody YongCommentDTO yongCommentDTO){
+    public StatusResponse save(@RequestBody YongCommentDTO yongCommentDTO){
         Long joinId = yongCommentService.join(yongCommentDTO);
-        return ResponseEntity.ok(joinId);
+        return new StatusResponse(StatusCode.SUCCESS, joinId, "댓글 생성 성공");
     }
 
     @GetMapping("/comments/{id}")
-    public ResponseEntity<YongCommentVO> show(@PathVariable("id") Long id){
+    public StatusResponse show(@PathVariable("id") Long id){
         YongCommentVO show = yongCommentService.show(id);
-        return ResponseEntity.ok(show);
+        return new StatusResponse(StatusCode.SUCCESS, show, "댓글 단일건 조회");
     }
 
     @PutMapping("/comments/{id}")
-    public ResponseEntity<String> update(@PathVariable("id") Long id, @RequestBody YongCommentDTO yongCommentDTO){
+    public StatusResponse update(@PathVariable("id") Long id, @RequestBody YongCommentDTO yongCommentDTO){
         yongCommentService.update(id, yongCommentDTO);
-        return ResponseEntity.ok("updated!!");
+        return new StatusResponse(StatusCode.SUCCESS);
     }
 
     @DeleteMapping("/comments/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id){
+    public StatusResponse delete(@PathVariable("id") Long id){
         yongCommentService.delete(id);
-        return ResponseEntity.ok("deleted!!");
+        return new StatusResponse(StatusCode.SUCCESS);
     }
 }

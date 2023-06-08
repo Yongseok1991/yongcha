@@ -14,6 +14,14 @@ public class YongNotificationVO {
     private String read;
     private String referenceId;
     private String referenceUrl;
-    private YongUserVO yongUser;
     private YongNotificationTypeVO yongNotificationType;
+
+    public YongNotificationVO(YongNotification yongNotification) {
+        this.id = yongNotification.getId();
+        this.message = yongNotification.getMessage();
+        this.read = yongNotification.getRead();
+        this.referenceId = yongNotification.getReferenceId();
+        this.referenceUrl = yongNotification.getReferenceUrl();
+        this.yongNotificationType = new YongNotificationTypeVO(yongNotification.getYongNotificationType());
+    }
 }

@@ -1,7 +1,6 @@
 package yong.app.domain.notification.notification.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yong.app.domain.notification.notification.*;
@@ -12,7 +11,6 @@ import yong.app.domain.user.YongUserRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,12 +20,11 @@ public class YongNotificationServiceImpl implements YongNotificationService {
     private final YongNotificationRepository notifyRepositoty;
     private final YongNotificationTypeRepository notifyTypeRepository;
     private final YongUserRepository yongUserRepository;
-    private final ModelMapper modelMapper;
 
     @Override
     public List<YongNotificationVO> list() {
         List<YongNotification> all = notifyRepositoty.findAll();
-        return all.stream().map(yongNotification -> modelMapper.map(yongNotification, YongNotificationVO.class)).collect(Collectors.toList());
+        return all.stream().map(YongNotificationVO::new).toList();
     }
 
     @Override
@@ -57,13 +54,13 @@ public class YongNotificationServiceImpl implements YongNotificationService {
     @Override
     public YongNotificationVO showById(Long id) {
         YongNotification yongNotification = notifyRepositoty.findById(id).orElseThrow(() -> new NoSuchElementException("there is no notification"));
-        return modelMapper.map(yongNotification, YongNotificationVO.class);
+        return new YongNotificationVO(yongNotification);
     }
 
     @Override
     public List<YongNotificationVO> showUserNotify(String email) {
         List<YongNotification> userNotifies = notifyRepositoty.findByYongUserEmail(email);
-        return userNotifies.stream().map(notify -> modelMapper.map(notify, YongNotificationVO.class)).collect(Collectors.toList());
+        return userNotifies.stream().map(YongNotificationVO::new).toList();
     }
 
     @Override

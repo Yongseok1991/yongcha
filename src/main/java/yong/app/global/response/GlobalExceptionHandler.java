@@ -1,7 +1,5 @@
 package yong.app.global.response;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -76,17 +74,15 @@ public class GlobalExceptionHandler {
      * Developer Custom Exception: 직접 정의한 RestApiException 에러 클래스에 대한 예외 처리
      */
     @ExceptionHandler(RestApiException.class)
-    protected ResponseEntity<StatusResponse> handleCustomException(RestApiException ex) {
+    protected StatusResponse handleCustomException(RestApiException ex) {
         StatusCode statusCode = ex.getStatusCode();
         return handleExceptionInternal(statusCode);
-    };
+    }
 
     /*
      * handleExceptionInternal() 메소드를 오버라이딩해 응답 커스터마이징
      */
-    private ResponseEntity<StatusResponse> handleExceptionInternal(StatusCode statusCode) {
-        return ResponseEntity
-                .status(statusCode.getHttpStatus().value())
-                .body(new StatusResponse(statusCode));
+    private StatusResponse handleExceptionInternal(StatusCode statusCode) {
+        return new StatusResponse(statusCode);
     }
 }
