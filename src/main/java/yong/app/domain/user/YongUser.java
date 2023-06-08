@@ -1,15 +1,14 @@
 package yong.app.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import yong.app.domain.auth.RoleType;
 import yong.app.domain.auth.YongRole;
 import yong.app.domain.auth.YongUsersRole;
-// import yong.app.domain.base.Address;
 import yong.app.domain.base.Address;
 import yong.app.global.base.BaseTimeEntity;
 
