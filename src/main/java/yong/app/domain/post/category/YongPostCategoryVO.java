@@ -11,4 +11,10 @@ public class YongPostCategoryVO {
     private String description;
     private String deleteYn;
 
+    public YongPostCategoryVO(YongPostCategory yongPostCategory) {
+        this.id = yongPostCategory.getId();
+        this.name = yongPostCategory.getName();
+        this.description = yongPostCategory.getDescription();
+        this.deleteYn = yongPostCategory.getDeleteYn();
+    }
 }

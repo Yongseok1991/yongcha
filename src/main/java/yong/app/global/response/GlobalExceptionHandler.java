@@ -1,5 +1,6 @@
 package yong.app.global.response;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -28,41 +29,29 @@ public class GlobalExceptionHandler {
      *  - MethodArgumentNotValidException : 'DTO'에 붙은 validation에 대해 핸들링
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<StatusResponse> handleValidationException(MethodArgumentNotValidException ex){
+    protected StatusResponse handleValidationException(MethodArgumentNotValidException ex){
         BindingResult bindingResult = ex.getBindingResult();
 
-        StatusResponse statusResponse = new StatusResponse();
-        statusResponse.setMessage("validation failed");
-        statusResponse.setStatusCode(400);
-
+        StatusResponse statusResponse = new StatusResponse(StatusCode.FORBIDDEN_ACCESS, "벨리데이션 오류야");
         if(bindingResult.hasErrors()) {
             for(FieldError fieldError : bindingResult.getFieldErrors()) {
                 statusResponse.addError(fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage());
             }
         }
-
-        return ResponseEntity
-                .status(statusResponse.getStatusCode())
-                .body(statusResponse);
+        return statusResponse;
     }
 
     @ExceptionHandler(BindException.class)
-    protected ResponseEntity<StatusResponse> handleValidationException(BindException ex){
+    protected StatusResponse handleValidationException(BindException ex){
         BindingResult bindingResult = ex.getBindingResult();
 
-        StatusResponse statusResponse = new StatusResponse();
-        statusResponse.setMessage("validation failed");
-        statusResponse.setStatusCode(400);
-
+        StatusResponse statusResponse = new StatusResponse(StatusCode.BAD_REQUEST, "벨리데이션 오류야");
         if(bindingResult.hasErrors()) {
             for(FieldError fieldError : bindingResult.getFieldErrors()) {
                 statusResponse.addError(fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage());
             }
         }
-
-        return ResponseEntity
-                .status(statusResponse.getStatusCode())
-                .body(statusResponse);
+        return statusResponse;
     }
 
     /*
@@ -70,11 +59,8 @@ public class GlobalExceptionHandler {
      *  - ConstraintViolationException : 'Entity'에 붙은 validation에 대해 핸들링
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    protected ResponseEntity<StatusResponse> validationException(ConstraintViolationException e){
-        StatusResponse statusResponse = new StatusResponse();
-        statusResponse.setMessage("validation failed");
-        statusResponse.setStatusCode(400);
-
+    protected StatusResponse validationException(ConstraintViolationException e){
+        StatusResponse statusResponse = new StatusResponse(StatusCode.BAD_REQUEST, "벨리데이션 오류야");
         if(!e.getConstraintViolations().isEmpty()) {
             for(ConstraintViolation constraintViolation : e.getConstraintViolations()) {
                 // object-name , field, message
@@ -83,9 +69,7 @@ public class GlobalExceptionHandler {
             }
         }
 
-        return ResponseEntity
-                .status(statusResponse.getStatusCode())
-                .body(statusResponse);
+        return statusResponse;
     }
 
     /*

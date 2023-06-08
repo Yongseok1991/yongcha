@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import yong.app.global.auth.PrincipalDetails;
+import yong.app.global.util.UserUtil;
 
 import java.util.Optional;
 
@@ -27,11 +28,11 @@ public class AuditorAwareImpl implements AuditorAware<Long> {
          *       TODO
          *         regId, updtID가 ... 사용하는 곳만 바인딩하기 (보류)
          */
-        if(authentication != null && !"anonymousUser".equals(authentication.getPrincipal())) {
+        if(UserUtil.isAuthenticated(authentication)) {
             PrincipalDetails details = (PrincipalDetails) authentication.getPrincipal();
-            return Optional.ofNullable(details.getId());             // ofNullable : return null
+            return Optional.of(details.getId());             // ofNullable : return null
         } else {
-            return null;
+            throw new IllegalStateException("id is not found");
             // TODO : redirect to login page.... (move Back/to login page)
         }
     }

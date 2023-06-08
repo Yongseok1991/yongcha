@@ -1,4 +1,4 @@
-package yong.app.domain.file;
+package yong.app.domain.file.file;
 
 import java.util.List;
 
@@ -13,4 +13,6 @@ public interface YongFileService {
     void update(Long id, YongFileDTO yongFileDTO);
 
     void delete(Long id);
+
+    List<YongFileVO> findFilesByFileGroupId(Long fileGroupId);
 }
