@@ -10,5 +10,10 @@ public class YongMovingCompanyVO {
     private Long id;
     private String name;
     private String description;
-    private YongFileVO yongFile;
+
+    public YongMovingCompanyVO(YongMovingCompany yongMovingCompany) {
+        this.id = yongMovingCompany.getId();
+        this.name = yongMovingCompany.getName();
+        this.description = yongMovingCompany.getDescription();
+    }
 }

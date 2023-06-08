@@ -1,7 +1,6 @@
 package yong.app.domain.file.group;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yong.app.global.response.StatusCode;
 import yong.app.global.response.StatusResponse;
@@ -62,9 +61,9 @@ public class YongFileGroupController {
     // - 리턴 : void
     // - 방법 : findById -> 변경메서드를 통해 변경
     @PutMapping("/file/groups/{id}")
-    public ResponseEntity<String> update(@PathVariable("id") Long id, @RequestBody YongFileGroupDTO yongFileGroupDTO){
+    public StatusResponse update(@PathVariable("id") Long id, @RequestBody YongFileGroupDTO yongFileGroupDTO){
         fileGroupService.update(id, yongFileGroupDTO);
-        return ResponseEntity.ok("updated!!");
+        return new StatusResponse(StatusCode.SUCCESS);
     }
 
 }

@@ -1,7 +1,6 @@
 package yong.app.domain.region.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yong.app.domain.region.*;
@@ -10,8 +9,6 @@ import yong.app.domain.user.YongUserRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

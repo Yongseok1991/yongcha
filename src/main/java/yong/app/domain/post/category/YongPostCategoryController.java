@@ -1,14 +1,11 @@
 package yong.app.domain.post.category;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yong.app.global.response.StatusCode;
 import yong.app.global.response.StatusResponse;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
