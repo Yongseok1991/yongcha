@@ -9,6 +9,10 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import yong.app.domain.user.YongUser;
+import yong.app.global.auth.PrincipalDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -28,5 +32,8 @@ public class BaseEntity extends BaseTimeEntity {
     @Schema(name = "수정자", description = "수정자" , hidden = true)
     private Long updtId;
 
-
+    public void addUserKey(YongUser user) {
+        this.regId = user.getId();
+        this.updtId = user.getId();
+    }
 }

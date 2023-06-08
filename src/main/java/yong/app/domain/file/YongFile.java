@@ -56,6 +56,7 @@ public class YongFile extends BaseTimeEntity {
     }
 
     public void updateFile(YongFileDTO yongFileDTO){
+
         if(yongFileDTO.getFileName() != null) this.fileName = yongFileDTO.getFileName();
         if(yongFileDTO.getDescription() != null) this.description = yongFileDTO.getDescription();
         if(yongFileDTO.getParent() != null) {

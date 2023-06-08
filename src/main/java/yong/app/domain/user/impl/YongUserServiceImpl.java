@@ -15,6 +15,7 @@ import yong.app.domain.token.YongConfirmToken;
 import yong.app.domain.token.YongConfirmTokenService;
 import yong.app.domain.user.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -54,7 +55,7 @@ public class YongUserServiceImpl implements YongUserService {
         List<YongRole> byRoleType = new ArrayList<>(yongRoleRepository.findAllByRoleTypeIn(yongUserDTO.roleTypes()));
 
         if(byRoleType.isEmpty()){
-            throw new NullPointerException("there is no role type");
+            throw new EntityNotFoundException("there is no role type");
         }
         // 권한 포함 insert
         YongUser yongUser = YongUser.joinProcBuilder()
