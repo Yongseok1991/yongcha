@@ -18,14 +18,13 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = false)
 public class YongRegionServiceImpl implements YongRegionService {
 
-    private final ModelMapper modelMapper;
     private final YongRegionRepository yongRegionRepository;
     private final YongUserRepository yongUserRepository;
 
     @Override
     public List<YongRegionVO> list() {
         List<YongRegion> all = yongRegionRepository.findAll();
-        return all.stream().map(yongRegion -> modelMapper.map(yongRegion, YongRegionVO.class)).collect(Collectors.toList());
+        return all.stream().map(YongRegionVO::new).toList();
     }
 
     @Override
@@ -52,7 +51,7 @@ public class YongRegionServiceImpl implements YongRegionService {
     @Override
     public List<YongRegionVO> showByLoginEmail(String email) {
         List<YongRegion> byYongUserEmail = yongRegionRepository.findByYongUserEmail(email);
-        return byYongUserEmail.stream().map(yongRegion -> modelMapper.map(yongRegion, YongRegionVO.class)).collect(Collectors.toList());
+        return byYongUserEmail.stream().map(YongRegionVO::new).toList();
     }
 
     @Override
