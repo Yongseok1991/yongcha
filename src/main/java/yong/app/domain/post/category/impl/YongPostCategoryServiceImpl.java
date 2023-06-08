@@ -1,16 +1,13 @@
 package yong.app.domain.post.category.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yong.app.domain.post.category.*;
-import yong.app.domain.post.post.YongPost;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -19,18 +16,12 @@ import java.util.stream.Collectors;
 public class YongPostCategoryServiceImpl implements YongPostCategoryService {
 
     private final YongPostCategoryRepository yongPostCategoryRepository;
-    private final ModelMapper modelMapper;
 
     @Override
     public List<YongPostCategoryVO> list() {
-
         List<YongPostCategory> postCategories = yongPostCategoryRepository.findAll();
-
         if(postCategories.isEmpty()) throw new UsernameNotFoundException("there is no post category");
-
-        return postCategories.stream()
-                .map(category -> modelMapper.map(category, YongPostCategoryVO.class))
-                .collect(Collectors.toList());
+        return postCategories.stream().map(YongPostCategoryVO::new).toList();
     }
 
     @Override
@@ -43,7 +34,6 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
                 .build();
 
         YongPostCategory savePostCategory = yongPostCategoryRepository.save(yongPostCategory);
-
         return savePostCategory.getId();
     }
 
@@ -52,7 +42,6 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
     public void update(Long id, YongPostCategoryDTO yongPostCategoryDTO) {
         YongPostCategory yongPostCategory = yongPostCategoryRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("there is no post category"));
-
         yongPostCategory.updateCategory(yongPostCategoryDTO);
     }
 
@@ -60,7 +49,7 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
     public YongPostCategoryVO show(Long id) {
         YongPostCategory yongPostCategory = yongPostCategoryRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("there is no post category"));
-        return modelMapper.map(yongPostCategory, YongPostCategoryVO.class);
+        return new YongPostCategoryVO(yongPostCategory);
     }
 
     @Override
@@ -69,6 +58,12 @@ public class YongPostCategoryServiceImpl implements YongPostCategoryService {
         YongPostCategory yongPostCategory = yongPostCategoryRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("there is no category"));
         yongPostCategory.deleteCategory();
+    }
+
+    @Override
+    public YongPostCategory findPostCategoryByPostId(Long postId) {
+        return yongPostCategoryRepository.findByIdAndDeleteYnIs(postId, "N")
+                .orElseThrow(() -> new NoSuchElementException("there is no parent"));
     }
 }
 

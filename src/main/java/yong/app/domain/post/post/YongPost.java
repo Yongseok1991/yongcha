@@ -32,7 +32,8 @@ public class YongPost extends BaseEntity {
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "yong_file_id")
 //    @JsonIgnore
-//    private YongFileGroup yongFileGroup;
+    @Transient
+    private YongFileGroup yongFileGroup;
 
     private Long yongFileGroupId;
 
@@ -62,8 +63,6 @@ public class YongPost extends BaseEntity {
         this.viewCount = viewCount;
         this.deleteYn = "N";
     }
-
-
     // update 용
     public void updatePost(YongPostDTO yongPostDTO){
         if(yongPostDTO.getYongPostCategory() != null) this.postCategory = yongPostDTO.getYongPostCategory();

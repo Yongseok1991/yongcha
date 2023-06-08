@@ -1,15 +1,11 @@
 package yong.app.domain.file.file;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class YongFileVO {
 
@@ -19,9 +15,20 @@ public class YongFileVO {
     private Integer fileSize;
     private String fileType;
 
-//    private Long id;
-//    private String fileName;
-//    private String description;
-//    private String deleteYn;
-//    private List<YongFileVO> child;
+    // findAllFilesByFileGroupId
+    public YongFileVO(Long id, String fileName, String filePath, Integer fileSize, String fileType) {
+        this.id = id;
+        this.fileName = fileName;
+        this.filePath = filePath;
+        this.fileSize = fileSize;
+        this.fileType = fileType;
+    }
+
+    public YongFileVO(YongFile yongFile){
+        this.id = yongFile.getId();
+        this.fileName = yongFile.getFileName();
+        this.filePath = yongFile.getFilePath();
+        this.fileSize = yongFile.getFileSize();
+        this.fileType = yongFile.getFileType();
+    }
 }

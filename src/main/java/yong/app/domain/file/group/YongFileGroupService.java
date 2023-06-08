@@ -6,10 +6,16 @@ public interface YongFileGroupService {
 
     List<YongFileGroupVO> list();
 
+    List<YongFileGroupVO> listWithFiles();
+
     Long join(YongFileGroupDTO yongFileGroupDTO);
 
     YongFileGroupVO show(Long id);
 
+    YongFileGroupVO showWithFiles(Long id);
+
     void update(Long id, YongFileGroupDTO yongFileGroupDTO);
+
+    YongFileGroupVO findPostFileGroup(Long fileGroupId);
 
 }

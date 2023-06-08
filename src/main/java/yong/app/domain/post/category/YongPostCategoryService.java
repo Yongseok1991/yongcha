@@ -15,4 +15,6 @@ public interface YongPostCategoryService {
     YongPostCategoryVO show(Long id);
 
     void delete(Long id);
+
+    YongPostCategory findPostCategoryByPostId(Long postId);
 }

@@ -23,6 +23,12 @@ public class YongFileGroupController {
         return ResponseEntity.ok(list);
     }
 
+    @GetMapping("/file/groups/with/files")
+    public ResponseEntity<List<YongFileGroupVO>> listWithFiles(){
+        List<YongFileGroupVO> list = fileGroupService.listWithFiles();
+        return ResponseEntity.ok(list);
+    }
+
     // INSERT
     // - 리턴 : id (pk)
     // - 방법 : builder을 통해 save
@@ -40,6 +46,13 @@ public class YongFileGroupController {
         YongFileGroupVO show = fileGroupService.show(id);
         return ResponseEntity.ok(show);
     }
+
+    @GetMapping("/file/groups/with/files/{id}")
+    public ResponseEntity<YongFileGroupVO> showWithFiles(@PathVariable("id") Long id){
+        YongFileGroupVO show = fileGroupService.showWithFiles(id);
+        return ResponseEntity.ok(show);
+    }
+
 
     // UPDATE
     // - 리턴 : void

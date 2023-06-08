@@ -1,8 +1,6 @@
 package yong.app.domain.post.comment.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yong.app.domain.post.comment.*;
@@ -11,8 +9,6 @@ import yong.app.domain.post.post.YongPostRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,12 +17,11 @@ public class YongCommentServiceImpl implements YongCommentService {
 
     private final YongCommentRepository yongCommentRepository;
     private final YongPostRepository yongPostRepository;
-    private final ModelMapper modelMapper;
 
     @Override
     public List<YongCommentVO> list() {
         List<YongComment> yongComments = yongCommentRepository.findAll();
-        return yongComments.stream().map(yongComment -> modelMapper.map(yongComment, YongCommentVO.class)).collect(Collectors.toList());
+        return yongComments.stream().map(YongCommentVO::new).toList();
     }
 
     @Override
@@ -51,16 +46,14 @@ public class YongCommentServiceImpl implements YongCommentService {
     @Override
     public YongCommentVO show(Long id) {
         YongComment yongComment = yongCommentRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no comment"));
-        return modelMapper.map(yongComment, YongCommentVO.class);
+        return new YongCommentVO(yongComment);
     }
 
     @Override
     @Transactional(readOnly = false)
     public void update(Long id, YongCommentDTO yongCommentDTO) {
-
         YongComment yongComment = yongCommentRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("there is no comment"));
-
         yongComment.updateComment(yongCommentDTO);
     }
 
@@ -71,5 +64,8 @@ public class YongCommentServiceImpl implements YongCommentService {
         yongComment.deleteComment();
     }
 
-
+    @Override
+    public List<YongCommentVO> findAllCommentsByPostId(Long postId) {
+        return yongCommentRepository.findAllByYongPostId(postId);
+    }
 }

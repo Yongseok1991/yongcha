@@ -14,7 +14,7 @@ public class KakaoUserDTO {
     private String oauthName;
     private String nickname;
     private String email;
-    private final String PROVIDER = "kakao";
+    private static final String PROVIDER = "kakao";
     private Map<String, Object> attributes;
     public KakaoUserDTO(OAuth2User oAuth2User) {
         // TODO null exception 고민...

@@ -2,7 +2,6 @@ package yong.app.domain.post.post;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,13 +12,25 @@ import java.util.List;
 public class YongPostController {
 
     private final YongPostService yongPostService;
+    @GetMapping("/test/querydsl")
+    public ResponseEntity<List<YongPostVO>> querydsl(){
+        List<YongPostVO> list = yongPostService.testQueryDSL();
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity<List<YongPostVO>> list(){
+        List<YongPostVO> list = yongPostService.list();
+        return ResponseEntity.ok(list);
+    }
+
 
     // GET LIST
     // - 리턴 : vo list
     // - 방법 : findAlll -> 모델매퍼를 통해 vo로 변경
-    @GetMapping("/posts")
-    public ResponseEntity<List<YongPostVO>> list(){
-        List<YongPostVO> list = yongPostService.list();
+    @GetMapping("/posts/with/files/comments")
+    public ResponseEntity<List<YongPostVO>> listWithFilesAndComments(){
+        List<YongPostVO> list = yongPostService.listWithFilesAndComments();
         return ResponseEntity.ok(list);
     }
 
@@ -56,6 +67,11 @@ public class YongPostController {
         return ResponseEntity.ok(findPost);
     }
 
+    @GetMapping("/posts/with/files/comments/{id}")
+    public ResponseEntity<YongPostVO> showWithFilesAndComments(@PathVariable("id") Long id){
+        YongPostVO findPost = yongPostService.showWithFilesAndComments(id);
+        return ResponseEntity.ok(findPost);
+    }
 
     // DELETE
     // - 리턴 : void
