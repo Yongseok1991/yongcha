@@ -1,11 +1,7 @@
 package yong.app.domain.post.comment;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import yong.app.domain.post.comment.Impl.YongCommentServiceImpl;
-import yong.app.domain.post.post.YongPost;
-import yong.app.domain.post.post.YongPostVO;
 import yong.app.global.response.StatusCode;
 import yong.app.global.response.StatusResponse;
 

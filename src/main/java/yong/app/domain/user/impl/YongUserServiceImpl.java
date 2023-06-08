@@ -2,7 +2,6 @@ package yong.app.domain.user.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import yong.app.domain.user.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,18 +27,17 @@ public class YongUserServiceImpl implements YongUserService {
     private final YongRoleRepository yongRoleRepository;
     private final YongConfirmTokenService yongConfirmTokenService;
     private final PasswordEncoder bCryptPasswordEncoder;
-    private final ModelMapper modelMapper;
 
     @Override
     public List<YongUserVO> list() {
         List<YongUser> all = yongUserRepository.findAll();
-        return all.stream().map(yongUser -> modelMapper.map(yongUser, YongUserVO.class)).collect(Collectors.toList());
+        return all.stream().map(YongUserVO::new).toList();
     }
 
     @Override
     public YongUserVO show(Long id) {
         YongUser findUser = yongUserRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no user"));
-        return modelMapper.map(findUser, YongUserVO.class);
+        return new YongUserVO(findUser);
     }
 
     public Optional<YongUser> getEmail(String email) {

@@ -1,14 +1,12 @@
 package yong.app.domain.notification.type.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yong.app.domain.notification.type.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -16,12 +14,11 @@ import java.util.stream.Collectors;
 public class YongNotificationTypeServiceImpl implements YongNotificationTypeService {
 
     private final YongNotificationTypeRepository yongNotificationTypeRepository;
-    private final ModelMapper modelMapper;
 
     @Override
     public List<YongNotificationTypeVO> list() {
         List<YongNotificationType> all = yongNotificationTypeRepository.findAll();
-        return all.stream().map(yongNotificationType -> modelMapper.map(yongNotificationType, YongNotificationTypeVO.class)).collect(Collectors.toList());
+        return all.stream().map(YongNotificationTypeVO::new).toList();
     }
 
     @Override
@@ -47,6 +44,6 @@ public class YongNotificationTypeServiceImpl implements YongNotificationTypeServ
     @Override
     public YongNotificationTypeVO show(Long id) {
         YongNotificationType type = yongNotificationTypeRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no notification type"));
-        return modelMapper.map(type, YongNotificationTypeVO.class);
+        return new YongNotificationTypeVO(type);
     }
 }
