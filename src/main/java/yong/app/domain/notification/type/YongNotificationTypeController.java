@@ -1,9 +1,7 @@
 package yong.app.domain.notification.type;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import yong.app.domain.notification.notification.YongNotification;
 import yong.app.global.response.StatusCode;
 import yong.app.global.response.StatusResponse;
 
