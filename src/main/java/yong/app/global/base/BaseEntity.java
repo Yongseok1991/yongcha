@@ -3,20 +3,14 @@ package yong.app.global.base;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import yong.app.domain.user.YongUser;
-import yong.app.global.auth.PrincipalDetails;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
 
 @Getter
 @EntityListeners(value = {AuditingEntityListener.class}) // Auditing 적용 에너테이션
@@ -32,8 +26,4 @@ public class BaseEntity extends BaseTimeEntity {
     @Schema(name = "수정자", description = "수정자" , hidden = true)
     private Long updtId;
 
-    public void addUserKey(YongUser user) {
-        this.regId = user.getId();
-        this.updtId = user.getId();
-    }
 }

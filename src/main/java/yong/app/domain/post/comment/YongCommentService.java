@@ -13,4 +13,6 @@ public interface YongCommentService {
     void update(Long id, YongCommentDTO yongCommentDTO);
 
     void delete(Long id);
+
+    List<YongCommentVO> findAllCommentsByPostId(Long postId);
 }

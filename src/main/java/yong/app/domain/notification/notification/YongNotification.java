@@ -1,6 +1,7 @@
 package yong.app.domain.notification.notification;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import yong.app.domain.notification.type.YongNotificationType;
@@ -29,12 +30,30 @@ public class YongNotification extends BaseTimeEntity {
 
     private String message;
 
-    @Column(name = "is_read")
-    private boolean isRead;
+    @Column(name = "read")
+    private String read;
 
     @Column(name = "reference_id")
     private String referenceId;
 
     @Column(name = "reference_url")
     private String referenceUrl;
+
+    @Builder(builderMethodName = "insertNotificationBuilder")
+    public YongNotification(YongUser yongUser, YongNotificationType yongNotificationType, String message, String read, String referenceId, String referenceUrl) {
+        this.yongUser = yongUser;
+        this.yongNotificationType = yongNotificationType;
+        this.message = message;
+        this.read = read;
+        this.referenceId = referenceId;
+        this.referenceUrl = referenceUrl;
+    }
+
+    public void updateNotification(YongNotificationDTO notifyDTO){
+        if(notifyDTO.getYongNotificationType() != null) this.yongNotificationType = notifyDTO.getYongNotificationType();
+        if(notifyDTO.getMessage() != null) this.message = notifyDTO.getMessage();
+        if(notifyDTO.getRead() != null) this.read = notifyDTO.getRead();
+        if(notifyDTO.getReferenceId() != null) this.referenceId = notifyDTO.getReferenceId();
+        if(notifyDTO.getReferenceUrl() != null) this.referenceUrl = notifyDTO.getReferenceUrl();
+    }
 }

@@ -9,4 +9,6 @@ public class YongCommentDTO {
     private Long yongPostId;
     private String title;
     private String content;
+
+
 }
