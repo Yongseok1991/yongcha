@@ -1,5 +1,6 @@
 package yong.app.global.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,7 +35,7 @@ public class StatusResponse {
     private String message;
     private String moreMessage;
     private Object data;
-    private List<FieldError> validErrors = new ArrayList<>();        // for validation check errors
+    private List<FieldsError> validErrors = new ArrayList<>();        // for validation check errors
 
 
 
@@ -70,7 +71,15 @@ public class StatusResponse {
     }
 
     public void addError(String objectName, String field, String message) {
-        validErrors.add(new FieldError(objectName, field, message));
+        validErrors.add(new FieldsError(objectName, field, message));
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class FieldsError {
+        private String objectName;
+        private String field;
+        private String message;
     }
 
 }
