@@ -17,4 +17,5 @@ public class YongPostDTO {
 
     private List<String> addFiles = new ArrayList<>();
     private List<Long> delFiles = new ArrayList<>();
+
 }

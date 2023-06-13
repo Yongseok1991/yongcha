@@ -29,7 +29,8 @@ public class SecurityConfig {
                     .usernameParameter("email")
                     .loginPage("/login")
                     .loginProcessingUrl("/loginProc")
-                    .defaultSuccessUrl("/"))
+                    .defaultSuccessUrl("/")
+            )
             .oauth2Login(oAuth2LoginConfigurer ->
                 oAuth2LoginConfigurer
                     .loginPage("/login")

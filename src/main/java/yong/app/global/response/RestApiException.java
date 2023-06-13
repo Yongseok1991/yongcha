@@ -15,6 +15,11 @@ import lombok.Getter;
 public class RestApiException extends RuntimeException {
     private final StatusCode statusCode;
 
+
+    public RestApiException(StatusCode statusCode) {
+        super(statusCode.getMessage());
+        this.statusCode = statusCode;
+    }
     public RestApiException(StatusCode statusCode, Object moreMessage) {
         super(statusCode.getMessage());
         this.statusCode = statusCode;

@@ -59,7 +59,7 @@ public class YongPostController {
     @PostMapping("/posts")
     public StatusResponse insert(@RequestBody YongPostDTO yongPostDTO){
         Long joinId = yongPostService.join(yongPostDTO);
-        return new StatusResponse(StatusCode.SUCCESS, joinId, "게시글 생성 성공");
+        return new StatusResponse(StatusCode.CREATED, joinId, "게시글 생성 성공");
     }
 
 
