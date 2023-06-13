@@ -6,8 +6,8 @@ public final class UserUtil {
     private UserUtil() {}
 
     public static boolean isAuthenticated(Authentication authentication) {
-        return authentication != null &&
-                authentication.getPrincipal() != "anonymousUser";
+        return authentication != null
+                && authentication.getPrincipal() != "anonymousUser";
     }
 
 }

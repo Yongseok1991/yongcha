@@ -10,6 +10,10 @@ import yong.app.global.base.BaseTimeEntity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static javax.persistence.FetchType.*;
+import static javax.persistence.GenerationType.*;
 
 @Entity
 @Getter
@@ -17,11 +21,11 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class YongFile extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = IDENTITY)
     @Column(name = "yong_file_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "yong_file_group_id")
     private YongFileGroup yongFileGroup;
 
@@ -60,9 +64,6 @@ public class YongFile extends BaseTimeEntity {
         this.fileSize = fileSize;
         this.fileType = fileType;
     }
-
-
-
 //    public YongFile(String fileName, String description, YongFile parent) {
 //        this.fileName = fileName;
 //        this.description = description;
@@ -91,7 +92,7 @@ public class YongFile extends BaseTimeEntity {
 
     public void updateFile(YongFileDTO yongFileDTO, YongFileGroup yongFileGroup){
         this.yongFileGroup = yongFileGroup;
-        if(yongFileDTO.getFileName() != null) this.fileName = yongFileDTO.getFileName();
+        this.fileName = Optional.ofNullable(yongFileDTO.getFileName()).orElse(this.fileName);
         if(yongFileDTO.getFilePath() != null) this.filePath = yongFileDTO.getFilePath();
         if(yongFileDTO.getFileSize() != null) this.fileSize = yongFileDTO.getFileSize();
         if(yongFileDTO.getFileType() != null) this.fileType = yongFileDTO.getFileType();

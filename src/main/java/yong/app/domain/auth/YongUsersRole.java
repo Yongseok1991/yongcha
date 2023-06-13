@@ -1,13 +1,12 @@
 package yong.app.domain.auth;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import yong.app.domain.user.YongUser;
 import yong.app.global.base.BaseTimeEntity;
 
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity

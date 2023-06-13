@@ -11,7 +11,6 @@ import java.util.List;
 
 @Getter @Setter
 public class YongPostDTO {
-
     private Long id;
     private Long yongPostCategoryId; // insert용
     private String title;
@@ -22,8 +21,6 @@ public class YongPostDTO {
 
     private List<String> addFiles = new ArrayList<>();
     private List<Long> delFiles = new ArrayList<>();
-
-
     private YongPostCategory yongPostCategory;  // update용
     private YongFileGroup yongFileGroup;                  // update 용
 }

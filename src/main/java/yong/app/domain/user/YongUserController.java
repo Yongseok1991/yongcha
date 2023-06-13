@@ -57,7 +57,7 @@ public class YongUserController {
     //         (3) 1 user의 builder에서 각각의 user-role에 대해 builder 생성
     //         (4) save (cascade : all)
     @PostMapping("/users/join") // insert info
-    public StatusResponse join(@RequestBody YongUserRecord yongUserDTO) {
+    public StatusResponse join(@RequestBody YongUserDTO yongUserDTO) {
         Long joinId = yongUserService.join(yongUserDTO);
         return new StatusResponse(StatusCode.SUCCESS, joinId, "유저 생성");
     }

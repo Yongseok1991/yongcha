@@ -19,7 +19,6 @@ public class YongNotification extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "yong_notification_id")
     private Long id;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "yong_user_id")
     private YongUser yongUser;
@@ -27,15 +26,11 @@ public class YongNotification extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "yong_notification_type_id")
     private YongNotificationType yongNotificationType;
-
     private String message;
-
     @Column(name = "read")
     private String read;
-
     @Column(name = "reference_id")
     private String referenceId;
-
     @Column(name = "reference_url")
     private String referenceUrl;
 

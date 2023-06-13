@@ -24,7 +24,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oauth2User = super.loadUser(userRequest);
         KakaoUserDTO kakaoUserDTO = new KakaoUserDTO(oauth2User);
-
          return yongUserService.getEmail(kakaoUserDTO.getEmail())
                 .map(existingUser -> {
                     existingUser.getYongRoles().forEach(role -> role.getYongRole().getRoleType());
