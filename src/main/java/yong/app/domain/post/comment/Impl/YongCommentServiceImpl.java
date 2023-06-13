@@ -21,6 +21,7 @@ public class YongCommentServiceImpl implements YongCommentService {
     @Override
     public List<YongCommentVO> list() {
         List<YongComment> yongComments = yongCommentRepository.findAll();
+        if(yongComments.isEmpty()) throw new NullPointerException("comments is empty");
         return yongComments.stream().map(YongCommentVO::new).toList();
     }
 

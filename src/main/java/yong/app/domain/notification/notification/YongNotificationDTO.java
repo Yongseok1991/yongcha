@@ -13,5 +13,4 @@ public class YongNotificationDTO {
     private String referenceId;
     private String referenceUrl;
 
-    private YongNotificationType yongNotificationType;
 }

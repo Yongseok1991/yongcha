@@ -70,11 +70,9 @@ public class YongNotificationServiceImpl implements YongNotificationService {
 
         YongNotificationType type = notifyTypeRepository.findById(notifyDTO.getYongNotificationTypeId()).orElseThrow(() -> new NoSuchElementException("there is no notification type"));
 
-
         YongNotification yongNotification = notifyRepositoty.findById(id).orElseThrow(() -> new NoSuchElementException("there is no notification"));
-        notifyDTO.setYongNotificationType(type);
 
-        yongNotification.updateNotification(notifyDTO);
+        yongNotification.updateNotification(notifyDTO, type);
     }
 
     @Override

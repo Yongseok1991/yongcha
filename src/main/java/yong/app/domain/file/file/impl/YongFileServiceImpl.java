@@ -21,6 +21,7 @@ public class YongFileServiceImpl implements YongFileService {
     @Override
     public List<YongFileVO> list() {
         List<YongFile> findAll = yongFileRepository.findAll();
+        if(findAll.isEmpty()) throw new NullPointerException("file is empty");
         return findAll.stream().map(YongFileVO::new).toList();
     }
 
@@ -79,6 +80,7 @@ public class YongFileServiceImpl implements YongFileService {
 
     @Override
     public List<YongFileVO> findFilesByFileGroupId(Long fileGroupId) {
-        return yongFileRepository.findAllFilesByFileGroupId(fileGroupId);
+        List<YongFile> allByYongFileGroupId = yongFileRepository.findAllByYongFileGroupId(fileGroupId);
+        return allByYongFileGroupId.stream().map(YongFileVO::new).toList();
     }
 }

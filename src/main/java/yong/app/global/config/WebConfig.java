@@ -1,5 +1,6 @@
 package yong.app.global.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,19 +48,19 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/home").setViewName("app/home/home");
     }
 
-//    @Bean
-//    public ModelMapper modelMapper(){
-//        ModelMapper modelMapper = new ModelMapper();
-//
-//        // 매핑 추가 전략 설정 (커스텀)
-//        //modelMapper.addMappings(memberDTOtoMember());
-//
-//        // 매핑 전략 설정
-//        modelMapper.getConfiguration()
-//                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)  // 필드 접근 제한자 레벨을 Private으로 변경
-//                .setFieldMatchingEnabled(true);     // allow private fields to be matched -> default값 : disabled
-//        return modelMapper;
-//    }
+    @Bean
+    public ModelMapper modelMapper(){
+        ModelMapper modelMapper = new ModelMapper();
+
+        // 매핑 추가 전략 설정 (커스텀)
+        //modelMapper.addMappings(memberDTOtoMember());
+
+        // 매핑 전략 설정
+        modelMapper.getConfiguration()
+                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)  // 필드 접근 제한자 레벨을 Private으로 변경
+                .setFieldMatchingEnabled(true);     // allow private fields to be matched -> default값 : disabled
+        return modelMapper;
+    }
 
 
     /* redirect 필요 시

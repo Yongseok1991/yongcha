@@ -37,8 +37,6 @@ public class StatusResponse {
     private Object data;
     private List<FieldsError> validErrors = new ArrayList<>();        // for validation check errors
 
-
-
     // FOR 'RestApiException'
     public StatusResponse(StatusCode statusCode){
         this.statusCode = statusCode.getHttpStatus().value();

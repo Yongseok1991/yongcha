@@ -49,8 +49,8 @@ public class YongNotification extends BaseTimeEntity {
         this.referenceUrl = referenceUrl;
     }
 
-    public void updateNotification(YongNotificationDTO notifyDTO){
-        if(notifyDTO.getYongNotificationType() != null) this.yongNotificationType = notifyDTO.getYongNotificationType();
+    public void updateNotification(YongNotificationDTO notifyDTO, YongNotificationType type){
+        if(type != null) this.yongNotificationType = type;
         if(notifyDTO.getMessage() != null) this.message = notifyDTO.getMessage();
         if(notifyDTO.getRead() != null) this.read = notifyDTO.getRead();
         if(notifyDTO.getReferenceId() != null) this.referenceId = notifyDTO.getReferenceId();

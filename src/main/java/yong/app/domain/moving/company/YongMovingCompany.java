@@ -7,8 +7,12 @@ import lombok.RequiredArgsConstructor;
 import yong.app.domain.base.Address;
 import yong.app.domain.file.file.YongFile;
 import yong.app.domain.file.group.YongFileGroup;
+import yong.app.domain.moving.review.YongMovingCompanyReview;
+import yong.app.domain.post.comment.YongComment;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "yong_moving_company")
@@ -31,11 +35,10 @@ public class YongMovingCompany {
     @Column(name = "use_count") // 고용횟수
     private Integer useCount;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "yong_file_group_id")
-//    private YongFileGroup yongFileGroup;
-
     private Long yongFileGroupId;
+
+    @Transient
+    private YongFileGroup yongFileGroup;
 
     private float latitude;
     private float langitude;
@@ -57,6 +60,9 @@ public class YongMovingCompany {
 
     @Column(name = "delete_yn")
     private String deleteYn;
+
+    @OneToMany(mappedBy = "yongMovingCompany")
+    private List<YongMovingCompanyReview> reviews = new ArrayList<>();
 
     @Builder(builderMethodName = "insertMovingCompanyBuilder", toBuilder = true)
     public YongMovingCompany(String name, Long yongFileGroupId, String description) {

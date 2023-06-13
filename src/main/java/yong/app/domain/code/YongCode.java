@@ -42,9 +42,9 @@ public class YongCode {
         this.parent = parent;
     }
 
-    public void updateYongCode(YongCodeDTO yongCodeDTO){
+    public void updateYongCode(YongCodeDTO yongCodeDTO, YongCode parentCode){
         if(yongCodeDTO.getName() != null) this.name = yongCodeDTO.getName();
         if(yongCodeDTO.getDescription() != null) this.description =  yongCodeDTO.getDescription();
-        if(yongCodeDTO.getParentCode() != null) this.parent = yongCodeDTO.getParentCode();
+        if(parentCode != null) this.parent = parentCode;
     }
 }

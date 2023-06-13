@@ -31,6 +31,7 @@ public class YongUserServiceImpl implements YongUserService {
     @Override
     public List<YongUserVO> list() {
         List<YongUser> all = yongUserRepository.findAll();
+        if(all.isEmpty()) throw new NullPointerException("user is empty");
         return all.stream().map(YongUserVO::new).toList();
     }
 
@@ -46,17 +47,17 @@ public class YongUserServiceImpl implements YongUserService {
 
     @Override
     @Transactional
-    public Long join(YongUserRecord yongUserDTO) {
+    public Long join(YongUserDTO yongUserDTO) {
 
-        List<YongRole> byRoleType = new ArrayList<>(yongRoleRepository.findAllByRoleTypeIn(yongUserDTO.roleTypes()));
+        List<YongRole> byRoleType = new ArrayList<>(yongRoleRepository.findAllByRoleTypeIn(yongUserDTO.getRoleType()));
 
         if(byRoleType.isEmpty()){
             throw new NullPointerException("there is no role type");
         }
         // 권한 포함 insert
         YongUser yongUser = YongUser.joinProcBuilder()
-                .email(yongUserDTO.email())
-                .password(bCryptPasswordEncoder.encode(yongUserDTO.password()))
+                .email(yongUserDTO.getEmail())
+                .password(bCryptPasswordEncoder.encode(yongUserDTO.getPassword()))
                 .yongRole(byRoleType)
                 .build();
         YongUser savedUser = yongUserRepository.save(yongUser);

@@ -16,6 +16,5 @@ public interface YongFileGroupService {
 
     void update(Long id, YongFileGroupDTO yongFileGroupDTO);
 
-    YongFileGroupVO findPostFileGroup(Long fileGroupId);
-
+    YongFileGroupVO findFileGroupWithFiles(Long fileGroupId);
 }

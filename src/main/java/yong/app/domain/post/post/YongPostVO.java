@@ -21,21 +21,9 @@ public class YongPostVO {
     private String content;
     private String deleteYn;
     private Integer viewCount;
-    private Long yongFileGroupId;
     private List<YongCommentVO> comments = new ArrayList<>();
     private YongFileGroupVO yongFileGroup;
 
-    // findAllYongPost
-    public YongPostVO(Long id, String title, String content, String deleteYn, Integer viewCount, Long yongFileGroupId) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.deleteYn = deleteYn;
-        this.viewCount = viewCount;
-        this.yongFileGroupId = yongFileGroupId;
-    }
-
-//    private List<YongCommentVO> comments;
     @QueryProjection
     public YongPostVO(Long id, String title, String content, List<YongCommentVO> comments, String deleteYn, Integer viewCount, YongFileGroupVO yongFileGroup){
         this.id = id;
@@ -46,7 +34,6 @@ public class YongPostVO {
         this.viewCount = viewCount;
         this.yongFileGroup = yongFileGroup;
     }
-
 
     public YongPostVO(YongPost yongPost, List<YongCommentVO> comments,  YongFileGroupVO yongFileGroup){
         this.id = yongPost.getId();
