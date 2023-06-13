@@ -29,7 +29,6 @@ public class YongNotificationTypeServiceImpl implements YongNotificationTypeServ
                 .name(yongNotificationTypeDTO.getName())
                 .description(yongNotificationTypeDTO.getDescription())
                 .build();
-
         YongNotificationType save = yongNotificationTypeRepository.save(yongNotificationType);
         return save.getId();
     }

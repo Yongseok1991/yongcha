@@ -1,7 +1,9 @@
 package yong.app.domain.notification.type;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import yong.app.global.response.RestApiException;
 import yong.app.global.response.StatusCode;
 import yong.app.global.response.StatusResponse;
 
@@ -20,7 +22,7 @@ public class YongNotificationTypeController {
     @GetMapping("/notification/types")
     public StatusResponse list(){
         List<YongNotificationTypeVO> list = yongNotificationTypeService.list();
-        if(list.isEmpty()) return new StatusResponse(StatusCode.NO_CONTENT);
+        if(list.isEmpty()) throw new RestApiException(StatusCode.NO_CONTENT);
         return new StatusResponse(StatusCode.SUCCESS, list, "전체 알림 타입 조회");
     }
 

@@ -2,6 +2,7 @@ package yong.app.domain.user;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import yong.app.domain.auth.RoleType;
 
 import javax.validation.constraints.Email;

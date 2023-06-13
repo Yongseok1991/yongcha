@@ -1,9 +1,6 @@
 package yong.app.global.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.validation.FieldError;
 
 import java.time.LocalTime;
@@ -27,6 +24,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class StatusResponse {
 
     private LocalTime timestamp = LocalTime.now();
@@ -36,8 +34,6 @@ public class StatusResponse {
     private String moreMessage;
     private Object data;
     private List<FieldsError> validErrors = new ArrayList<>();        // for validation check errors
-
-
 
     // FOR 'RestApiException'
     public StatusResponse(StatusCode statusCode){
