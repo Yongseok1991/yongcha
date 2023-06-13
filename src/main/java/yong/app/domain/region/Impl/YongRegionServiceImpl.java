@@ -21,6 +21,7 @@ public class YongRegionServiceImpl implements YongRegionService {
     @Override
     public List<YongRegionVO> list() {
         List<YongRegion> all = yongRegionRepository.findAll();
+        if(all.isEmpty()) throw new NullPointerException("region is empty");
         return all.stream().map(YongRegionVO::new).toList();
     }
 

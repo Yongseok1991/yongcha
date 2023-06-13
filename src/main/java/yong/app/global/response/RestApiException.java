@@ -25,4 +25,8 @@ public class RestApiException extends RuntimeException {
         this.statusCode = statusCode;
         this.statusCode.setMoreMessage(moreMessage);
     }
+    public RestApiException(StatusCode statusCode) {
+        super(statusCode.getMessage());
+        this.statusCode = statusCode;
+    }
 }

@@ -8,8 +8,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class YongPostCategoryDTO {
 
-    private Long id;
     private String name;
     private String description;
-    private String deleteYn;
 }

@@ -8,6 +8,7 @@ import yong.app.domain.file.file.YongFileVO;
 import yong.app.domain.file.group.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -22,17 +23,18 @@ public class YongFileGroupServiceImpl implements YongFileGroupService {
     @Override
     public List<YongFileGroupVO> list() {
         List<YongFileGroup> all = yongFileGroupRepository.findAll();
-        return all.stream().map(YongFileGroupVO::new).toList();
+        if(all.isEmpty()) throw new NullPointerException("file group is empty");
+        return all.stream().map(yongFileGroup -> new YongFileGroupVO(yongFileGroup, new ArrayList<>())).toList();
     }
 
     @Override
     public List<YongFileGroupVO> listWithFiles() {
-        List<YongFileGroupVO> all = yongFileGroupRepository.findAllFileGroup();
-        all.forEach(yongFileGroup -> {
+        List<YongFileGroup> all = yongFileGroupRepository.findAll();
+        if(all.isEmpty()) throw new NullPointerException("file group is empty");
+        return all.stream().map(yongFileGroup -> {
             List<YongFileVO> files = yongFileService.findFilesByFileGroupId(yongFileGroup.getId());
-            yongFileGroup.setFiles(files);
-        });
-        return all;
+            return new YongFileGroupVO(yongFileGroup, files);
+        }).toList();
     }
 
     @Override
@@ -51,16 +53,14 @@ public class YongFileGroupServiceImpl implements YongFileGroupService {
     @Override
     public YongFileGroupVO show(Long id) {
         YongFileGroup fileGroup = yongFileGroupRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no file group"));
-        return new YongFileGroupVO(fileGroup);
+        return new YongFileGroupVO(fileGroup, new ArrayList<>());
     }
 
     @Override
     public YongFileGroupVO showWithFiles(Long id) {
         YongFileGroup fileGroup = yongFileGroupRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no file group"));
         List<YongFileVO> files = yongFileService.findFilesByFileGroupId(fileGroup.getId());
-        YongFileGroupVO yongFileGroupVO = new YongFileGroupVO(fileGroup);
-        yongFileGroupVO.setFiles(files);
-        return yongFileGroupVO;
+        return new YongFileGroupVO(fileGroup, files);
     }
 
     @Override
@@ -71,8 +71,9 @@ public class YongFileGroupServiceImpl implements YongFileGroupService {
     }
 
     @Override
-    public YongFileGroupVO findPostFileGroup(Long fileGroupId) {
-        return yongFileGroupRepository.findPostFileGroupById(fileGroupId)
-                .orElseThrow(EntityNotFoundException::new);
+    public YongFileGroupVO findFileGroupWithFiles(Long fileGroupId) {
+        YongFileGroup fileGroup = yongFileGroupRepository.findById(fileGroupId).orElseThrow(EntityNotFoundException::new);
+        List<YongFileVO> files = yongFileService.findFilesByFileGroupId(fileGroup.getId());
+        return new YongFileGroupVO(fileGroup, files);
     }
 }

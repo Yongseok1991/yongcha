@@ -19,6 +19,7 @@ public class SecurityConfig {
         http
             .authorizeRequests(authorize ->
                 authorize
+                        .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/**", "/swagger-ui.html").permitAll()
                     .mvcMatchers("/user/**").authenticated()
                     .mvcMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                     .anyRequest().permitAll()

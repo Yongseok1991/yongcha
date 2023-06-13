@@ -15,7 +15,6 @@ public class YongFileGroupVO {
     private String description;
     private List<YongFileVO> files = new ArrayList<>();
 
-    // findPostFileGroupById
     @QueryProjection
     public YongFileGroupVO(Long id, String fileGroupName, String description) {
         this.id = id;
@@ -23,9 +22,10 @@ public class YongFileGroupVO {
         this.description = description;
     }
 
-    public YongFileGroupVO(YongFileGroup yongFileGroup) {
+    public YongFileGroupVO(YongFileGroup yongFileGroup, List<YongFileVO> files) {
         this.id = yongFileGroup.getId();
         this.fileGroupName = yongFileGroup.getFileGroupName();
         this.description = yongFileGroup.getDescription();
+        this.files = files;
     }
 }

@@ -54,8 +54,10 @@ public class YongCodeServiceImpl implements YongCodeService {
 
         if(yongCodeDTO.getParentId() != null) {
             YongCode parentCode = yongCodeRepository.findById(yongCodeDTO.getParentId()).orElseThrow(() -> new NoSuchElementException("there is no parent code"));
-            yongCodeDTO.setParentCode(parentCode);
+//            yongCodeDTO.setParentCode(parentCode);
+            yongCode.updateYongCode(yongCodeDTO, parentCode);
+        }else {
+            yongCode.updateYongCode(yongCodeDTO, null);
         }
-        yongCode.updateYongCode(yongCodeDTO);
     }
 }

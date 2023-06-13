@@ -28,12 +28,13 @@ public class AuditorAwareImpl implements AuditorAware<Long> {
          *       TODO
          *         regId, updtID가 ... 사용하는 곳만 바인딩하기 (보류)
          */
-        if(UserUtil.isAuthenticated(authentication)) {
-            PrincipalDetails details = (PrincipalDetails) authentication.getPrincipal();
-            return Optional.of(details.getId());             // ofNullable : return null
-        } else {
-            throw new IllegalStateException("id is not found");
-            // TODO : redirect to login page.... (move Back/to login page)
-        }
+//        if(UserUtil.isAuthenticated(authentication)) {
+//            PrincipalDetails details = (PrincipalDetails) authentication.getPrincipal();
+//            return Optional.of(details.getId());             // ofNullable : return null
+//        } else {
+//            throw new IllegalStateException("id is not found");
+//            // TODO : redirect to login page.... (move Back/to login page)
+//        }
+        return null;
     }
 }

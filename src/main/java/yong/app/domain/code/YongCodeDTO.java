@@ -14,5 +14,4 @@ public class YongCodeDTO {
     @NotBlank
     private String description;
 
-    private YongCode parentCode;
 }

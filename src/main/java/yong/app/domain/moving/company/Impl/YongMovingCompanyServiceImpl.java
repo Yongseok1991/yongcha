@@ -3,8 +3,11 @@ package yong.app.domain.moving.company.Impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import yong.app.domain.base.YongFileCommon;
 import yong.app.domain.file.group.YongFileGroup;
+import yong.app.domain.file.group.YongFileGroupService;
+import yong.app.domain.file.group.YongFileGroupVO;
 import yong.app.domain.moving.company.*;
 
 import java.util.List;
@@ -17,11 +20,26 @@ public class YongMovingCompanyServiceImpl implements YongMovingCompanyService {
 
     private final YongMovingCompanyRepository movingCompanyRepository;
     private final YongFileCommon yongFileCommon;
+    private final YongFileGroupService yongFileGroupService;
 
     @Override
     public List<YongMovingCompanyVO> list() {
         List<YongMovingCompany> all = movingCompanyRepository.findAll();
-        return all.stream().map(YongMovingCompanyVO::new).toList();
+        if(all.isEmpty()) throw new NullPointerException("moving company is empty");
+        return all.stream().map(yongMovingCompany -> new YongMovingCompanyVO(yongMovingCompany, null)).toList();
+    }
+
+    @Override
+    public List<YongMovingCompanyVO> listWithFiles() {
+        List<YongMovingCompany> all = movingCompanyRepository.findAll();
+        if(all.isEmpty()) throw new NullPointerException("moving company is empty");
+        return all.stream().map(yongMovingCompany -> {
+            YongFileGroupVO fileGroup = null;
+            if(yongMovingCompany.getYongFileGroupId() != null){
+                fileGroup = yongFileGroupService.findFileGroupWithFiles(yongMovingCompany.getYongFileGroupId());
+            }
+            return new YongMovingCompanyVO(yongMovingCompany, fileGroup);
+        }).toList();
     }
 
     @Override
@@ -33,7 +51,7 @@ public class YongMovingCompanyServiceImpl implements YongMovingCompanyService {
                 .description(movingDTO.getDescription())
                 .build();
 
-        if(!movingDTO.getAddFiles().isEmpty()){
+        if(!ObjectUtils.isEmpty(movingDTO.getAddFiles())){
             YongFileGroup fileGroup = yongFileCommon.addFiles(movingDTO.getAddFiles(), null,0L);
             movingCompany = movingCompany.toBuilder().yongFileGroupId(fileGroup.getId()).build();
         }
@@ -45,8 +63,16 @@ public class YongMovingCompanyServiceImpl implements YongMovingCompanyService {
     @Override
     public YongMovingCompanyVO show(Long id) {
         YongMovingCompany company = movingCompanyRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no company"));
-        return new YongMovingCompanyVO(company);
+        return new YongMovingCompanyVO(company, null);
     }
+
+    @Override
+    public YongMovingCompanyVO showWithFiles(Long id) {
+        YongMovingCompany company = movingCompanyRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no company"));
+        YongFileGroupVO fileGroupWithFiles = yongFileGroupService.findFileGroupWithFiles(company.getYongFileGroupId());
+        return new YongMovingCompanyVO(company, fileGroupWithFiles);
+    }
+
 
     @Override
     @Transactional(readOnly = false)

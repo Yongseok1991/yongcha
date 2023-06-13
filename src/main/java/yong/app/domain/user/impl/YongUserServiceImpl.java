@@ -32,6 +32,7 @@ public class YongUserServiceImpl implements YongUserService {
     @Override
     public List<YongUserVO> list() {
         List<YongUser> all = yongUserRepository.findAll();
+        if(all.isEmpty()) throw new NullPointerException("user is empty");
         return all.stream().map(YongUserVO::new).toList();
     }
 

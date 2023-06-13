@@ -29,9 +29,6 @@ public class YongPost extends BaseEntity {
     @JsonIgnore
     private YongPostCategory postCategory;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "yong_file_id")
-//    @JsonIgnore
     @Transient
     private YongFileGroup yongFileGroup;
 
@@ -64,9 +61,9 @@ public class YongPost extends BaseEntity {
         this.deleteYn = "N";
     }
     // update 용
-    public void updatePost(YongPostDTO yongPostDTO){
-        if(yongPostDTO.getYongPostCategory() != null) this.postCategory = yongPostDTO.getYongPostCategory();
-        if(yongPostDTO.getYongFileGroup() != null) this.yongFileGroupId = yongPostDTO.getYongFileGroupId();
+    public void updatePost(YongPostDTO yongPostDTO, YongPostCategory yongPostCategory, YongFileGroup fileGroup){
+        if(yongPostCategory != null) this.postCategory = yongPostCategory;
+        if(fileGroup != null) this.yongFileGroupId = fileGroup.getId();
         if(yongPostDTO.getTitle() != null) this.title = yongPostDTO.getTitle();
         if(yongPostDTO.getContent() != null) this.content = yongPostDTO.getContent();
         if(yongPostDTO.getViewCount() != null) this.viewCount = yongPostDTO.getViewCount();

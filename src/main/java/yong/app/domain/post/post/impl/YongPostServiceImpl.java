@@ -6,9 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yong.app.domain.base.YongFileCommon;
-import yong.app.domain.file.file.YongFileService;
-import yong.app.domain.file.file.YongFileVO;
-import yong.app.domain.file.group.*;
+import yong.app.domain.file.group.QYongFileGroupVO;
+import yong.app.domain.file.group.YongFileGroup;
+import yong.app.domain.file.group.YongFileGroupService;
+import yong.app.domain.file.group.YongFileGroupVO;
 import yong.app.domain.post.category.YongPostCategory;
 import yong.app.domain.post.category.YongPostCategoryService;
 import yong.app.domain.post.comment.QYongCommentVO;
@@ -16,6 +17,7 @@ import yong.app.domain.post.comment.YongCommentService;
 import yong.app.domain.post.comment.YongCommentVO;
 import yong.app.domain.post.post.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -31,38 +33,31 @@ import static yong.app.domain.post.post.QYongPost.yongPost;
 public class YongPostServiceImpl implements YongPostService {
 
     private final YongFileGroupService yongFileGroupService;
-    private final YongFileService yongFileService;
     private final YongCommentService yongCommentService;
     private final YongPostCategoryService yongPostCategoryService;
     private final JPAQueryFactory jpaQueryFactory;
     private final YongPostRepository yongPostRepository;
     private final YongFileCommon yongFileCommon;
 
-    private final YongFileGroupRepository yongFileGroupRepository;
-
     @Override
     public List<YongPostVO> list() {
         List<YongPost> all = yongPostRepository.findAll();
-        return all.stream().map(yongPost -> new YongPostVO(yongPost, null, null)).toList();
+        if(all.isEmpty()) throw new NullPointerException("post is empty");
+        return all.stream().map(yongPost -> new YongPostVO(yongPost, new ArrayList<>(), null)).toList();
     }
 
     @Override
     public List<YongPostVO> listWithFilesAndComments() {
-
-        List<YongPostVO> findAll = yongPostRepository.findAllYongPost(); // -> fetch join
-        findAll.forEach(yongPost -> {
-            if(yongPost.getYongFileGroupId() != null) {
-                YongFileGroupVO fileGroup = yongFileGroupService.findPostFileGroup(yongPost.getYongFileGroupId());
-                List<YongFileVO> files = yongFileService.findFilesByFileGroupId(fileGroup.getId());
-                fileGroup.setFiles(files);                  // files
-                yongPost.setYongFileGroup(fileGroup);       // file group
+        List<YongPost> all = yongPostRepository.findAll();
+        if(all.isEmpty()) throw new NullPointerException("post is empty");
+        return all.stream().map(yongPost -> {
+            YongFileGroupVO fileGroup = null;
+            if (yongPost.getYongFileGroupId() != null) {
+                fileGroup = yongFileGroupService.findFileGroupWithFiles(yongPost.getYongFileGroupId());
             }
             List<YongCommentVO> comments = yongCommentService.findAllCommentsByPostId(yongPost.getId());
-            if(!comments.isEmpty()) {
-                yongPost.setComments(comments); // comments
-            }
-        });
-        return findAll;
+            return new YongPostVO(yongPost, comments, fileGroup);
+        }).toList();
     }
 
     @Override
@@ -99,21 +94,22 @@ public class YongPostServiceImpl implements YongPostService {
     public void update(Long id, YongPostDTO yongPostDTO) {
         // 1. if has parent -> find parent and set parent
         YongPostCategory findParentCategory = yongPostCategoryService.findPostCategoryByPostId(yongPostDTO.getYongPostCategoryId());
-        yongPostDTO.setYongPostCategory(findParentCategory);
+//        yongPostDTO.setYongPostCategory(findParentCategory);
 
 
         // 2. if has file
+        YongFileGroup fileGroup = null;
         if(yongPostDTO.getYongFileGroupId() != null){
-            YongFileGroup fileGroup = yongFileCommon.addFiles(yongPostDTO.getAddFiles(), yongPostDTO.getDelFiles(), yongPostDTO.getYongFileGroupId());
-            yongPostDTO.setYongFileGroup(fileGroup);
-        }else if(!yongPostDTO.getAddFiles().isEmpty()){  // 2-1. insert file new!
-            YongFileGroup fileGroup = yongFileCommon.addFiles(yongPostDTO.getAddFiles(), null, 0L);
-            yongPostDTO.setYongFileGroup(fileGroup);
+            fileGroup = yongFileCommon.addFiles(yongPostDTO.getAddFiles(), yongPostDTO.getDelFiles(), yongPostDTO.getYongFileGroupId());
+//            yongPostDTO.setYongFileGroup(fileGroup);
+        }else {  // 2-1. insert file new!
+            fileGroup = yongFileCommon.addFiles(yongPostDTO.getAddFiles(), null, 0L);
+//            yongPostDTO.setYongFileGroup(fileGroup);
         }
 
         // 3. then use update method
         YongPost findPost = yongPostRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no post"));
-        findPost.updatePost(yongPostDTO);
+        findPost.updatePost(yongPostDTO, findParentCategory, fileGroup);
     }
 
     @Override
@@ -121,19 +117,16 @@ public class YongPostServiceImpl implements YongPostService {
         YongPost findPost = yongPostRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("there is no post"));
 
-        return new YongPostVO(findPost, null, null);
+        return new YongPostVO(findPost,  new ArrayList<>(), null);
     }
 
     @Override
     public YongPostVO showWithFilesAndComments(Long id) {
         YongPost findPost = yongPostRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("there is no post"));
-        YongFileGroupVO yongFileGroupVO = yongFileGroupService.findPostFileGroup(findPost.getYongFileGroupId());
-        List<YongFileVO> yongFileVOS = yongFileService.findFilesByFileGroupId(findPost.getYongFileGroupId());
-        yongFileGroupVO.setFiles(yongFileVOS);
-
+        YongFileGroupVO yongFileGroupVO = null;
+        if(findPost.getYongFileGroupId() != null) yongFileGroupVO = yongFileGroupService.findFileGroupWithFiles(findPost.getYongFileGroupId());
         List<YongCommentVO> commentVOS = yongCommentService.findAllCommentsByPostId(findPost.getId());
-
         return new YongPostVO(findPost, commentVOS, yongFileGroupVO);
     }
 
